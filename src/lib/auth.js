@@ -18,4 +18,19 @@ export const auth = betterAuth({
     trustedOrigins: [
         process.env.BETTER_AUTH_URL,
     ],
+    user: {
+        additionalFields: {
+            role: {
+                defaultValue: 'User',
+            },
+
+            isBlocked: {
+                defaultValue: false
+            },
+            createdAt: {
+                defaultValue: new Date()
+            }
+
+        },
+    }
 });

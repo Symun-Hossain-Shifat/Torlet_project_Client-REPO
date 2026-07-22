@@ -4,6 +4,7 @@ import { useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff, Mail, Lock, Store } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
+import { authClient } from "@/lib/auth-client";
 
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
@@ -13,10 +14,27 @@ export default function Login() {
         setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
-    const handleSubmit = (e) => {
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // TODO: wire up to your auth logic
-        console.log("Login submitted:", formData);
+
+        const { data, error } = await authClient.signIn.email({
+            email: formData.email, // required
+            password: formData.password, // required
+            rememberMe: true,
+            callbackURL: "/",
+        });
+        if (error) {
+            toast.error(error.message || "Login failed!");
+            return;
+        }
+        if (data) {
+            router.push("/");
+            toast.success("Congratulations! Login successful.");
+        }
+
+
+
     };
 
     const handleGoogleLogin = () => {

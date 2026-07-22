@@ -32,9 +32,12 @@ export default function Signup() {
             toast.error(error.message || "Registration failed!");
             return;
         }
+        if (data) {
+            router.push("/");
+            toast.success("Congratulations! Registration successful.");
+        }
 
-        toast.success("Congratulations! Registration successful.");
-        router.push("/");
+
     };
 
     const handleGoogleSignup = () => {
