@@ -10,6 +10,7 @@ import {
     User,
     Store,
 } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
 
 // ---- Config: edit these to match your project ----
 const NAV_LINKS = [
@@ -21,12 +22,14 @@ const NAV_LINKS = [
 ];
 
 export default function Navbar({
-    isLoggedIn = false,
+
     cartCount = 0,
     wishlistCount = 0,
 }) {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-
+    const { data: session } = authClient.useSession()
+    const user = session?.user
+    console.log(user)
     return (
         <>
             {/* ---------- Top header ---------- */}
@@ -63,7 +66,7 @@ export default function Navbar({
                             <ShoppingCart size={20} />
                         </IconLink>
 
-                        {isLoggedIn ? (
+                        {user ? (
                             <Link
                                 href="/account"
                                 className="ml-1 inline-flex items-center gap-2 rounded-full border border-neutral-700 px-3 py-1.5 text-sm font-medium text-neutral-200 hover:border-amber-400 hover:text-amber-400"
@@ -102,8 +105,8 @@ export default function Navbar({
                 </BottomTabLink>
 
                 <BottomTabLink
-                    href={isLoggedIn ? "/account" : "/login"}
-                    label={isLoggedIn ? "Account" : "Login"}
+                    href={user ? "/account" : "/Signin"}
+                    label={user ? "Account" : "Login"}
                 >
                     <User size={22} />
                 </BottomTabLink>

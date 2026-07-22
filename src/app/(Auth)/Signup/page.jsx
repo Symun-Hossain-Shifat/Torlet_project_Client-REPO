@@ -4,19 +4,37 @@ import { useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff, Mail, Lock, User, Store } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
+import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
+
 
 export default function Signup() {
     const [showPassword, setShowPassword] = useState(false);
     const [formData, setFormData] = useState({ name: "", email: "", password: "" });
+    const router = useRouter();
 
     const handleChange = (e) => {
         setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
-        // TODO: wire up to your auth logic
-        console.log("Signup submitted:", formData);
+
+        const { data, error } = await authClient.signUp.email({
+            name: formData.name,
+            email: formData.email,
+            password: formData.password,
+            callbackURL: "/",
+        });
+
+        if (error) {
+            toast.error(error.message || "Registration failed!");
+            return;
+        }
+
+        toast.success("Congratulations! Registration successful.");
+        router.push("/");
     };
 
     const handleGoogleSignup = () => {
