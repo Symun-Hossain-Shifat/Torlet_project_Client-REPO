@@ -74,7 +74,7 @@ export default function Navbar({
                             </Link>
                         ) : (
                             <Link
-                                href="/login"
+                                href="/Signin"
                                 className="ml-1 rounded-full bg-amber-400 px-4 py-1.5 text-sm font-semibold text-neutral-950 hover:bg-amber-300"
                             >
                                 Login

@@ -135,24 +135,7 @@ export default function Banner() {
                 </div>
             </div>
 
-            <style jsx>{`
-                .marquee-track {
-                    animation: marquee 22s linear infinite;
-                }
-                @keyframes marquee {
-                    from {
-                        transform: translateX(0);
-                    }
-                    to {
-                        transform: translateX(-50%);
-                    }
-                }
-                @media (prefers-reduced-motion: reduce) {
-                    .marquee-track {
-                        animation: none;
-                    }
-                }
-            `}</style>
+
         </section>
     );
 }
