@@ -25,25 +25,40 @@ export default function Signup() {
             name: formData.name,
             email: formData.email,
             password: formData.password,
-            callbackURL: "/",
+            callbackURL: "/Signin",
         });
 
-        if (error) {
-            toast.error(error.message || "Registration failed!");
-            return;
-        }
-        if (data) {
-            router.push("/");
-            toast.success("Congratulations! Registration successful.");
+        if (data?.user) {
+            toast.success("Registration Successful 🎉");
+            router.push("/Signin");
+        } else if (error) {
+            toast.error(`Registration Failed! ${error.message}`);
         }
 
 
     };
 
-    const handleGoogleSignup = () => {
-        // TODO: wire up to your Google OAuth flow
-        console.log("Continue with Google clicked");
+    const HandleGoogleSignin = async () => {
+        // await authClient.signIn.social({
+        //     provider: "google",
+        // });
+
+        // const session = await authClient.getSession();
+
+        // if (session.data?.user?.isBlocked) {
+        //     toast.error(
+        //         "You cannot login! Your account has been blocked by the admin.",
+        //         {
+        //             duration: 10000,
+        //         }
+        //     );
+
+        //     await authClient.signOut();
+
+        //     router.push("/");
+        // }
     };
+
 
     return (
         <div className="flex min-h-screen w-full items-center justify-center bg-neutral-950 px-4 py-12">
@@ -167,7 +182,7 @@ export default function Signup() {
                     {/* Google signup */}
                     <button
                         type="button"
-                        onClick={handleGoogleSignup}
+                        onClick={HandleGoogleSignin}
                         className="flex w-full items-center justify-center gap-3 rounded-lg border border-neutral-700 bg-white py-2.5 text-sm font-semibold text-neutral-800 transition-colors hover:bg-neutral-100"
                     >
                         <FcGoogle size={18} />

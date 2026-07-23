@@ -1,4 +1,4 @@
-import { GetUserInserver } from "@/lib/Action/GetUser";
+'use client'
 import {
     BsCalendar3,
     BsClock,
@@ -9,9 +9,13 @@ import {
 } from "react-icons/bs";
 import { MdVerified, MdOutlineErrorOutline } from "react-icons/md";
 import { BiLogOut } from "react-icons/bi";
+import { authClient } from "@/lib/auth-client";
+import { useRouter } from "next/navigation";
 
-export default async function ProfilePage() {
-    const user = await GetUserInserver();
+export default function ProfilePage() {
+    const { data: session } = authClient.useSession()
+    const router = useRouter()
+    const user = session?.user;
     const {
         name,
         email,
@@ -32,6 +36,11 @@ export default async function ProfilePage() {
             dateStyle: "medium",
             timeStyle: "short",
         });
+    };
+
+    const HandleLogout = async () => {
+        await authClient.signOut();
+        router.push('/Signin')
     };
 
     const infoRows = [
@@ -76,7 +85,7 @@ export default async function ProfilePage() {
 
                                 {/* Log Out Button (Desktop Position) */}
                                 <div className="hidden sm:block">
-                                    <button className="group inline-flex items-center gap-2 rounded-2xl border border-red-500/20 bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-400 transition-all duration-200 hover:border-red-500/40 hover:bg-red-500/20 hover:text-red-300">
+                                    <button onClick={HandleLogout} className="group inline-flex items-center gap-2 rounded-2xl border border-red-500/20 bg-red-500/10 px-4 py-2 text-sm font-semibold text-red-400 transition-all duration-200 hover:border-red-500/40 hover:bg-red-500/20 hover:text-red-300">
                                         <BiLogOut className="text-lg transition-transform group-hover:-translate-x-0.5" />
                                         <span>Log Out</span>
                                     </button>
@@ -94,8 +103,8 @@ export default async function ProfilePage() {
                                 {/* Verification Badge */}
                                 <span
                                     className={`inline-flex items-center gap-1.5 rounded-xl border px-3 py-1 text-xs font-semibold backdrop-blur-sm ${emailVerified
-                                            ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-400"
-                                            : "border-amber-500/20 bg-amber-500/10 text-amber-400"
+                                        ? "border-emerald-500/20 bg-emerald-500/10 text-emerald-400"
+                                        : "border-amber-500/20 bg-amber-500/10 text-amber-400"
                                         }`}
                                 >
                                     <MdVerified className="text-sm" />
@@ -105,8 +114,8 @@ export default async function ProfilePage() {
                                 {/* Blocked Status Badge */}
                                 <span
                                     className={`inline-flex items-center gap-1.5 rounded-xl border px-3 py-1 text-xs font-semibold backdrop-blur-sm ${isBlocked
-                                            ? "border-red-500/20 bg-red-500/10 text-red-400"
-                                            : "border-neutral-800 bg-neutral-900 text-neutral-300"
+                                        ? "border-red-500/20 bg-red-500/10 text-red-400"
+                                        : "border-neutral-800 bg-neutral-900 text-neutral-300"
                                         }`}
                                 >
                                     {isBlocked ? (
@@ -125,7 +134,7 @@ export default async function ProfilePage() {
 
                             {/* Log Out Button (Mobile Position) */}
                             <div className="pt-2 sm:hidden w-full">
-                                <button className="group inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-red-500/20 bg-red-500/10 px-4 py-2.5 text-sm font-semibold text-red-400 transition-all duration-200 hover:border-red-500/40 hover:bg-red-500/20 hover:text-red-300">
+                                <button onClick={HandleLogout} className="group inline-flex w-full items-center justify-center gap-2 rounded-2xl border border-red-500/20 bg-red-500/10 px-4 py-2.5 text-sm font-semibold text-red-400 transition-all duration-200 hover:border-red-500/40 hover:bg-red-500/20 hover:text-red-300">
                                     <BiLogOut className="text-lg transition-transform group-hover:-translate-x-0.5" />
                                     <span>Log Out</span>
                                 </button>

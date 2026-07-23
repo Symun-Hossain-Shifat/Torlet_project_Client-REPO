@@ -5,9 +5,12 @@ import Link from "next/link";
 import { Eye, EyeOff, Mail, Lock, Store } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { authClient } from "@/lib/auth-client";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
+    const router = useRouter()
     const [formData, setFormData] = useState({ email: "", password: "" });
 
     const handleChange = (e) => {
@@ -21,25 +24,53 @@ export default function Login() {
         const { data, error } = await authClient.signIn.email({
             email: formData.email, // required
             password: formData.password, // required
-            rememberMe: true,
-            callbackURL: "/",
+            rememberMe: false
+
         });
-        if (error) {
-            toast.error(error.message || "Login failed!");
+        if (data?.user?.isBlocked === true) {
+            toast.error(
+                "You cannot login! Your account has been blocked by the admin. Please wait until the admin unblocks your account.",
+                {
+                    duration: 10000,
+                }
+            );
+
+            setTimeout(async () => {
+                await authClient.signOut();
+                router.push("/");
+            }, 10000);
+
             return;
         }
-        if (data) {
+
+        if (data?.user) {
+            toast.success("Login Successful 🎉");
             router.push("/");
-            toast.success("Congratulations! Login successful.");
+        } else if (error) {
+            toast.error(`Login Failed! ${error.message}`);
         }
-
-
 
     };
 
-    const handleGoogleLogin = () => {
-        // TODO: wire up to your Google OAuth flow
-        console.log("Continue with Google clicked");
+    const HandleGoogleSignin = async () => {
+        //   await authClient.signIn.social({
+        //     provider: "google",
+        //   });
+
+        //   const session = await authClient.getSession();
+
+        //   if (session.data?.user?.isBlocked) {
+        //     toast.error(
+        //       "You cannot login! Your account has been blocked by the admin.",
+        //       {
+        //         duration: 10000,
+        //       }
+        //     );
+
+        //     await authClient.signOut();
+
+        //     router.push("/");
+        //   }
     };
 
     return (
@@ -146,7 +177,7 @@ export default function Login() {
                     {/* Google login */}
                     <button
                         type="button"
-                        onClick={handleGoogleLogin}
+                        onClick={HandleGoogleSignin}
                         className="flex w-full items-center justify-center gap-3 rounded-lg border border-neutral-700 bg-white py-2.5 text-sm font-semibold text-neutral-800 transition-colors hover:bg-neutral-100"
                     >
                         <FcGoogle size={18} />
