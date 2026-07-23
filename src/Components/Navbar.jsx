@@ -29,6 +29,7 @@ export default function Navbar({
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
     const { data: session } = authClient.useSession()
     const user = session?.user
+    const role = user?.role
     console.log(user)
     return (
         <>
@@ -68,7 +69,7 @@ export default function Navbar({
 
                         {user ? (
                             <Link
-                                href="/account"
+                                href={`/ProfileDashboard/${role}`}
                                 className="ml-1 inline-flex items-center gap-2 rounded-full border border-neutral-700 px-3 py-1.5 text-sm font-medium text-neutral-200 hover:border-amber-400 hover:text-amber-400"
                                 aria-label="My account"
                             >
@@ -85,10 +86,10 @@ export default function Navbar({
                         )}
                     </div>
                 </div>
-            </header>
+            </header >
 
             {/* ---------- Mobile bottom tab bar ---------- */}
-            <nav className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around border-t border-neutral-800 bg-neutral-950 py-2 md:hidden">
+            < nav className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around border-t border-neutral-800 bg-neutral-950 py-2 md:hidden" >
                 <BottomTabButton
                     label="Menu"
                     onClick={() => setIsDrawerOpen(true)}
@@ -105,23 +106,24 @@ export default function Navbar({
                 </BottomTabLink>
 
                 <BottomTabLink
-                    href={user ? "/account" : "/Signin"}
+                    href={user ? " /ProfileDashboard" : "/Signin"}
                     label={user ? "Account" : "Login"}
                 >
                     <User size={22} />
                 </BottomTabLink>
-            </nav>
+            </nav >
 
             {/* Spacer so page content doesn't hide behind the fixed bottom bar on mobile */}
-            <div className="h-16 md:hidden" />
+            < div className="h-16 md:hidden" />
 
             {/* ---------- Mobile drawer (opens from left) ---------- */}
-            <div
+            < div
                 className={`fixed inset-0 z-50 md:hidden ${isDrawerOpen ? "pointer-events-auto" : "pointer-events-none"
-                    }`}
+                    }`
+                }
             >
                 {/* Overlay */}
-                <div
+                < div
                     onClick={() => setIsDrawerOpen(false)}
                     className={`absolute inset-0 bg-black/60 transition-opacity duration-300 ${isDrawerOpen ? "opacity-100" : "opacity-0"
                         }`}
@@ -166,7 +168,7 @@ export default function Navbar({
                         ))}
                     </nav>
                 </aside>
-            </div>
+            </div >
         </>
     );
 }
