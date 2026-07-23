@@ -5,9 +5,9 @@ import { usePathname } from "next/navigation";
 import { Button, Drawer, Tooltip } from "@heroui/react";
 
 import {
-    BiBookOpen,
+
     BiHeart,
-    BiPlusCircle,
+
 } from "react-icons/bi";
 import { BsFileEarmarkBarGraph, BsHouse, BsPeople, BsPerson } from "react-icons/bs";
 import { CgShoppingCart } from "react-icons/cg";
@@ -21,22 +21,23 @@ export function SideNavigation({ plan, Userinfo }) {
     const user = Userinfo;
 
     const UserNavItems = [
-        { href: "/Dashboard/User", icon: BsHouse, label: "Overview" },
+        { href: "/ProfileDashboard/User", icon: BsHouse, label: "Overview" },
 
 
-        { href: "/Dashboard/User/Mycart", icon: CgShoppingCart, label: "Your Cart" },
-        { href: "/Dashboard/User/Wishlist", icon: BiHeart, label: "WishList" },
+        { href: "/ProfileDashboard/User/Cart", icon: CgShoppingCart, label: "Your Cart" },
+        { href: "/ProfileDashboard/User/wishlist", icon: BiHeart, label: "WishList" },
 
     ];
 
     const AdminNavItems = [
-        { href: "/Dashboard/Admin", icon: BsHouse, label: "Overview" },
-        { href: "/Dashboard/Admin/User", icon: BsPeople, label: "Manage User" },
-        { href: "/Dashboard/Admin/Recipes", icon: FiBookOpen, label: "Manage Recipes" },
-        { href: "/Dashboard/Admin/report", icon: BsFileEarmarkBarGraph, label: "Recipes Report" },
-        { href: "/Dashboard/Admin/Payments", icon: AiOutlineTransaction, label: "Transaction" },
-        { href: "/Dashboard/Admin/profile", icon: BsPerson, label: "Profile" },
+        { href: "/ProfileDashboard/Admin", icon: BsHouse, label: "Overview" },
+        { href: "/ProfileDashboard/Admin/User", icon: BsPeople, label: "Manage User" },
+        { href: "/ProfileDashboard/Admin/Products", icon: FiBookOpen, label: "Manage Product" },
+        { href: "/ProfileDashboard/Admin/Report", icon: BsFileEarmarkBarGraph, label: "Manage Report" },
+        { href: "/ProfileDashboard/Admin/Transiction", icon: AiOutlineTransaction, label: "Transaction" },
+
     ];
+
 
     const FinalLinks = user?.role === 'Admin' ? AdminNavItems : UserNavItems;
 

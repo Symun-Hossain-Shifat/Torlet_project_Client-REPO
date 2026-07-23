@@ -39,24 +39,24 @@ export default function Signup() {
     };
 
     const HandleGoogleSignin = async () => {
-        // await authClient.signIn.social({
-        //     provider: "google",
-        // });
+        await authClient.signIn.social({
+            provider: "google",
+        });
 
-        // const session = await authClient.getSession();
+        const session = await authClient.getSession();
 
-        // if (session.data?.user?.isBlocked) {
-        //     toast.error(
-        //         "You cannot login! Your account has been blocked by the admin.",
-        //         {
-        //             duration: 10000,
-        //         }
-        //     );
+        if (session.data?.user?.isBlocked) {
+            toast.error(
+                "You cannot login! Your account has been blocked by the admin.",
+                {
+                    duration: 10000,
+                }
+            );
 
-        //     await authClient.signOut();
+            await authClient.signOut();
 
-        //     router.push("/");
-        // }
+            router.push("/");
+        }
     };
 
 

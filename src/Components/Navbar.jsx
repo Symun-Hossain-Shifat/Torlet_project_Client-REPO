@@ -9,16 +9,18 @@ import {
     ShoppingCart,
     User,
     Store,
+
+    UserRoundKey,
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 
 // ---- Config: edit these to match your project ----
 const NAV_LINKS = [
     { label: "Home", href: "/" },
-    { label: "Shop", href: "/shop" },
-    { label: "Categories", href: "/categories" },
-    { label: "Deals", href: "/deals" },
-    { label: "Contact", href: "/contact" },
+    { label: "Browse Products", href: "/shop" },
+    { label: "Blog", href: "/categories" },
+    { label: "About Us", href: "/AboutUs" },
+    { label: "Contact Us", href: "/ContactUs" },
 ];
 
 export default function Navbar({
@@ -59,11 +61,11 @@ export default function Navbar({
 
                     {/* Right: wishlist, cart, login/profile — desktop only, mobile has these in the bottom bar */}
                     <div className="hidden md:flex items-center gap-3">
-                        <IconLink href="/wishlist" label="Wishlist" count={wishlistCount}>
+                        <IconLink href="/ProfileDashboard/User/wishlist" label="Wishlist" count={wishlistCount}>
                             <Heart size={20} />
                         </IconLink>
 
-                        <IconLink href="/cart" label="Cart" count={cartCount}>
+                        <IconLink href="/ProfileDashboard/User/Cart" label="Cart" count={cartCount}>
                             <ShoppingCart size={20} />
                         </IconLink>
 
@@ -97,19 +99,22 @@ export default function Navbar({
                     <Menu size={22} />
                 </BottomTabButton>
 
-                <BottomTabLink href="/wishlist" label="Wishlist" count={wishlistCount}>
+                <BottomTabLink href="/ProfileDashboard/User/wishlist" label="Wishlist" count={wishlistCount}>
                     <Heart size={22} />
                 </BottomTabLink>
 
-                <BottomTabLink href="/cart" label="Cart" count={cartCount}>
+                <BottomTabLink href=" /ProfileDashboard/User/Cart" label="Cart" count={cartCount}>
                     <ShoppingCart size={22} />
                 </BottomTabLink>
 
                 <BottomTabLink
-                    href={user ? " /ProfileDashboard" : "/Signin"}
+                    href={user ? `/ProfileDashboard/${role}` : "/Signin"}
                     label={user ? "Account" : "Login"}
                 >
-                    <User size={22} />
+                    {
+                        user ? <User size={22} /> : <UserRoundKey size={22} />
+                    }
+
                 </BottomTabLink>
             </nav >
 
@@ -142,7 +147,7 @@ export default function Navbar({
                         >
                             <Store size={20} className="text-amber-400" />
                             <span className="text-base font-semibold text-white">
-                                YourLogo
+                                Torlet.com
                             </span>
                         </Link>
                         <button
