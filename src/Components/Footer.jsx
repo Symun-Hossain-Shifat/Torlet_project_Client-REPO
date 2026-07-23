@@ -39,10 +39,10 @@ const OUR_STORES = [
 ];
 
 const USEFUL_LINKS = [
-    { label: "Privacy Policy", href: "/privacy-policy" },
-    { label: "Returns", href: "/returns" },
-    { label: "Terms & Conditions", href: "/terms" },
-    { label: "Contact Us", href: "/contact" },
+    { label: "Privacy Policy", href: "/PrivacyPolicyPage" },
+    { label: "Returns", href: "/ReturnsPage" },
+    { label: "Terms & Conditions", href: "/TermsAndConditionsPage" },
+    { label: "Contact Us", href: "/ContactUs" },
     { label: "Latest News", href: "/news" },
     { label: "Our Sitemap", href: "/sitemap" },
 ];
