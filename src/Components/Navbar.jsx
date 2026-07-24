@@ -9,7 +9,6 @@ import {
     ShoppingCart,
     User,
     Store,
-
     UserRoundKey,
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
@@ -24,21 +23,21 @@ const NAV_LINKS = [
 ];
 
 export default function Navbar({
-
     cartCount = 0,
     wishlistCount = 0,
 }) {
     const [isDrawerOpen, setIsDrawerOpen] = useState(false);
-    const { data: session } = authClient.useSession()
-    const user = session?.user
-    const role = user?.role
-    console.log(user)
+    const { data: session } = authClient.useSession();
+    const user = session?.user;
+    const role = user?.role;
+    console.log(user);
+
     return (
         <>
             {/* ---------- Top header ---------- */}
             <header className="sticky top-0 z-40 w-full border-b border-neutral-800 bg-neutral-950/95 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/80">
                 <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-                    {/* Left: logo (mobile menu button removed from here, it lives in the bottom bar now) */}
+                    {/* Left: logo */}
                     <Link href="/" className="flex items-center gap-2 shrink-0">
                         <Store size={22} className="text-amber-400" />
                         <span className="text-lg font-semibold tracking-tight text-white">
@@ -59,7 +58,7 @@ export default function Navbar({
                         ))}
                     </nav>
 
-                    {/* Right: wishlist, cart, login/profile — desktop only, mobile has these in the bottom bar */}
+                    {/* Right: wishlist, cart, login/profile — desktop only */}
                     <div className="hidden md:flex items-center gap-3">
                         <IconLink href="/ProfileDashboard/User/wishlist" label="Wishlist" count={wishlistCount}>
                             <Heart size={20} />
@@ -88,10 +87,10 @@ export default function Navbar({
                         )}
                     </div>
                 </div>
-            </header >
+            </header>
 
             {/* ---------- Mobile bottom tab bar ---------- */}
-            < nav className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around border-t border-neutral-800 bg-neutral-950 py-2 md:hidden" >
+            <nav className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around border-t border-neutral-800 bg-neutral-950 py-2 md:hidden">
                 <BottomTabButton
                     label="Menu"
                     onClick={() => setIsDrawerOpen(true)}
@@ -103,7 +102,7 @@ export default function Navbar({
                     <Heart size={22} />
                 </BottomTabLink>
 
-                <BottomTabLink href=" /ProfileDashboard/User/Cart" label="Cart" count={cartCount}>
+                <BottomTabLink href="/ProfileDashboard/User/Cart" label="Cart" count={cartCount}>
                     <ShoppingCart size={22} />
                 </BottomTabLink>
 
@@ -111,24 +110,17 @@ export default function Navbar({
                     href={user ? `/ProfileDashboard/${role}` : "/Signin"}
                     label={user ? "Account" : "Login"}
                 >
-                    {
-                        user ? <User size={22} /> : <UserRoundKey size={22} />
-                    }
-
+                    {user ? <User size={22} /> : <UserRoundKey size={22} />}
                 </BottomTabLink>
-            </nav >
-
-            {/* Spacer so page content doesn't hide behind the fixed bottom bar on mobile */}
-            < div className="h-16 md:hidden" />
+            </nav>
 
             {/* ---------- Mobile drawer (opens from left) ---------- */}
-            < div
+            <div
                 className={`fixed inset-0 z-50 md:hidden ${isDrawerOpen ? "pointer-events-auto" : "pointer-events-none"
-                    }`
-                }
+                    }`}
             >
                 {/* Overlay */}
-                < div
+                <div
                     onClick={() => setIsDrawerOpen(false)}
                     className={`absolute inset-0 bg-black/60 transition-opacity duration-300 ${isDrawerOpen ? "opacity-100" : "opacity-0"
                         }`}
@@ -173,7 +165,7 @@ export default function Navbar({
                         ))}
                     </nav>
                 </aside>
-            </div >
+            </div>
         </>
     );
 }
@@ -217,14 +209,14 @@ function BottomTabLink({ href, label, count = 0, children }) {
     );
 }
 
-// Mobile bottom bar item that triggers an action (e.g. opens the drawer)
+// Mobile bottom bar item that triggers an action
 function BottomTabButton({ label, onClick, children }) {
     return (
         <button
             type="button"
             onClick={onClick}
             aria-label={label}
-            className="flex flex-1 flex-col  items-center justify-center gap-1 text-neutral-300 hover:text-amber-400"
+            className="flex flex-1 flex-col items-center justify-center gap-1 text-neutral-300 hover:text-amber-400"
         >
             {children}
             <span className="text-[11px] font-medium">{label}</span>
