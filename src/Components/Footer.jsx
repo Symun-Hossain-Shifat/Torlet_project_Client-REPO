@@ -30,12 +30,12 @@ const RECENT_POSTS = [
 ];
 
 const OUR_STORES = [
-    { label: "New York", href: "/stores/new-york" },
-    { label: "London SF", href: "/stores/london-sf" },
-    { label: "Edinburgh", href: "/stores/edinburgh" },
-    { label: "Los Angeles", href: "/stores/los-angeles" },
-    { label: "Chicago", href: "/stores/chicago" },
-    { label: "Las Vegas", href: "/stores/las-vegas" },
+    { label: "New York", href: "1" },
+    { label: "London SF", href: "2" },
+    { label: "Edinburgh", href: "3" },
+    { label: "Los Angeles", href: "4" },
+    { label: "Chicago", href: "5" },
+    { label: "Las Vegas", href: "6" },
 ];
 
 const USEFUL_LINKS = [
@@ -44,7 +44,7 @@ const USEFUL_LINKS = [
     { label: "Terms & Conditions", href: "/TermsAndConditionsPage" },
     { label: "Contact Us", href: "/ContactUs" },
     { label: "Latest News", href: "/news" },
-    { label: "Our Sitemap", href: "/sitemap" },
+
 ];
 
 const SOCIAL_LINKS = [
@@ -125,7 +125,7 @@ export default function Footer() {
                             {OUR_STORES.map((store) => (
                                 <li key={store.href}>
                                     <Link
-                                        href={store.href}
+                                        href='#'
                                         className="text-neutral-500 hover:text-amber-400"
                                     >
                                         {store.label}
