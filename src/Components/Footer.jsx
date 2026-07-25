@@ -19,13 +19,13 @@ const RECENT_POSTS = [
         title: "Exploring Atlanta's modern homes",
         date: "August 27, 2021",
         comments: "No Comments",
-        href: "/blog/exploring-atlantas-modern-homes",
+        href: "1",
     },
     {
         title: "Green interior design inspiration",
         date: "August 27, 2021",
         comments: "No Comments",
-        href: "/blog/green-interior-design-inspiration",
+        href: "2",
     },
 ];
 
@@ -43,7 +43,7 @@ const USEFUL_LINKS = [
     { label: "Returns", href: "/ReturnsPage" },
     { label: "Terms & Conditions", href: "/TermsAndConditionsPage" },
     { label: "Contact Us", href: "/ContactUs" },
-    { label: "Latest News", href: "/news" },
+    { label: "Latest News", href: "/News" },
 
 ];
 
@@ -52,7 +52,7 @@ const SOCIAL_LINKS = [
     { label: "Facebook", href: "https://facebook.com", icon: FaFacebookF },
     { label: "Twitter", href: "https://twitter.com", icon: FaTwitter },
     { label: "LinkedIn", href: "https://linkedin.com", icon: FaLinkedinIn },
-    { label: "Latest News", href: "/news", icon: FaNewspaper },
+    { label: "Latest News", href: "/News", icon: FaNewspaper },
 ];
 
 
@@ -101,7 +101,7 @@ export default function Footer() {
                                     className="border-l-2 border-neutral-800 pl-3 hover:border-amber-400"
                                 >
                                     <Link
-                                        href={post.href}
+                                        href='/'
                                         className="block text-sm font-semibold leading-snug text-neutral-200 hover:text-amber-400"
                                     >
                                         {post.title}
