@@ -17,7 +17,7 @@ import { authClient } from "@/lib/auth-client";
 const NAV_LINKS = [
     { label: "Home", href: "/" },
     { label: "Browse Products", href: "/shop" },
-    { label: "Blog", href: "/categories" },
+    { label: "Blog", href: "/Blog" },
     { label: "About Us", href: "/AboutUs" },
     { label: "Contact Us", href: "/ContactUs" },
 ];
