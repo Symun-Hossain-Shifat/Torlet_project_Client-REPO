@@ -191,14 +191,7 @@ export default function Footer() {
             </div>
 
 
-            <button
-                type="button"
-                onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
-                aria-label="Scroll to top"
-                className="fixed bottom-6 right-6 z-40 flex h-10 w-10 items-center justify-center rounded-full border border-neutral-800 bg-neutral-900 text-neutral-400 shadow-md hover:border-amber-400 hover:text-amber-400"
-            >
-                <FaArrowUp size={16} />
-            </button>
+
         </footer>
     );
 }

@@ -3,13 +3,15 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
-    Menu,
+
     X,
     Heart,
     ShoppingCart,
     User,
     Store,
+    Menu,
     UserRoundKey,
+
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 
