@@ -3,7 +3,6 @@
 import { useState } from "react";
 import Link from "next/link";
 import {
-
     X,
     Heart,
     ShoppingCart,
@@ -11,18 +10,10 @@ import {
     Store,
     Menu,
     UserRoundKey,
-
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
-
-// ---- Config: edit these to match your project ----
-const NAV_LINKS = [
-    { label: "Home", href: "/" },
-    { label: "Browse Products", href: "/shop" },
-    { label: "Blog", href: "/Blog" },
-    { label: "About Us", href: "/AboutUs" },
-    { label: "Contact Us", href: "/ContactUs" },
-];
+import { useTranslations } from "next-intl";
+import LanguageSwitcher from "@/Components/LanguageSwitcher";
 
 export default function Navbar({
     cartCount = 0,
@@ -32,7 +23,15 @@ export default function Navbar({
     const { data: session } = authClient.useSession();
     const user = session?.user;
     const role = user?.role;
-    console.log(user);
+    const t = useTranslations("Navbar");
+
+    const NAV_LINKS = [
+        { label: t("home"), href: "/" },
+        { label: t("browseProducts"), href: "/shop" },
+        { label: t("blog"), href: "/Blog" },
+        { label: t("aboutUs"), href: "/AboutUs" },
+        { label: t("contactUs"), href: "/ContactUs" },
+    ];
 
     return (
         <>
@@ -43,7 +42,7 @@ export default function Navbar({
                     <Link href="/" className="flex items-center gap-2 shrink-0">
                         <Store size={22} className="text-amber-400" />
                         <span className="text-lg font-semibold tracking-tight text-white">
-                            Torlet.Com
+                            {t("title")}
                         </span>
                     </Link>
 
@@ -60,13 +59,15 @@ export default function Navbar({
                         ))}
                     </nav>
 
-                    {/* Right: wishlist, cart, login/profile — desktop only */}
+                    {/* Right: language switcher, wishlist, cart, login/profile — desktop only */}
                     <div className="hidden md:flex items-center gap-3">
-                        <IconLink href="/ProfileDashboard/User/wishlist" label="Wishlist" count={wishlistCount}>
+                        <LanguageSwitcher />
+
+                        <IconLink href="/ProfileDashboard/User/wishlist" label={t("wishlist")} count={wishlistCount}>
                             <Heart size={20} />
                         </IconLink>
 
-                        <IconLink href="/ProfileDashboard/User/Cart" label="Cart" count={cartCount}>
+                        <IconLink href="/ProfileDashboard/User/Cart" label={t("cart")} count={cartCount}>
                             <ShoppingCart size={20} />
                         </IconLink>
 
@@ -74,17 +75,17 @@ export default function Navbar({
                             <Link
                                 href={`/ProfileDashboard/${role}`}
                                 className="ml-1 inline-flex items-center gap-2 rounded-full border border-neutral-700 px-3 py-1.5 text-sm font-medium text-neutral-200 hover:border-amber-400 hover:text-amber-400"
-                                aria-label="My account"
+                                aria-label={t("account")}
                             >
                                 <User size={18} />
-                                <span>Profile</span>
+                                <span>{t("profile")}</span>
                             </Link>
                         ) : (
                             <Link
                                 href="/Signin"
                                 className="ml-1 rounded-full bg-amber-400 px-4 py-1.5 text-sm font-semibold text-neutral-950 hover:bg-amber-300"
                             >
-                                Login
+                                {t("login")}
                             </Link>
                         )}
                     </div>
@@ -94,23 +95,23 @@ export default function Navbar({
             {/* ---------- Mobile bottom tab bar ---------- */}
             <nav className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around border-t border-neutral-800 bg-neutral-950 py-2 md:hidden">
                 <BottomTabButton
-                    label="Menu"
+                    label={t("menu")}
                     onClick={() => setIsDrawerOpen(true)}
                 >
                     <Menu size={22} />
                 </BottomTabButton>
 
-                <BottomTabLink href="/ProfileDashboard/User/wishlist" label="Wishlist" count={wishlistCount}>
+                <BottomTabLink href="/ProfileDashboard/User/wishlist" label={t("wishlist")} count={wishlistCount}>
                     <Heart size={22} />
                 </BottomTabLink>
 
-                <BottomTabLink href="/ProfileDashboard/User/Cart" label="Cart" count={cartCount}>
+                <BottomTabLink href="/ProfileDashboard/User/Cart" label={t("cart")} count={cartCount}>
                     <ShoppingCart size={22} />
                 </BottomTabLink>
 
                 <BottomTabLink
                     href={user ? `/ProfileDashboard/${role}` : "/Signin"}
-                    label={user ? "Account" : "Login"}
+                    label={user ? t("account") : t("login")}
                 >
                     {user ? <User size={22} /> : <UserRoundKey size={22} />}
                 </BottomTabLink>
@@ -141,7 +142,7 @@ export default function Navbar({
                         >
                             <Store size={20} className="text-amber-400" />
                             <span className="text-base font-semibold text-white">
-                                Torlet.com
+                                {t("title")}
                             </span>
                         </Link>
                         <button
@@ -166,6 +167,14 @@ export default function Navbar({
                             </Link>
                         ))}
                     </nav>
+
+                    {/* Language Switcher for Mobile Drawer */}
+                    <div className="flex flex-col gap-4 p-4 border-t border-neutral-800">
+                        <div className="flex items-center justify-between">
+                            <span className="text-xs font-semibold text-neutral-400">{t("menu")} {t("profile")}</span>
+                            <LanguageSwitcher />
+                        </div>
+                    </div>
                 </aside>
             </div>
         </>

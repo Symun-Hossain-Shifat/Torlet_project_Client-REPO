@@ -3,13 +3,12 @@
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { Button, Drawer, Tooltip } from "@heroui/react";
+import { useTranslations } from "next-intl";
 
 import {
-
     BiHeart,
-
 } from "react-icons/bi";
-import { BsFileEarmarkBarGraph, BsHouse, BsPeople, BsPerson } from "react-icons/bs";
+import { BsFileEarmarkBarGraph, BsHouse, BsPeople } from "react-icons/bs";
 import { CgShoppingCart } from "react-icons/cg";
 import { IoMenu } from "react-icons/io5";
 
@@ -19,25 +18,21 @@ import { AiOutlineTransaction } from "react-icons/ai";
 export function SideNavigation({ plan, Userinfo }) {
     const pathname = usePathname();
     const user = Userinfo;
+    const t = useTranslations("ProfileSidebar");
 
     const UserNavItems = [
-        { href: "/ProfileDashboard/User", icon: BsHouse, label: "Overview" },
-
-
-        { href: "/ProfileDashboard/User/Cart", icon: CgShoppingCart, label: "Your Cart" },
-        { href: "/ProfileDashboard/User/wishlist", icon: BiHeart, label: "WishList" },
-
+        { href: "/ProfileDashboard/User", icon: BsHouse, label: t("overview") },
+        { href: "/ProfileDashboard/User/Cart", icon: CgShoppingCart, label: t("cart") },
+        { href: "/ProfileDashboard/User/wishlist", icon: BiHeart, label: t("wishlist") },
     ];
 
     const AdminNavItems = [
-        { href: "/ProfileDashboard/Admin", icon: BsHouse, label: "Overview" },
-        { href: "/ProfileDashboard/Admin/User", icon: BsPeople, label: "Manage User" },
-        { href: "/ProfileDashboard/Admin/Products", icon: FiBookOpen, label: "Manage Product" },
-        { href: "/ProfileDashboard/Admin/Report", icon: BsFileEarmarkBarGraph, label: "Manage Report" },
-        { href: "/ProfileDashboard/Admin/Transiction", icon: AiOutlineTransaction, label: "Transaction" },
-
+        { href: "/ProfileDashboard/Admin", icon: BsHouse, label: t("overview") },
+        { href: "/ProfileDashboard/Admin/User", icon: BsPeople, label: t("manageUser") },
+        { href: "/ProfileDashboard/Admin/Products", icon: FiBookOpen, label: t("manageProduct") },
+        { href: "/ProfileDashboard/Admin/Report", icon: BsFileEarmarkBarGraph, label: t("manageReport") },
+        { href: "/ProfileDashboard/Admin/Transiction", icon: AiOutlineTransaction, label: t("transaction") },
     ];
-
 
     const FinalLinks = user?.role === 'Admin' ? AdminNavItems : UserNavItems;
 
@@ -101,12 +96,12 @@ export function SideNavigation({ plan, Userinfo }) {
                 {initials}
             </div>
             {!compact && (
-                <div className="min-w-0">
+                <div className="min-w-0 flex-1">
                     <h1 className="truncate font-semibold text-white">
                         {user?.name}
                     </h1>
                     <p className="text-xs text-gray-400">
-                        Welcome back 👋
+                        {t("welcome")}
                     </p>
                 </div>
             )}
@@ -122,14 +117,14 @@ export function SideNavigation({ plan, Userinfo }) {
                         {initials}
                     </div>
                     <span className="truncate text-sm font-medium text-white">
-                        {user?.name || "Menu"}
+                        {user?.name || t("navigation")}
                     </span>
                 </div>
 
                 <Drawer>
                     <Button
                         isIconOnly
-                        aria-label="Open navigation"
+                        aria-label={t("navigation")}
                         className="shrink-0 bg-orange-500 text-white"
                     >
                         <IoMenu className="text-lg" />
@@ -141,7 +136,7 @@ export function SideNavigation({ plan, Userinfo }) {
                                 <Drawer.CloseTrigger />
                                 <Drawer.Header>
                                     <Drawer.Heading className="text-white">
-                                        Navigation
+                                        {t("navigation")}
                                     </Drawer.Heading>
                                 </Drawer.Header>
                                 <Drawer.Body className="px-2 bg-black">

@@ -2,34 +2,36 @@
 
 import Link from "next/link";
 import { ArrowRight, ShieldCheck, Truck, Tag, Sparkles } from "lucide-react";
-
-// ---- Config: edit content to match your project ----
-const CATEGORIES = [
-    "Electronics",
-    "Fashion",
-    "Home & Living",
-    "Sports",
-    "Beauty",
-    "Books",
-    "Toys",
-    "Groceries",
-    "Automotive",
-    "Furniture",
-];
-
-const STATS = [
-    { label: "Products listed", value: "50K+" },
-    { label: "Categories", value: "30+" },
-    { label: "Happy customers", value: "120K+" },
-];
-
-const TRUST_BADGES = [
-    { icon: Truck, label: "Fast delivery" },
-    { icon: ShieldCheck, label: "Secure payments" },
-    { icon: Tag, label: "Best price guarantee" },
-];
+import { useTranslations } from "next-intl";
 
 export default function Banner() {
+    const t = useTranslations("Banner");
+
+    const CATEGORIES = [
+        t("categories.Electronics"),
+        t("categories.Fashion"),
+        t("categories.Home & Living"),
+        t("categories.Sports"),
+        t("categories.Beauty"),
+        t("categories.Books"),
+        t("categories.Toys"),
+        t("categories.Groceries"),
+        t("categories.Automotive"),
+        t("categories.Furniture"),
+    ];
+
+    const STATS = [
+        { label: t("stats.productsLabel"), value: t("stats.productsVal") },
+        { label: t("stats.categoriesLabel"), value: t("stats.categoriesVal") },
+        { label: t("stats.customersLabel"), value: t("stats.customersVal") },
+    ];
+
+    const TRUST_BADGES = [
+        { icon: Truck, label: t("badges.delivery") },
+        { icon: ShieldCheck, label: t("badges.payments") },
+        { icon: Tag, label: t("badges.price") },
+    ];
+
     return (
         <section className="relative w-full overflow-hidden bg-neutral-950">
             {/* Ambient glow accents */}
@@ -42,19 +44,16 @@ export default function Banner() {
                     <div>
                         <span className="inline-flex items-center gap-2 rounded-full border border-neutral-800 bg-neutral-900 px-3 py-1 text-xs font-medium text-amber-400">
                             <Sparkles size={13} />
-                            One marketplace, every category
+                            {t("eyebrow")}
                         </span>
 
                         <h1 className="mt-5 text-4xl font-bold leading-tight tracking-tight text-white sm:text-5xl lg:text-6xl">
-                            Find literally
-                            <span className="block text-amber-400">anything you need.</span>
+                            {t("title")}{" "}
+                            <span className="block text-amber-400">{t("titleColored")}</span>
                         </h1>
 
                         <p className="mt-5 max-w-md text-base leading-relaxed text-neutral-400">
-                            Torlet.com brings thousands of sellers and every kind of
-                            product — electronics, fashion, home goods, and more — onto
-                            one marketplace. Search it, compare it, buy it, all in one
-                            place.
+                            {t("description")}
                         </p>
 
                         <div className="mt-8 flex flex-wrap items-center gap-4">
@@ -62,14 +61,14 @@ export default function Banner() {
                                 href="/shop"
                                 className="inline-flex items-center gap-2 rounded-full bg-amber-400 px-6 py-3 text-sm font-semibold text-neutral-950 transition-colors hover:bg-amber-300"
                             >
-                                Shop Now
+                                {t("shopNow")}
                                 <ArrowRight size={16} />
                             </Link>
                             <Link
                                 href="/categories"
                                 className="inline-flex items-center gap-2 rounded-full border border-neutral-700 px-6 py-3 text-sm font-semibold text-neutral-200 transition-colors hover:border-amber-400 hover:text-amber-400"
                             >
-                                Explore Categories
+                                {t("exploreCategories")}
                             </Link>
                         </div>
 
@@ -86,19 +85,17 @@ export default function Banner() {
 
                     {/* Right: scattered category badge collage */}
                     <div className="relative mx-auto hidden h-96 w-full max-w-md lg:block">
-                        <BadgeCard className="left-2 top-2 rotate-[-6deg]" label="Electronics" />
-                        <BadgeCard className="left-40 top-0 rotate-[4deg]" label="Fashion" />
-                        <BadgeCard className="left-4 top-32 rotate-[3deg]" label="Home & Living" />
-                        <BadgeCard className="left-48 top-28 rotate-[-4deg]" label="Sports" />
-                        <BadgeCard className="left-16 top-60 rotate-[-3deg]" label="Beauty" />
-                        <BadgeCard className="left-56 top-56 rotate-[6deg]" label="Toys" />
+                        <BadgeCard className="left-2 top-2 rotate-[-6deg]" label={t("categories.Electronics")} />
+                        <BadgeCard className="left-40 top-0 rotate-[4deg]" label={t("categories.Fashion")} />
+                        <BadgeCard className="left-4 top-32 rotate-[3deg]" label={t("categories.Home & Living")} />
+                        <BadgeCard className="left-48 top-28 rotate-[-4deg]" label={t("categories.Sports")} />
+                        <BadgeCard className="left-16 top-60 rotate-[-3deg]" label={t("categories.Beauty")} />
+                        <BadgeCard className="left-56 top-56 rotate-[6deg]" label={t("categories.Toys")} />
 
                         {/* Center highlight card */}
                         <div className="absolute left-1/2 top-1/2 flex h-28 w-28 -translate-x-1/2 -translate-y-1/2 items-center justify-center rounded-2xl bg-amber-400 text-center shadow-xl shadow-amber-400/20">
                             <span className="px-2 text-sm font-bold leading-tight text-neutral-950">
-                                + 25 more
-                                <br />
-                                categories
+                                {t("moreCategories", { count: 25 })}
                             </span>
                         </div>
                     </div>
@@ -134,7 +131,6 @@ export default function Banner() {
                     ))}
                 </div>
             </div>
-
 
         </section>
     );

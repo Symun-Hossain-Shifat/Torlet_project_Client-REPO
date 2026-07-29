@@ -1,41 +1,43 @@
 "use client";
 
 import { Truck, ShieldCheck, RotateCcw, Headphones } from "lucide-react";
-
-// ---- Config: edit content to match your project ----
-const FEATURES = [
-    {
-        icon: Truck,
-        title: "Free Shipping",
-        description: "Free delivery on every order, no minimum spend required.",
-    },
-    {
-        icon: ShieldCheck,
-        title: "Secure Payment",
-        description: "Your transactions are encrypted and fully protected.",
-    },
-    {
-        icon: RotateCcw,
-        title: "Easy Returns",
-        description: "Not the right fit? Send it back within 30 days, hassle-free.",
-    },
-    {
-        icon: Headphones,
-        title: "24/7 Support",
-        description: "Our team is here around the clock, whenever you need help.",
-    },
-];
+import { useTranslations } from "next-intl";
 
 export default function WhyChooseUs() {
+    const t = useTranslations("Chooseus");
+
+    const FEATURES = [
+        {
+            icon: Truck,
+            title: t("shipping.title"),
+            description: t("shipping.description"),
+        },
+        {
+            icon: ShieldCheck,
+            title: t("payment.title"),
+            description: t("payment.description"),
+        },
+        {
+            icon: RotateCcw,
+            title: t("returns.title"),
+            description: t("returns.description"),
+        },
+        {
+            icon: Headphones,
+            title: t("support.title"),
+            description: t("support.description"),
+        },
+    ];
+
     return (
         <section className="w-full bg-neutral-950 py-16">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
                 <div className="mx-auto max-w-xl text-center">
                     <span className="text-xs font-semibold uppercase tracking-widest text-amber-400">
-                        Why shop with us
+                        {t("eyebrow")}
                     </span>
                     <h2 className="mt-3 text-3xl font-bold tracking-tight text-white sm:text-4xl">
-                        Why Choose Us
+                        {t("title")}
                     </h2>
                 </div>
 

@@ -1,0 +1,390 @@
+{
+  "Navbar": {
+    "title": "Torlet.Com",
+    "home": "Home",
+    "browseProducts": "Browse Products",
+    "blog": "Blog",
+    "aboutUs": "About Us",
+    "contactUs": "Contact Us",
+    "wishlist": "Wishlist",
+    "cart": "Cart",
+    "profile": "Profile",
+    "login": "Login",
+    "menu": "Menu",
+    "account": "Account"
+  },
+  "LanguageSwitcher": {
+    "title": "Language",
+    "en": "🇺🇸 English",
+    "ar": "🇸🇦 العربية"
+  },
+  "Banner": {
+    "categories": {
+      "Electronics": "Electronics",
+      "Fashion": "Fashion",
+      "Home & Living": "Home & Living",
+      "Sports": "Sports",
+      "Beauty": "Beauty",
+      "Books": "Books",
+      "Toys": "Toys",
+      "Groceries": "Groceries",
+      "Automotive": "Automotive",
+      "Furniture": "Furniture"
+    },
+    "stats": {
+      "productsVal": "50K+",
+      "productsLabel": "Products listed",
+      "categoriesVal": "30+",
+      "categoriesLabel": "Categories",
+      "customersVal": "120K+",
+      "customersLabel": "Happy customers"
+    },
+    "badges": {
+      "delivery": "Fast delivery",
+      "payments": "Secure payments",
+      "price": "Best price guarantee"
+    },
+    "eyebrow": "One marketplace, every category",
+    "title": "Find literally",
+    "titleColored": "anything you need.",
+    "description": "Torlet.com brings thousands of sellers and every kind of product — electronics, fashion, home goods, and more — onto one marketplace. Search it, compare it, buy it, all in one place.",
+    "shopNow": "Shop Now",
+    "exploreCategories": "Explore Categories",
+    "moreCategories": "+ {count} more categories"
+  },
+  "Chooseus": {
+    "eyebrow": "Why shop with us",
+    "title": "Why Choose Us",
+    "shipping": {
+      "title": "Free Shipping",
+      "description": "Free delivery on every order, no minimum spend required."
+    },
+    "payment": {
+      "title": "Secure Payment",
+      "description": "Your transactions are encrypted and fully protected."
+    },
+    "returns": {
+      "title": "Easy Returns",
+      "description": "Not the right fit? Send it back within 30 days, hassle-free."
+    },
+    "support": {
+      "title": "24/7 Support",
+      "description": "Our team is here around the clock, whenever you need help."
+    }
+  },
+  "Footer": {
+    "desc": "An e-commerce site is an online platform for buying and selling products or services. It offers features like secure payments, product listings, and easy shopping from anywhere.",
+    "address": "Muscat, Ruwi, Wadi Adai",
+    "phone": "Phone: 99119843",
+    "recentPosts": "Recent Posts",
+    "ourStores": "Our Stores",
+    "usefulLinks": "Useful Links",
+    "footerMenu": "Footer Menu",
+    "copyright": "Based on <theme>Torlet</theme> theme 2024 <site>Torlet.com</site>.",
+    "posts": {
+      "post1": "Exploring Atlanta's modern homes",
+      "post2": "Green interior design inspiration",
+      "noComments": "No Comments",
+      "aug27": "August 27, 2021"
+    },
+    "stores": {
+      "saudiArabia": "Saudi Arabia",
+      "uae": "United Arab Emirates",
+      "qatar": "Qatar",
+      "kuwait": "Kuwait",
+      "oman": "Oman",
+      "bahrain": "Bahrain",
+      "egypt": "Egypt"
+    },
+    "links": {
+      "privacy": "Privacy Policy",
+      "returns": "Returns",
+      "terms": "Terms & Conditions",
+      "contact": "Contact Us",
+      "news": "Latest News"
+    },
+    "social": {
+      "instagram": "Instagram",
+      "facebook": "Facebook",
+      "twitter": "Twitter",
+      "linkedin": "LinkedIn",
+      "news": "Latest News"
+    }
+  },
+  "AboutUs": {
+    "eyebrow": "Our Story",
+    "title": "About Torlet",
+    "intro": "Premium fixtures and essentials built to last. We bring quality, reliability, and modern craftsmanship directly to your doorstep.",
+    "missionTitle": "Our Mission",
+    "missionBody": "We started Torlet to simplify online shopping for premium home fixtures. No glossy photos hiding poor quality, no vague specifications—just a curated collection of products tested for fit, finish, and long-term performance.",
+    "values": {
+      "val1Title": "Verified Specifications",
+      "val1Body": "Dimensions, material grade, and compatibility—every technical specification is thoroughly verified before listing to ensure what you see is what you get.",
+      "val2Title": "Quality Over Marketing",
+      "val2Body": "Solid brass, vitreous china, and premium finishes. We focus on durable materials that withstand daily use rather than superficial marketing hype.",
+      "val3Title": "Hassle-Free Support",
+      "val3Body": "Every product comes with transparent coverage guidelines, easy returns, and dedicated support so your purchase is always protected."
+    }
+  },
+  "ContactUs": {
+    "eyebrow": "Get In Touch",
+    "title": "Contact Torlet",
+    "desc": "Rough-in question, warranty claim, or a trade order for a whole building, tell us which and we'll route it to someone who knows the fixture, not a ticket queue.",
+    "emailLabel": "Email:",
+    "phoneLabel": "Phone:",
+    "hoursLabel": "Hours: Sat–Thu, 10am–7pm",
+    "form": {
+      "name": "Name",
+      "email": "Email",
+      "about": "What's this about",
+      "selectOne": "Select one",
+      "reasonProduct": "Product or fit question",
+      "reasonWarranty": "Warranty claim",
+      "reasonTrade": "Trade or bulk order",
+      "reasonOther": "Something else",
+      "message": "Message",
+      "send": "Send message",
+      "sent": "Sent",
+      "success": "Got it, we'll reply within one business day."
+    },
+    "reasons": {
+      "reason1Title": "Product & fit questions",
+      "reason1Body": "Not sure a toilet's rough-in matches your bathroom? Send the model and a measurement, we'll confirm before you order.",
+      "reason2Title": "Warranty & installation issues",
+      "reason2Body": "Something arrived damaged or isn't sealing right? Tell us what happened, we handle the manufacturer claim for you.",
+      "reason3Title": "Trade & bulk orders",
+      "reason3Body": "Outfitting multiple units or a full renovation? We quote trade pricing directly, no markup middleman."
+    }
+  },
+  "Returns": {
+    "eyebrow": "Hassle-Free Protection",
+    "title": "Returns & Guarantees",
+    "desc": "We are currently updating our detailed return policy documentation. Rest assured, every Torlet fixture comes backed by our quality guarantee and dedicated support.",
+    "card1Title": "Easy Process",
+    "card1Body": "Straightforward return requests with transparent coverage guidelines and zero hassle.",
+    "card2Title": "Verified Specs",
+    "card2Body": "Every fixture is tested for fit, finish, and material grade so what you order is what you get.",
+    "card3Title": "Dedicated Support",
+    "card3Body": "Have an issue with an order? Our team is always here to make sure your purchase is protected.",
+    "contactSupport": "Contact Customer Support",
+    "returnToStore": "Return to Store"
+  },
+  "Terms": {
+    "eyebrow": "Legal",
+    "title": "Terms & Conditions",
+    "updated": "Last updated: July 23, 2026",
+    "intro": "By ordering from Torlet, you're agreeing to the terms below. Read the ones that affect you, returns and warranty are the ones most people actually need.",
+    "questions": "Questions about these terms? Reach us at {email}.",
+    "sections": {
+      "s1Title": "1. Acceptance of terms",
+      "s1Body": "Placing an order on Torlet means you accept these terms in full. If you don't agree with any part of them, please don't use the site to make a purchase.",
+      "s2Title": "2. Products & listings",
+      "s2Body": "We do our best to keep specs, dimensions, and rough-in measurements accurate for every fixture listed. Finishes may vary slightly from photos due to screen display or batch variation in materials like ceramic glaze or brass plating.",
+      "s3Title": "3. Orders & payment",
+      "s3Body": "An order is confirmed once payment is successfully processed. We reserve the right to cancel or refuse an order in cases of pricing errors, stock unavailability, or suspected fraud, and will notify you if that happens.",
+      "s3List1": "Prices are listed in the currency shown at checkout and include applicable taxes unless stated otherwise",
+      "s3List2": "Bulk and trade pricing is agreed separately and is not covered by standard listing prices",
+      "s4Title": "4. Shipping & delivery",
+      "s4Body": "Delivery timelines shown at checkout are estimates, not guarantees, and can shift due to courier delays or fixture availability. Risk of loss or damage in transit is covered under our claims process below, not on you as the buyer.",
+      "s5Title": "5. Returns & warranty claims",
+      "s5Body": "Unused fixtures in original packaging can be returned within 14 days of delivery for a refund, minus return shipping. Installed fixtures are covered under the manufacturer's warranty rather than our return policy, contact us and we'll handle the claim on your behalf.",
+      "s5List1": "Custom or final-sale items are excluded from returns unless defective",
+      "s5List2": "Damage from improper installation is not covered under warranty",
+      "s6Title": "6. Acceptable use",
+      "s6Body": "You agree not to use the site to commit fraud, resell listings without authorization as your own storefront, or attempt to disrupt or reverse-engineer the site's systems.",
+      "s7Title": "7. Limitation of liability",
+      "s7Body": "Torlet's liability for any claim relating to a purchase is limited to the amount paid for that order. We aren't liable for indirect losses, such as costs from a delayed installation, beyond replacing or refunding the fixture itself.",
+      "s8Title": "8. Changes to these terms",
+      "s8Body": "We may update these terms as the business changes. Continued use of the site after an update means you accept the revised terms, so check back if you're a returning trade customer.",
+      "s9Title": "9. Governing law",
+      "s9Body": "These terms are governed by the laws of the jurisdiction in which Torlet is registered, without regard to conflict-of-law principles."
+    }
+  },
+  "Privacy": {
+    "eyebrow": "Legal",
+    "title": "Privacy Policy",
+    "updated": "Last updated: July 23, 2026",
+    "intro": "This describes what we collect when you shop with Torlet, why we collect it, and what say you have over it. Plain terms, no buried clauses.",
+    "questions": "Questions about this policy? Reach us at {email}.",
+    "sections": {
+      "s1Title": "1. Information we collect",
+      "s1Body": "We collect information you give us directly, and a smaller set we collect automatically when you use the site.",
+      "s1List1": "Account details: name, email, phone number, shipping address",
+      "s1List2": "Order details: items purchased, payment status, delivery preferences",
+      "s1List3": "Support requests: anything you send us via the contact form or email",
+      "s1List4": "Usage data: pages viewed, device and browser type, approximate location from IP address",
+      "s2Title": "2. How we use it",
+      "s2Body": "We use your information to run the store and keep it useful.",
+      "s2List1": "Process and deliver your orders",
+      "s2List2": "Verify warranty and installation support requests",
+      "s2List3": "Send order updates and, if you opt in, product or promotional emails",
+      "s2List4": "Improve the site based on how people actually use it",
+      "s2List5": "Detect and prevent fraud or abuse",
+      "s3Title": "3. What we don't do",
+      "s3Body": "We don't sell your personal information. We don't share your data with third parties for their own marketing purposes. Fixture manufacturers only receive the details needed to process a warranty claim on your behalf.",
+      "s4Title": "4. Cookies",
+      "s4Body": "We use cookies to keep you signed in, remember your cart, and understand which pages get used. You can disable cookies in your browser settings, though some parts of checkout may stop working correctly without them.",
+      "s5Title": "5. Data retention",
+      "s5Body": "We keep order and account records for as long as your account is active, and for a period afterward as required for tax, warranty, and accounting purposes. You can request deletion of your account data at any time, subject to those legal requirements.",
+      "s6Title": "6. Your rights",
+      "s6Body": "You can, at any time:",
+      "s6List1": "Request a copy of the data we hold about you",
+      "s6List2": "Ask us to correct inaccurate information",
+      "s6List3": "Ask us to delete your account and associated data",
+      "s6List4": "Opt out of marketing emails using the unsubscribe link in any email",
+      "s7Title": "7. Security",
+      "s7Body": "Payment information is processed through our payment provider and is never stored on our own servers in raw form. We use standard encryption in transit and access controls to limit who inside Torlet can view customer data.",
+      "s8Title": "8. Changes to this policy",
+      "s8Body": "If we make material changes to how we handle your data, we'll update the date at the top of this page and, for significant changes, notify you by email."
+    }
+  },
+  "News": {
+    "eyebrow": "Torlet Newsroom",
+    "title": "Latest News & Updates",
+    "desc": "No news or press releases have been published yet. Check back soon for upcoming product launches, material innovations, and company announcements!",
+    "card1Title": "New Releases",
+    "card1Body": "Be the first to know when new solid brass and vitreous china lines launch.",
+    "card2Title": "Quality Specs",
+    "card2Body": "Updates on manufacturing standards and material grade testing.",
+    "card3Title": "Store Updates",
+    "card3Body": "Important coverage guideline updates and shipping enhancements.",
+    "backHome": "Back to Home"
+  },
+  "Blog": {
+    "eyebrow": "Torlet Journal & Insights",
+    "title": "Craftsmanship in the Making",
+    "desc": "There are no articles published just yet. We’re currently preparing guides on solid brass fixtures, installation specs, and long-term care.",
+    "card1Title": "Verified Specs",
+    "card1Body": "Material grades and dimensions verified before every listing.",
+    "card2Title": "Built to Last",
+    "card2Body": "Solid brass, vitreous china, and premium durable finishes.",
+    "card3Title": "Hassle-Free Support",
+    "card3Body": "Transparent coverage guidelines and easy returns standard.",
+    "explore": "Explore Premium Fixtures"
+  },
+  "Signin": {
+    "logo": "Torlet.com",
+    "title": "Welcome back",
+    "desc": "Log in to continue shopping on Torlet.",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Enter your password",
+    "forgotPassword": "Forgot password?",
+    "loginButton": "Log In",
+    "or": "OR",
+    "googleButton": "Continue with Google",
+    "signupPrompt": "Don't have an account?",
+    "signupLink": "Sign up",
+    "messages": {
+      "blockedAdmin": "You cannot login! Your account has been blocked by the admin. Please wait until the admin unblocks your account.",
+      "success": "Login Successful 🎉",
+      "failed": "Login Failed! {error}",
+      "blockedGeneral": "You cannot login! Your account has been blocked by the admin."
+    }
+  },
+  "Signup": {
+    "logo": "Torlet.com",
+    "title": "Create your account",
+    "desc": "Sign up to start shopping on Torlet.",
+    "nameLabel": "Full name",
+    "namePlaceholder": "Your full name",
+    "emailLabel": "Email",
+    "emailPlaceholder": "you@example.com",
+    "passwordLabel": "Password",
+    "passwordPlaceholder": "Create a password",
+    "signupButton": "Sign Up",
+    "or": "OR",
+    "googleButton": "Continue with Google",
+    "loginPrompt": "Already have an account?",
+    "loginLink": "Log in",
+    "messages": {
+      "success": "Registration Successful 🎉",
+      "failed": "Registration Failed! {error}",
+      "blockedAdmin": "You cannot login! Your account has been blocked by the admin."
+    }
+  },
+  "Unauthorized": {
+    "title": "Unauthorized Access",
+    "badge": "403 • Access Denied",
+    "desc": "You don’t have permission to access this page. Please sign in with an authorized account or return to safety.",
+    "goBack": "Go Back",
+    "dashboard": "Dashboard",
+    "footer": "If you believe this is an error, contact your system administrator."
+  },
+  "Profile": {
+    "overview": "Overview",
+    "yourCart": "Your Cart",
+    "wishlist": "WishList",
+    "accountInfo": "Account Information",
+    "fullName": "Full name",
+    "emailAddress": "Email address",
+    "joined": "Joined",
+    "lastUpdated": "Last updated",
+    "logout": "Log Out",
+    "active": "Active",
+    "blocked": "Blocked",
+    "verified": "Verified",
+    "unverified": "Unverified",
+    "backHome": "← Back to Home",
+    "welcome": "Welcome back 👋",
+    "userProfile": "User Profile",
+    "noEmail": "No email provided",
+    "navigation": "Navigation",
+    "admin": "Admin",
+    "user": "User"
+  },
+  "ProfileSidebar": {
+    "overview": "Overview",
+    "cart": "Your Cart",
+    "wishlist": "WishList",
+    "manageUser": "Manage User",
+    "manageProduct": "Manage Product",
+    "manageReport": "Manage Report",
+    "transaction": "Transaction",
+    "navigation": "Navigation",
+    "welcome": "Welcome back 👋"
+  },
+  "WishlistPage": {
+    "title": "Wishlist",
+    "subtitle": "Save your favorite products and come back to them anytime.",
+    "emptyTitle": "Your Wishlist is Empty",
+    "emptyDesc": "You haven't added any products to your wishlist yet. Browse our collection and save your favorite items for later.",
+    "explore": "Explore Products"
+  },
+  "CartPage": {
+    "title": "Shopping Cart",
+    "subtitle": "Review the items you've added before proceeding to checkout.",
+    "emptyTitle": "Your Cart is Empty",
+    "emptyDesc": "It looks like you haven't added any products yet. Explore our collection and add your favorite items to get started.",
+    "continue": "Continue Shopping"
+  },
+  "AdminProducts": {
+    "title": "Product Management",
+    "subtitle": "Manage your inventory by adding, updating, or removing products.",
+    "emptyTitle": "No Products Found",
+    "emptyDesc": "Your inventory is currently empty. Add your first product to start selling and managing your store.",
+    "addNew": "Add New Product"
+  },
+  "AdminUsers": {
+    "title": "User Management",
+    "subtitle": "View, manage, and monitor all registered users from one place.",
+    "emptyTitle": "No Users Found",
+    "emptyDesc": "There are currently no registered users to display. Once users create an account, they will appear here for management.",
+    "dashboard": "Go to Dashboard"
+  },
+  "AdminTransactions": {
+    "title": "Transaction History",
+    "subtitle": "View and manage all payment transactions, purchase records, and order history.",
+    "emptyTitle": "No Transactions Found",
+    "emptyDesc": "There are no transaction records available yet. Once customers place orders and complete payments, their transaction history will appear here.",
+    "viewProducts": "View Products"
+  },
+  "AdminReports": {
+    "title": "Product Report",
+    "subtitle": "Analyze product performance, inventory status, and sales insights.",
+    "emptyTitle": "No Reports Available",
+    "emptyDesc": "Product reports will appear here once your store has products, inventory updates, and sales activity to analyze.",
+    "manageProducts": "Manage Products"
+  }
+}
