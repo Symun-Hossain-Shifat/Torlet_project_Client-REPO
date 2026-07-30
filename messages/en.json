@@ -174,7 +174,7 @@
     "title": "Terms & Conditions",
     "updated": "Last updated: July 23, 2026",
     "intro": "By ordering from Torlet, you're agreeing to the terms below. Read the ones that affect you, returns and warranty are the ones most people actually need.",
-    "questions": "Questions about these terms? Reach us at {email}.",
+    "questions": "Questions about these terms? Reach us at <email>privacy@torlet.com</email>.",
     "sections": {
       "s1Title": "1. Acceptance of terms",
       "s1Body": "Placing an order on Torlet means you accept these terms in full. If you don't agree with any part of them, please don't use the site to make a purchase.",
@@ -205,7 +205,7 @@
     "title": "Privacy Policy",
     "updated": "Last updated: July 23, 2026",
     "intro": "This describes what we collect when you shop with Torlet, why we collect it, and what say you have over it. Plain terms, no buried clauses.",
-    "questions": "Questions about this policy? Reach us at {email}.",
+    "questions": "Questions about this policy? Reach us at <email>privacy@torlet.com</email>.",
     "sections": {
       "s1Title": "1. Information we collect",
       "s1Body": "We collect information you give us directly, and a smaller set we collect automatically when you use the site.",
