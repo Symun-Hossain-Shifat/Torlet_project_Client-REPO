@@ -341,7 +341,7 @@
     "manageUser": "Manage User",
     "manageProduct": "Manage Product",
     "manageReport": "Manage Report",
-    "transaction": "Transaction",
+    "orderHistory": "Order History",
     "navigation": "Navigation",
     "welcome": "Welcome back 👋"
   },
@@ -374,9 +374,9 @@
     "dashboard": "Go to Dashboard"
   },
   "AdminTransactions": {
-    "title": "Transaction History",
+    "title": "Order History",
     "subtitle": "View and manage all payment transactions, purchase records, and order history.",
-    "emptyTitle": "No Transactions Found",
+    "emptyTitle": "No Orders Found",
     "emptyDesc": "There are no transaction records available yet. Once customers place orders and complete payments, their transaction history will appear here.",
     "viewProducts": "View Products"
   },

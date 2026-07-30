@@ -31,7 +31,7 @@ export function SideNavigation({ plan, Userinfo }) {
         { href: "/ProfileDashboard/Admin/User", icon: BsPeople, label: t("manageUser") },
         { href: "/ProfileDashboard/Admin/Products", icon: FiBookOpen, label: t("manageProduct") },
         { href: "/ProfileDashboard/Admin/Report", icon: BsFileEarmarkBarGraph, label: t("manageReport") },
-        { href: "/ProfileDashboard/Admin/Transiction", icon: AiOutlineTransaction, label: t("transaction") },
+        { href: "/ProfileDashboard/Admin/OrderHistory", icon: AiOutlineTransaction, label: t("orderHistory") },
     ];
 
     const FinalLinks = user?.role === 'Admin' ? AdminNavItems : UserNavItems;
