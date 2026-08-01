@@ -76,6 +76,7 @@
     "desc": "موقع التجارة الإلكترونية هو منصة عبر الإنترنت لشراء وبيع المنتجات أو الخدمات. ويتميز بخصائص مثل المدفوعات الآمنة، وقوائم المنتجات، والتسوق السهل من أي مكان.",
     "address": "مسقط، روي، وادي عدي",
     "phone": "الهاتف: 96897297547",
+    "email": "torlet@gmail.com : البريد الإلكتروني",
     "recentPosts": "المنشورات الأخيرة",
     "ourStores": "متاجرنا",
     "usefulLinks": "روابط مفيدة",
@@ -341,7 +342,8 @@
     "manageUser": "إدارة المستخدمين",
     "manageProduct": "إدارة المنتجات",
     "manageReport": "إدارة التقارير",
-    "transaction": "المعاملات المالية",
+    "orderHistory": "تاريخ الطلبات",
+    "Addproduct": "إضافة منتج",
     "navigation": "التنقل",
     "welcome": "مرحباً بعودتك 👋"
   },
@@ -386,5 +388,44 @@
     "emptyTitle": "لا توجد تقارير متاحة",
     "emptyDesc": "ستظهر تقارير المنتجات هنا بمجرد أن يحتوي متجرك على منتجات وتحديثات للمخزون ونشاط مبيعات لتحليله.",
     "manageProducts": "إدارة المنتجات"
+  },
+  "Addproduct": {
+    "title": "إضافة منتج جديد",
+    "subtitle": "املأ التفاصيل أدناه لإدراج منتج جديد في متجرك.",
+    "form": {
+      "titleLabel": "عنوان المنتج",
+      "titlePlaceholder": "أدخل عنوان المنتج",
+      "imageLabel": "رابط الصورة",
+      "imagePlaceholder": "https://example.com/image.jpg",
+      "videoLabel": "روابط الفيديو",
+      "videoPlaceholder": "اختر ملفات فيديو من جهازك",
+      "addVideo": "انقر لرفع الفيديو",
+      "priceLabel": "السعر",
+      "pricePlaceholder": "0.00",
+      "descriptionLabel": "الوصف",
+      "descriptionPlaceholder": "اكتب وصفاً تفصيلياً عن منتجك...",
+      "categoryLabel": "الفئة",
+      "categoryPlaceholder": "اختر فئة",
+      "featuresLabel": "المميزات",
+      "featuresPlaceholder": "اكتب ميزة واضغط Enter",
+      "cancel": "إلغاء",
+      "submit": "إضافة المنتج",
+      "imagePreview": "معاينة الصورة",
+      "noPreview": "لا توجد معاينة متاحة",
+      "removeVideo": "إزالة",
+      "removeFeature": "إزالة",
+      "categories": {
+        "electronics": "الإلكترونيات",
+        "fashion": "الموضة",
+        "homeLiving": "المنزل والمعيشة",
+        "sports": "الرياضة",
+        "beauty": "الجمال",
+        "books": "الكتب",
+        "toys": "الألعاب",
+        "groceries": "المواد الغذائية",
+        "automotive": "السيارات",
+        "furniture": "الأثاث"
+      }
+    }
   }
 }

@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 
 import {
     BiHeart,
+    BiRepost,
 } from "react-icons/bi";
 import { BsFileEarmarkBarGraph, BsHouse, BsPeople } from "react-icons/bs";
 import { CgShoppingCart } from "react-icons/cg";
@@ -28,10 +29,12 @@ export function SideNavigation({ plan, Userinfo }) {
 
     const AdminNavItems = [
         { href: "/ProfileDashboard/Admin", icon: BsHouse, label: t("overview") },
+        { href: "/ProfileDashboard/Admin/Addproduct", icon: BiRepost, label: t("Addproduct") },
         { href: "/ProfileDashboard/Admin/User", icon: BsPeople, label: t("manageUser") },
         { href: "/ProfileDashboard/Admin/Products", icon: FiBookOpen, label: t("manageProduct") },
         { href: "/ProfileDashboard/Admin/Report", icon: BsFileEarmarkBarGraph, label: t("manageReport") },
         { href: "/ProfileDashboard/Admin/OrderHistory", icon: AiOutlineTransaction, label: t("orderHistory") },
+
     ];
 
     const FinalLinks = user?.role === 'Admin' ? AdminNavItems : UserNavItems;

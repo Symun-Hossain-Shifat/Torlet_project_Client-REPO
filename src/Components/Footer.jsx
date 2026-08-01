@@ -12,6 +12,7 @@ import {
     FaNewspaper,
 } from "react-icons/fa";
 import { useTranslations } from "next-intl";
+import { MdMarkEmailUnread } from "react-icons/md";
 
 export default function Footer() {
     const t = useTranslations("Footer");
@@ -81,6 +82,10 @@ export default function Footer() {
                             <li className="flex items-start gap-2">
                                 <FaPhoneAlt size={13} className="mt-1 shrink-0 text-amber-400" />
                                 <span>{t("phone")}</span>
+                            </li>
+                            <li className="flex items-start gap-2">
+                                <MdMarkEmailUnread size={13} className="mt-1 shrink-0 text-amber-400" />
+                                <span>{t("email")}</span>
                             </li>
                         </ul>
                     </div>
