@@ -37,17 +37,20 @@ export default function Navbar({
         <>
             {/* ---------- Top header ---------- */}
             <header className="sticky top-0 z-40 w-full border-b border-neutral-800 bg-neutral-950/95 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/80">
-                <div className="mx-auto flex h-16 max-w-7xl items-center justify-between px-4 sm:px-6 lg:px-8">
-                    {/* Left: logo */}
-                    <Link href="/" className="flex items-center gap-2 shrink-0">
-                        <Store size={22} className="text-amber-400" />
-                        <span className="text-lg font-semibold tracking-tight text-white">
-                            {t("title")}
-                        </span>
-                    </Link>
 
-                    {/* Middle: nav links, desktop only */}
-                    <nav className="hidden md:flex items-center gap-8">
+                <div className="mx-auto grid h-16 max-w-7xl grid-cols-3 items-center px-4 sm:px-6 lg:px-8">
+                    {/* Left */}
+                    <div className="flex justify-start">
+                        <Link href="/" className="flex items-center gap-2">
+                            <Store size={22} className="text-amber-400" />
+                            <span className="text-lg font-semibold tracking-tight text-white">
+                                {t("title")}
+                            </span>
+                        </Link>
+                    </div>
+
+                    {/* Middle */}
+                    <nav className="hidden md:flex justify-center items-center gap-8">
                         {NAV_LINKS.map((link) => (
                             <Link
                                 key={link.href}
@@ -59,23 +62,30 @@ export default function Navbar({
                         ))}
                     </nav>
 
-                    {/* Right: language switcher, wishlist, cart, login/profile — desktop only */}
-                    <div className="hidden md:flex items-center gap-3">
+                    {/* Right */}
+                    <div className="hidden md:flex justify-end items-center gap-3">
                         <LanguageSwitcher />
 
-                        <IconLink href="/ProfileDashboard/User/wishlist" label={t("wishlist")} count={wishlistCount}>
+                        <IconLink
+                            href="/ProfileDashboard/User/wishlist"
+                            label={t("wishlist")}
+                            count={wishlistCount}
+                        >
                             <Heart size={20} />
                         </IconLink>
 
-                        <IconLink href="/ProfileDashboard/User/Cart" label={t("cart")} count={cartCount}>
+                        <IconLink
+                            href="/ProfileDashboard/User/Cart"
+                            label={t("cart")}
+                            count={cartCount}
+                        >
                             <ShoppingCart size={20} />
                         </IconLink>
 
                         {user ? (
                             <Link
                                 href={`/ProfileDashboard/${role}`}
-                                className="ml-1 inline-flex items-center gap-2 rounded-full border border-neutral-700 px-3 py-1.5 text-sm font-medium text-neutral-200 hover:border-amber-400 hover:text-amber-400"
-                                aria-label={t("account")}
+                                className="inline-flex items-center gap-2 rounded-full border border-neutral-700 px-3 py-1.5 text-sm font-medium text-neutral-200 hover:border-amber-400 hover:text-amber-400"
                             >
                                 <User size={18} />
                                 <span>{t("profile")}</span>
@@ -83,7 +93,7 @@ export default function Navbar({
                         ) : (
                             <Link
                                 href="/Signin"
-                                className="ml-1 rounded-full bg-amber-400 px-4 py-1.5 text-sm font-semibold text-neutral-950 hover:bg-amber-300"
+                                className="rounded-full bg-amber-400 px-4 py-1.5 text-sm font-semibold text-neutral-950 hover:bg-amber-300"
                             >
                                 {t("login")}
                             </Link>

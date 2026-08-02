@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { ArrowRight, ShieldCheck, Truck, Tag, Sparkles } from "lucide-react";
+import { ArrowRight, ShieldCheck, Truck, Tag, Sparkles, Search } from "lucide-react";
 import { useTranslations } from "next-intl";
 
 export default function Banner() {
@@ -37,6 +37,24 @@ export default function Banner() {
             {/* Ambient glow accents */}
             <div className="pointer-events-none absolute -top-32 left-1/4 h-72 w-72 rounded-full bg-amber-400/10 blur-3xl" />
             <div className="pointer-events-none absolute -bottom-24 right-10 h-80 w-80 rounded-full bg-amber-400/10 blur-3xl" />
+
+            {/* Search Icon Feild */}
+
+
+            <div className="mx-auto mt-5 w-10/12">
+                <div className="relative">
+                    <Search
+                        size={20}
+                        className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+                    />
+
+                    <input
+                        type="text"
+                        placeholder="Search products..."
+                        className="w-full rounded-xl border border-gray-700 bg-black py-3 pl-12 pr-5 text-white placeholder:text-gray-400 transition-all duration-200 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30"
+                    />
+                </div>
+            </div>
 
             <div className="relative mx-auto max-w-7xl px-4 pb-16 pt-16 sm:px-6 sm:pt-20 lg:px-8 lg:pt-24">
                 <div className="grid grid-cols-1 items-center gap-12 lg:grid-cols-2">
