@@ -88,12 +88,12 @@ export default function ContactUsPage() {
 
                         <div className="pt-4 border-t border-[#0E4749]/10 space-y-1 text-sm text-[#5B6666]">
                             <p>
-                                <span className="text-[#0E4749] font-medium">{t("emailLabel")} </span>
-                                support@torlet.com
+                                <span className="text-[#0E4749] font-semibold">{t("emailLabel")} </span>
+                                mozharislam0@gmail.com
                             </p>
                             <p>
-                                <span className="text-[#0E4749] font-medium">{t("phoneLabel")} </span>
-                                +880 1XXX-XXXXXX
+                                <span className="text-[#0E4749] font-semibold">{t("phoneLabel")} </span>
+                                96897297547
                             </p>
                             <p>
                                 <span className="text-[#0E4749] font-medium">{t("hoursLabel")}</span>

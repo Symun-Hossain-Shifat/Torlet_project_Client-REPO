@@ -60,9 +60,9 @@ export default function Footer() {
     return (
         <footer className="w-full border-t border-neutral-800 bg-neutral-950 text-neutral-400">
             <div className="mx-auto max-w-7xl px-4 py-14 sm:px-6 lg:px-8">
-                <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-5">
+                <div className="grid grid-cols-1 gap-10 sm:grid-cols-2 lg:grid-cols-6">
                     {/* Brand + contact info */}
-                    <div className="lg:col-span-1">
+                    <div className="lg:col-span-2">
                         <Link href="/" className="flex items-center gap-2">
                             <FaShoppingCart size={20} className="text-amber-400" />
                             <span className="text-xl font-bold tracking-tight text-white">
