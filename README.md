@@ -9,8 +9,8 @@ A modern full-stack web application for managing toilet-related services, bookin
 
 ## 📂 GitHub Repository
 
-* **Client:** https://github.com/your-username/toilet-project-client
-* **Server:** https://github.com/your-username/toilet-project-server
+* **Client:** https://github.com/Symun-Hossain-Shifat/Torlet_project_Client-REPO
+* **Server:** https://github.com/Symun-Hossain-Shifat/Torlet_project_Server_REPO
 
 ---
 
