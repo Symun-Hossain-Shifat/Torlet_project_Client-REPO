@@ -17,6 +17,8 @@ import {
     UploadCloud,
     Film,
 } from "lucide-react";
+import { PostProduct } from "@/lib/Action/PostData/PostProduct";
+import toast from "react-hot-toast";
 
 const CATEGORY_KEYS = [
     "electronics",
@@ -95,7 +97,7 @@ export default function AddProductPage() {
         setImageError(false);
     };
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault();
         const formData = {
             title,
@@ -106,6 +108,15 @@ export default function AddProductPage() {
             category,
             features,
         };
+        // const result = await PostProduct(formData);
+        // console.log(result)
+        // if (result) {
+        //     toast.success("Product added successfully");
+        //     handleCancel();
+        // }
+        // else {
+        //     toast.error("Failed to add product");
+        // }
         console.log("📦 Product Submitted:", formData);
     };
 

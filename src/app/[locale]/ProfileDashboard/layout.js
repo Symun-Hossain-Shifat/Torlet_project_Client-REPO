@@ -1,5 +1,6 @@
 import { SideNavigation } from "@/Components/ProfileDashboardSIdeBar";
-import { GetUserInserver } from "@/lib/Action/GetUser";
+import { GetUserInserver } from "@/lib/Action/GetData/GetUser";
+
 
 
 
