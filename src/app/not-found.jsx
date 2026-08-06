@@ -31,7 +31,7 @@ export default function NotFoundPage() {
                     </h1>
 
                     <p className="text-sm text-neutral-400 mb-8 leading-relaxed">
-                        The page you are looking for doesn't exist, was removed, or might have been moved to a new URL.
+                        The page you are looking for doesn&apos;t exist, was removed, or might have been moved to a new URL.
                     </p>
 
                     {/* Action Buttons */}

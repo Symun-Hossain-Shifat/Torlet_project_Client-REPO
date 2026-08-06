@@ -71,6 +71,20 @@
       "description": "Our team is here around the clock, whenever you need help."
     }
   },
+  "ProductShowing": {
+    "sectionTag": "Our Collection",
+    "title": "Featured Products",
+    "subtitle": "Explore our curated collection of premium products crafted for your daily needs.",
+    "viewDetails": "View Details",
+    "addToCart": "Add to Cart",
+    "addedToCart": "Added to Cart!",
+    "category": "Category",
+    "price": "Price",
+    "noProducts": "No products available at the moment.",
+    "inStock": "In Stock",
+    "outOfStock": "Out of Stock",
+    "currencySymbol": "$"
+  },
   "Footer": {
     "desc": "An e-commerce site is an online platform for buying and selling products or services. It offers features like secure payments, product listings, and easy shopping from anywhere.",
     "address": "Muscat, Ruwi, Wadi Adai",
@@ -387,44 +401,5 @@
     "emptyTitle": "No Reports Available",
     "emptyDesc": "Product reports will appear here once your store has products, inventory updates, and sales activity to analyze.",
     "manageProducts": "Manage Products"
-  },
-  "Addproduct": {
-    "title": "Add New Product",
-    "subtitle": "Fill in the details below to list a new product in your store.",
-    "form": {
-      "titleLabel": "Product Title",
-      "titlePlaceholder": "Enter product title",
-      "imageLabel": "Image URL",
-      "imagePlaceholder": "https://example.com/image.jpg",
-      "videoLabel": "Video URLs",
-      "videoPlaceholder": "Select video files from your device",
-      "addVideo": "Click to upload videos",
-      "priceLabel": "Price",
-      "pricePlaceholder": "0.00",
-      "descriptionLabel": "Description",
-      "descriptionPlaceholder": "Write a detailed description about your product...",
-      "categoryLabel": "Category",
-      "categoryPlaceholder": "Select a category",
-      "featuresLabel": "Features",
-      "featuresPlaceholder": "Type a feature and press Enter",
-      "cancel": "Cancel",
-      "submit": "Submit Product",
-      "imagePreview": "Image Preview",
-      "noPreview": "No preview available",
-      "removeVideo": "Remove",
-      "removeFeature": "Remove",
-      "categories": {
-        "electronics": "Electronics",
-        "fashion": "Fashion",
-        "homeLiving": "Home & Living",
-        "sports": "Sports",
-        "beauty": "Beauty",
-        "books": "Books",
-        "toys": "Toys",
-        "groceries": "Groceries",
-        "automotive": "Automotive",
-        "furniture": "Furniture"
-      }
-    }
   }
 }

@@ -45,7 +45,7 @@ export function SideNavigation({ plan, Userinfo }) {
         : "?";
 
     // Full nav content — used in the desktop sidebar (lg+) and the mobile drawer
-    const NavLinks = ({ onNavigate }) => (
+    const renderNavLinks = (onNavigate) => (
         <nav className="flex flex-col gap-1.5 sm:gap-2">
             {FinalLinks.map((item) => {
                 const isActive = pathname === item.href;
@@ -68,7 +68,7 @@ export function SideNavigation({ plan, Userinfo }) {
     );
 
     // Icon-only condensed nav — used in the md-only rail sidebar (tablet)
-    const NavIcons = () => (
+    const renderNavIcons = () => (
         <nav className="flex flex-col items-center gap-1.5">
             {FinalLinks.map((item) => {
                 const isActive = pathname === item.href;
@@ -90,7 +90,7 @@ export function SideNavigation({ plan, Userinfo }) {
         </nav>
     );
 
-    const UserCard = ({ compact }) => (
+    const renderUserCard = (compact = false) => (
         <div
             className={`flex items-center gap-3 rounded-2xl border border-gray-800 bg-black text-white mb-4 ${compact ? "justify-center p-2" : "p-3"
                 }`}
@@ -143,8 +143,8 @@ export function SideNavigation({ plan, Userinfo }) {
                                     </Drawer.Heading>
                                 </Drawer.Header>
                                 <Drawer.Body className="px-2 bg-black">
-                                    <UserCard />
-                                    <NavLinks />
+                                    {renderUserCard()}
+                                    {renderNavLinks()}
                                 </Drawer.Body>
                             </Drawer.Dialog>
                         </Drawer.Content>
@@ -157,13 +157,13 @@ export function SideNavigation({ plan, Userinfo }) {
                 <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-full bg-orange-500 text-sm font-semibold text-white">
                     {initials}
                 </div>
-                <NavIcons />
+                {renderNavIcons()}
             </aside>
 
             {/* Desktop sidebar (lg+): full labeled sidebar */}
             <aside className="hidden lg:flex lg:flex-col w-56 xl:w-64 shrink-0 border-r border-gray-800 bg-black p-4">
-                <UserCard />
-                <NavLinks />
+                {renderUserCard()}
+                {renderNavLinks()}
             </aside>
         </>
     );

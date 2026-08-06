@@ -1,7 +1,8 @@
 "use client";
 
-import React, { useState, useRef } from "react";
-import { Upload, Film, X, Plus, ImagePlus } from "lucide-react";
+import React, { useState } from "react";
+import { Upload, X, Plus } from "lucide-react";
+import { PostProduct } from "@/lib/Action/PostData/PostProduct";
 
 const CATEGORIES = [
     "Jerseys",
@@ -18,31 +19,11 @@ export default function ProductForm() {
     const [price, setPrice] = useState("");
     const [category, setCategory] = useState("");
     const [features, setFeatures] = useState([""]);
-
-
-    const [setImageFile] = useState(null);
-    const [setImagePreview] = useState(null);
     const [imageUrl, setImageUrl] = useState("");
-    const [videoFile, setVideoFile] = useState(null);
-    const [videoPreview, setVideoPreview] = useState(null);
+    const [videoUrl, setVideoUrl] = useState("");
 
     const [submitted, setSubmitted] = useState(false);
-
-    const videoInputRef = useRef(null);
-
-    const handleImageChange = (e) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-        setImageFile(file);
-        setImagePreview(URL.createObjectURL(file));
-    };
-
-    const handleVideoChange = (e) => {
-        const file = e.target.files?.[0];
-        if (!file) return;
-        setVideoFile(file);
-        setVideoPreview(URL.createObjectURL(file));
-    };
+    const [loading, setLoading] = useState(false);
 
     const updateFeature = (index, value) => {
         setFeatures((prev) => prev.map((f, i) => (i === index ? value : f)));
@@ -53,34 +34,55 @@ export default function ProductForm() {
     const removeFeature = (index) =>
         setFeatures((prev) => prev.filter((_, i) => i !== index));
 
-    const handleSubmit = (e) => {
+    const handleResetForm = () => {
+        setTitle("");
+        setDescription("");
+        setPrice("");
+        setCategory("");
+        setFeatures([""]);
+        setImageUrl("");
+        setVideoUrl("");
+    };
+
+    const handleSubmit = async (e) => {
         e.preventDefault();
+        setLoading(true);
+
         const formData = {
             title,
             description,
-            price,
+            price: parseFloat(price) || 0,
             category,
-            features,
+            features: features.filter((f) => f.trim() !== ""), // ফাঁকা ফিচার রিমুভ করা
             image: imageUrl,
-            video: videoFile,
+            video: videoUrl, // Video URL string হিসেবে পাঠানো হচ্ছে
         };
 
-        console.log("Product form data:", formData);
+        try {
+            const result = await PostProduct(formData);
+            console.log("Product posted successfully:", result);
 
-        setSubmitted(true);
-        setTimeout(() => setSubmitted(false), 2000);
+            setSubmitted(true);
+            handleResetForm(); // ফর্মের সকল ফিল্ড ক্লিয়ার করা
+
+            setTimeout(() => setSubmitted(false), 3000);
+        } catch (error) {
+            console.error("Failed to post product:", error);
+        } finally {
+            setLoading(false);
+        }
     };
 
     return (
-        <div className="min-h-screen bg-black text-white flex items-center justify-center p-6">
+        <div className="min-h-screen bg-black text-white flex items-center justify-center p-4 sm:p-6 md:p-8">
             <form
                 onSubmit={handleSubmit}
-                className="w-full max-w-4xl bg-neutral-950 border border-yellow-500/20 rounded-2xl p-8 shadow-[0_0_40px_-15px_rgba(212,175,55,0.3)]"
+                className="w-full max-w-4xl bg-neutral-950 border border-yellow-500/20 rounded-2xl p-4 sm:p-6 md:p-8 shadow-[0_0_40px_-15px_rgba(212,175,55,0.3)]"
             >
-                <h1 className="text-2xl font-semibold text-yellow-400 mb-1 tracking-tight">
+                <h1 className="text-xl sm:text-2xl font-semibold text-yellow-400 mb-1 tracking-tight">
                     Add product
                 </h1>
-                <p className="text-neutral-500 text-sm mb-6">
+                <p className="text-neutral-500 text-xs sm:text-sm mb-6">
                     Fill in the details below to list a new product.
                 </p>
 
@@ -114,75 +116,55 @@ export default function ProductForm() {
                     />
                 </div>
 
-                {/* Image */}
-                <div className="mb-4">
-                    <label className="block text-sm text-neutral-300 mb-1.5">
-                        Image URL
-                    </label>
-                    <input
-                        type="url"
-                        value={imageUrl}
-                        onChange={(e) => setImageUrl(e.target.value)}
-                        placeholder="https://example.com/image.jpg"
-                        required
-                        className="w-full bg-neutral-900 border border-neutral-800 focus:border-yellow-500 outline-none rounded-lg px-3 py-2.5 text-sm placeholder-neutral-600 transition-colors"
-                    />
-                    {imageUrl && (
-                        <div className="mt-2 h-28 rounded-lg overflow-hidden border border-neutral-800">
-                            <img
-                                src={imageUrl}
-                                alt="Preview"
-                                className="w-full h-full object-cover"
-                                onError={(e) => (e.currentTarget.style.display = "none")}
-                            />
-                        </div>
-                    )}
-                </div>
-
-                {/* Video */}
-                <div className="mb-4">
-                    <label className="block text-sm text-neutral-300 mb-1.5">
-                        Video
-                    </label>
+                {/* Image & Video URL Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-4">
+                    {/* Image URL */}
                     <div>
+                        <label className="block text-sm text-neutral-300 mb-1.5">
+                            Image URL
+                        </label>
                         <input
-                            ref={videoInputRef}
-                            type="file"
-                            accept="video/*"
-                            onChange={handleVideoChange}
-                            className="hidden"
+                            type="url"
+                            value={imageUrl}
+                            onChange={(e) => setImageUrl(e.target.value)}
+                            placeholder="https://example.com/image.jpg"
+                            required
+                            className="w-full bg-neutral-900 border border-neutral-800 focus:border-yellow-500 outline-none rounded-lg px-3 py-2.5 text-sm placeholder-neutral-600 transition-colors"
                         />
-                        <button
-                            type="button"
-                            onClick={() => videoInputRef.current?.click()}
-                            className="w-full h-28 border border-dashed border-neutral-700 hover:border-yellow-500 rounded-lg flex flex-col items-center justify-center gap-1 text-neutral-500 hover:text-yellow-400 transition-colors overflow-hidden relative"
-                        >
-                            {videoPreview ? (
-                                <>
-                                    <video
-                                        src={videoPreview}
-                                        className="w-full h-full object-cover"
-                                        muted
-                                    />
-                                    <span
-                                        onClick={(e) => {
-                                            e.stopPropagation();
-                                            setVideoFile(null);
-                                            setVideoPreview(null);
-                                            if (videoInputRef.current) videoInputRef.current.value = "";
-                                        }}
-                                        className="absolute top-1 right-1 bg-black/70 rounded-full p-1"
-                                    >
-                                        <X size={14} />
-                                    </span>
-                                </>
-                            ) : (
-                                <>
-                                    <Film size={20} />
-                                    <span className="text-xs">Attach from gallery</span>
-                                </>
-                            )}
-                        </button>
+                        {imageUrl && (
+                            <div className="mt-2 h-28 rounded-lg overflow-hidden border border-neutral-800 relative bg-neutral-900">
+                                <img
+                                    src={imageUrl}
+                                    alt="Preview"
+                                    className="w-full h-full object-cover"
+                                    onError={(e) => (e.currentTarget.style.display = "none")}
+                                />
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Video URL */}
+                    <div>
+                        <label className="block text-sm text-neutral-300 mb-1.5">
+                            Video URL
+                        </label>
+                        <input
+                            type="url"
+                            value={videoUrl}
+                            onChange={(e) => setVideoUrl(e.target.value)}
+                            placeholder="https://example.com/video.mp4"
+                            className="w-full bg-neutral-900 border border-neutral-800 focus:border-yellow-500 outline-none rounded-lg px-3 py-2.5 text-sm placeholder-neutral-600 transition-colors"
+                        />
+                        {videoUrl && (
+                            <div className="mt-2 h-28 rounded-lg overflow-hidden border border-neutral-800 relative bg-neutral-900 flex items-center justify-center">
+                                <video
+                                    src={videoUrl}
+                                    controls
+                                    className="w-full h-full object-cover"
+                                    onError={(e) => (e.currentTarget.style.display = "none")}
+                                />
+                            </div>
+                        )}
                     </div>
                 </div>
 
@@ -205,7 +187,7 @@ export default function ProductForm() {
                                     <button
                                         type="button"
                                         onClick={() => removeFeature(i)}
-                                        className="text-neutral-500 hover:text-red-400 p-1"
+                                        className="text-neutral-500 hover:text-red-400 p-1 transition-colors"
                                     >
                                         <X size={16} />
                                     </button>
@@ -216,14 +198,14 @@ export default function ProductForm() {
                     <button
                         type="button"
                         onClick={addFeature}
-                        className="mt-2 flex items-center gap-1 text-xs text-yellow-400 hover:text-yellow-300"
+                        className="mt-2 flex items-center gap-1 text-xs text-yellow-400 hover:text-yellow-300 transition-colors"
                     >
                         <Plus size={14} /> Add feature
                     </button>
                 </div>
 
-                {/* Price + Category */}
-                <div className="grid grid-cols-2 gap-3 mb-6">
+                {/* Price + Category Grid */}
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mb-6">
                     <div>
                         <label className="block text-sm text-neutral-300 mb-1.5">
                             Price
@@ -266,12 +248,18 @@ export default function ProductForm() {
                     </div>
                 </div>
 
+                {/* Submit Button */}
                 <button
                     type="submit"
-                    className="w-full bg-yellow-500 hover:bg-yellow-400 text-black font-medium rounded-lg py-2.5 text-sm transition-colors flex items-center justify-center gap-2"
+                    disabled={loading}
+                    className="w-full bg-yellow-500 hover:bg-yellow-400 disabled:opacity-50 text-black font-medium rounded-lg py-2.5 text-sm transition-colors flex items-center justify-center gap-2 cursor-pointer"
                 >
                     <Upload size={16} />
-                    {submitted ? "Logged to console ✓" : "Submit product"}
+                    {loading
+                        ? "Submitting..."
+                        : submitted
+                            ? "Submitted Successfully ✓"
+                            : "Submit product"}
                 </button>
             </form>
         </div>

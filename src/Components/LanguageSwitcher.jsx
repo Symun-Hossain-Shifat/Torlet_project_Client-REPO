@@ -33,9 +33,8 @@ export default function LanguageSwitcher() {
         type="button"
         onClick={() => setIsOpen(!isOpen)}
         disabled={isPending}
-        className={`inline-flex items-center gap-2 rounded-full border border-neutral-800 bg-neutral-900 px-3.5 py-1.5 text-xs font-semibold text-neutral-200 transition hover:border-amber-400/60 hover:text-amber-400 focus:outline-none ${
-          isPending ? 'opacity-50 cursor-not-allowed' : ''
-        }`}
+        className={`inline-flex items-center gap-2 rounded-full border border-neutral-800 bg-neutral-900 px-3.5 py-1.5 text-xs font-semibold text-neutral-200 transition hover:border-amber-400/60 hover:text-amber-400 focus:outline-none ${isPending ? 'opacity-50 cursor-not-allowed' : ''
+          }`}
         aria-expanded={isOpen}
         aria-haspopup="true"
       >
@@ -57,11 +56,10 @@ export default function LanguageSwitcher() {
                 key={lang.code}
                 type="button"
                 onClick={() => handleLanguageChange(lang.code)}
-                className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs font-semibold transition ${
-                  lang.code === locale
-                    ? 'bg-amber-400/10 text-amber-400'
-                    : 'text-neutral-400 hover:bg-neutral-900 hover:text-neutral-200'
-                }`}
+                className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs font-semibold transition ${lang.code === locale
+                  ? 'bg-amber-400/10 text-amber-400'
+                  : 'text-neutral-400 hover:bg-neutral-900 hover:text-neutral-200'
+                  }`}
               >
                 <span>{lang.flag}</span>
                 <span>{lang.name}</span>
