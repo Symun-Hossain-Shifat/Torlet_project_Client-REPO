@@ -45,6 +45,7 @@ export default function ProfilePage() {
     const HandleLogout = async () => {
         await authClient.signOut();
         router.push('/')
+        alert('Logout Successfull')
     };
 
     const infoRows = [

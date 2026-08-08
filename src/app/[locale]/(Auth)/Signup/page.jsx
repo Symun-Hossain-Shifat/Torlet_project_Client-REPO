@@ -30,10 +30,10 @@ export default function Signup() {
         });
 
         if (data?.user) {
-            toast.success(t("messages.success"));
+            alert(t("messages.success"));
             router.push("/Signin");
         } else if (error) {
-            toast.error(t("messages.failed", { error: error.message }));
+            alert(t("messages.failed", { error: error.message }));
         }
     };
 
@@ -45,7 +45,7 @@ export default function Signup() {
         const session = await authClient.getSession();
 
         if (session.data?.user?.isBlocked) {
-            toast.error(
+            alert(
                 t("messages.blockedAdmin"),
                 {
                     duration: 10000,

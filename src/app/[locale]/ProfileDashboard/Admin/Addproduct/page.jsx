@@ -66,8 +66,14 @@ export default function ProductForm() {
             handleResetForm(); // ফর্মের সকল ফিল্ড ক্লিয়ার করা
 
             setTimeout(() => setSubmitted(false), 3000);
+            if (result) {
+                alert('Product added successfully')
+            } else {
+                alert('Product added failed')
+            }
         } catch (error) {
-            console.error("Failed to post product:", error);
+            alert('Product added failed')
+
         } finally {
             setLoading(false);
         }

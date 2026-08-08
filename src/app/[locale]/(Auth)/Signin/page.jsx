@@ -27,7 +27,7 @@ export default function Login() {
             password: formData.password, // required
             rememberMe: false
         });
-        
+
         if (data?.user?.isBlocked === true) {
             toast.error(
                 t("messages.blockedAdmin"),
@@ -45,10 +45,10 @@ export default function Login() {
         }
 
         if (data?.user) {
-            toast.success(t("messages.success"));
+            alert(t("messages.success"));
             router.push("/");
         } else if (error) {
-            toast.error(t("messages.failed", { error: error.message }));
+            alert(t("messages.failed", { error: error.message }));
         }
     };
 
@@ -60,7 +60,7 @@ export default function Login() {
         const session = await authClient.getSession();
 
         if (session.data?.user?.isBlocked) {
-            toast.error(
+            alert(
                 t("messages.blockedGeneral"),
                 {
                     duration: 10000,
