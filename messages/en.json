@@ -40,13 +40,13 @@
     },
     "badges": {
       "delivery": "Fast delivery",
-      "payments": "Secure payments",
+      "payments": "Cash payments",
       "price": "Best price guarantee"
     },
     "eyebrow": "One marketplace, every category",
     "title": "Find literally",
     "titleColored": "anything you need.",
-    "description": "Torlet.com brings thousands of sellers and every kind of product — electronics, fashion, home goods, and more — onto one marketplace. Search it, compare it, buy it, all in one place.",
+    "description": "Torlet.com brings thousands of sellers and every kind of product electronics, fashion, home goods, and more into one marketplace. Search it, compare it, buy it, all in one place.",
     "shopNow": "Shop Now",
     "exploreCategories": "Explore Categories",
     "moreCategories": "+ {count} more categories"
@@ -59,7 +59,7 @@
       "description": "Free delivery on every order, no minimum spend required."
     },
     "payment": {
-      "title": "Secure Payment",
+      "title": "Cash Payment",
       "description": "Your transactions are encrypted and fully protected."
     },
     "returns": {
