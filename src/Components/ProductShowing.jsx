@@ -1,74 +1,15 @@
+
 import { GetProduct } from "@/lib/Action/GetData/GetProduct";
 import ProductCard from "./ProductCard";
 import { getTranslations } from "next-intl/server";
-import { Sparkles } from "lucide-react";
-
-/**
- * Fallback product collection used when backend database is empty or unreachable.
- * Ensures the homepage always presents a vibrant, high-quality showcase.
- */
-const SAMPLE_PRODUCTS = [
-    {
-        _id: "1",
-        title: "Argentina Home Jersey 2026",
-        category: "Jerseys",
-        price: 1290,
-        image: "https://images.unsplash.com/photo-1508098682722-e99c43a406b2?q=80&w=800&auto=format&fit=crop",
-        description: "Official 3-star home jersey crafted with breathable moisture-wicking fabric."
-    },
-    {
-        _id: "2",
-        title: "Air Max Pro Stealth Sneakers",
-        category: "Sneakers",
-        price: 4500,
-        image: "https://images.unsplash.com/photo-1542291026-7eec264c27ff?q=80&w=800&auto=format&fit=crop",
-        description: "Ergonomic running sneakers with maximum shock absorption and sleek design."
-    },
-    {
-        _id: "3",
-        title: "Wireless Noise-Canceling Headphones",
-        category: "Electronics",
-        price: 3200,
-        image: "https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800&auto=format&fit=crop",
-        description: "Immersive studio audio quality with active noise cancellation and 40h battery."
-    },
-    {
-        _id: "4",
-        title: "Minimalist Smart Watch V2",
-        category: "Electronics",
-        price: 2800,
-        image: "https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800&auto=format&fit=crop",
-        description: "Track fitness, heart rate, and notifications with AMOLED display."
-    },
-    {
-        _id: "5",
-        title: "Vintage Leather Travel Backpack",
-        category: "Fashion",
-        price: 3900,
-        image: "https://images.unsplash.com/photo-1553062407-98eeb64c6a62?q=80&w=800&auto=format&fit=crop",
-        description: "Handcrafted genuine leather backpack with laptop sleeve and water resistance."
-    },
-    {
-        _id: "6",
-        title: "Modern Ceramic Table Lamp",
-        category: "Home & Living",
-        price: 1850,
-        image: "https://images.unsplash.com/photo-1507473885765-e6ed057f782c?q=80&w=800&auto=format&fit=crop",
-        description: "Warm ambient lighting for your living room or study space."
-    }
-];
+import { PackageOpen, Sparkles } from "lucide-react";
 
 export const ProductShowing = async () => {
-    // Retrieve internationalized strings for ProductShowing component
     const t = await getTranslations("ProductShowing");
 
-    // Fetch product data from backend API
-    const fetchedData = await GetProduct();
-
-    // Validate fetched array; fallback to SAMPLE_PRODUCTS if empty
-    const products = (Array.isArray(fetchedData) && fetchedData.length > 0)
-        ? fetchedData
-        : SAMPLE_PRODUCTS;
+    const fetchedProducts = await GetProduct();
+    const products = Array.isArray(fetchedProducts) ? fetchedProducts : [];
+    const hasProducts = products.length > 0;
 
     return (
         <section className="bg-neutral-950 py-12 sm:py-16 lg:py-20 text-white">
@@ -88,8 +29,8 @@ export const ProductShowing = async () => {
                     </p>
                 </div>
 
-                {/* Product Cards Grid: sm device -> 1 col, md device -> 2 cols, lg device -> 3 cols */}
-                {products.length > 0 ? (
+                {/* Product Grid or Empty State */}
+                {hasProducts ? (
                     <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
                         {products.map((product, index) => (
                             <ProductCard
@@ -99,12 +40,25 @@ export const ProductShowing = async () => {
                         ))}
                     </div>
                 ) : (
-                    <div className="rounded-2xl border border-neutral-800 bg-neutral-900/50 p-12 text-center">
-                        <p className="text-neutral-400">{t("noProducts")}</p>
-                    </div>
+                    <EmptyProductState message={t("noProducts")} />
                 )}
 
             </div>
         </section>
     );
 };
+
+/**
+ * Shown when no products have been posted yet (empty DB or fetch failure).
+ */
+const EmptyProductState = ({ message }) => (
+    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-neutral-800 bg-neutral-900/50 px-6 py-16 text-center">
+        <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-neutral-800 bg-neutral-900">
+            <PackageOpen size={28} className="text-neutral-500" />
+        </div>
+        <p className="text-base font-medium text-neutral-300">{message}</p>
+        <p className="mt-1 text-sm text-neutral-500">
+            New products will be displayed here.
+        </p>
+    </div>
+);
