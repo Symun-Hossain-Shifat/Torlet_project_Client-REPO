@@ -18,8 +18,8 @@ export default function ProductCard({ product }) {
   const title = product.title || product.name || 'Untitled Product';
   const category = product.category || 'General';
   const price = typeof product.price === 'number' ? product.price : parseFloat(product.price || 0);
-  const imageSrc = !imageError && product.image 
-    ? product.image 
+  const imageSrc = !imageError && product.image
+    ? product.image
     : 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800&auto=format&fit=crop';
 
   const handleAddToCart = () => {
@@ -37,7 +37,7 @@ export default function ProductCard({ product }) {
 
   return (
     <div className="group relative flex flex-col overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900/90 shadow-xl transition-all duration-300 hover:-translate-y-1 hover:border-amber-400/50 hover:shadow-2xl hover:shadow-amber-400/10">
-      
+
       {/* Product Image & Floating Badges */}
       <div className="relative h-60 w-full overflow-hidden bg-neutral-950 sm:h-64">
         {/* Category Badge */}
@@ -51,11 +51,10 @@ export default function ProductCard({ product }) {
           type="button"
           onClick={handleToggleWishlist}
           aria-label="Add to wishlist"
-          className={`absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-200 backdrop-blur-md shadow-md ${
-            isWishlisted
+          className={`absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-200 backdrop-blur-md shadow-md ${isWishlisted
               ? 'border-red-500/50 bg-red-500/20 text-red-500'
               : 'border-neutral-700 bg-neutral-950/70 text-neutral-300 hover:border-amber-400 hover:text-amber-400'
-          }`}
+            }`}
         >
           <Heart size={16} className={isWishlisted ? 'fill-red-500' : ''} />
         </button>
@@ -105,7 +104,7 @@ export default function ProductCard({ product }) {
         <div className="mt-5 grid grid-cols-2 gap-2.5">
           {/* View Details Button */}
           <Link
-            href={`/product/${id}`}
+            href={`/${id}`}
             className="inline-flex items-center justify-center gap-1.5 rounded-xl border border-neutral-700 bg-neutral-800/80 px-3 py-2.5 text-xs font-semibold text-neutral-200 transition-all hover:border-amber-400/60 hover:bg-neutral-800 hover:text-amber-400 active:scale-95"
           >
             <Eye size={15} />
@@ -117,11 +116,10 @@ export default function ProductCard({ product }) {
             type="button"
             onClick={handleAddToCart}
             disabled={isAdded}
-            className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-xs font-bold transition-all duration-200 active:scale-95 ${
-              isAdded
+            className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-xs font-bold transition-all duration-200 active:scale-95 ${isAdded
                 ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
                 : 'bg-amber-400 text-neutral-950 hover:bg-amber-300 hover:shadow-lg hover:shadow-amber-400/20'
-            }`}
+              }`}
           >
             {isAdded ? (
               <>
