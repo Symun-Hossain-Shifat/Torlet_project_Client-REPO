@@ -2,7 +2,6 @@
 
 import { useState } from "react";
 import Image from "next/image";
-
 import {
     Heart,
     ShoppingCart,
@@ -11,10 +10,9 @@ import {
     Minus,
     Plus,
     CheckCircle2,
-    Loader2,
     ImageOff,
+    PackageX,
 } from "lucide-react";
-
 
 // ---------- Helpers ----------
 function toDriveEmbedUrl(url) {
@@ -57,43 +55,40 @@ function ProductImage({ src, alt }) {
     );
 }
 
-export default function PropertyDetailsPage({ Product }) {
-
-
-    // TODO: replace with your real data fetch (e.g. useEffect + fetch(`/api/products/${params.id}`)
-    // or a server component that passes `product` down as a prop).
-    const Product = Product;
-    const [loading] = useState(false);
-    const [activeMedia, setActiveMedia] = useState < "image" | "video" > ("image");
+export default function ProductDetailsPage({ Product }) {
+    console.log(Product)
+    const [activeMedia, setActiveMedia] = useState("image");
     const [quantity, setQuantity] = useState(1);
     const [wishlisted, setWishlisted] = useState(false);
-    const [cartMessage, setCartMessage] = useState < string | null > (null);
+    const [cartMessage, setCartMessage] = useState(null);
 
-    const embedVideoUrl = toDriveEmbedUrl(product.video);
+    // ---------- Not found state ----------
+    if (!Product) {
+        return (
+            <div className="flex min-h-[60vh] flex-col items-center justify-center gap-3 bg-black text-neutral-400">
+                <PackageX className="h-10 w-10 text-neutral-600" />
+                <p className="text-sm">This product could not be found.</p>
+            </div>
+        );
+    }
+
+    const embedVideoUrl = toDriveEmbedUrl(Product.video);
 
     const handleAddToCart = () => {
         // TODO: wire to your cart state / API
-        setCartMessage(`Added ${quantity} × ${product.title} to cart`);
+        setCartMessage(`Added ${quantity} × ${Product.title} to cart`);
         setTimeout(() => setCartMessage(null), 2500);
     };
 
     const handleBuyNow = () => {
-        // TODO: route to checkout, e.g. router.push(`/checkout?productId=${product._id}&qty=${quantity}`)
-        console.log("Buy now:", { id: product._id, quantity });
+        // TODO: route to checkout, e.g. router.push(`/checkout?productId=${Product._id}&qty=${quantity}`)
+        console.log("Buy now:", { id: Product._id, quantity });
     };
 
     const handleToggleWishlist = () => {
         // TODO: wire to your wishlist state / API
         setWishlisted((prev) => !prev);
     };
-
-    if (loading) {
-        return (
-            <div className="flex min-h-[60vh] items-center justify-center bg-black">
-                <Loader2 className="h-8 w-8 animate-spin text-[#D4AF37]" />
-            </div>
-        );
-    }
 
     return (
         <div className="min-h-screen bg-black text-neutral-100">
@@ -102,7 +97,7 @@ export default function PropertyDetailsPage({ Product }) {
                 <nav className="mb-6 text-sm text-neutral-500">
                     <span>Shop</span>
                     <span className="mx-2">/</span>
-                    <span className="text-[#D4AF37]">{product.category}</span>
+                    <span className="text-[#D4AF37]">{Product.category}</span>
                 </nav>
 
                 <div className="grid grid-cols-1 gap-10 lg:grid-cols-2 lg:gap-14">
@@ -110,13 +105,13 @@ export default function PropertyDetailsPage({ Product }) {
                     <div>
                         <div className="relative aspect-square w-full overflow-hidden rounded-2xl border border-neutral-800 bg-neutral-900">
                             {activeMedia === "image" || !embedVideoUrl ? (
-                                <ProductImage src={product.image} alt={product.title} />
+                                <ProductImage src={Product.image} alt={Product.title} />
                             ) : (
                                 <iframe
                                     src={embedVideoUrl}
                                     className="h-full w-full"
                                     allow="autoplay"
-                                    title={`${product.title} video`}
+                                    title={`${Product.title} video`}
                                 />
                             )}
                         </div>
@@ -130,10 +125,10 @@ export default function PropertyDetailsPage({ Product }) {
                                         : "border-neutral-800 opacity-70 hover:opacity-100"
                                         }`}
                                 >
-                                    <Image
-                                        src={product.image}
+                                    <img
+                                        src={Product.image}
                                         alt="Product thumbnail"
-                                        fill
+
                                         sizes="64px"
                                         className="object-cover"
                                     />
@@ -154,33 +149,33 @@ export default function PropertyDetailsPage({ Product }) {
                     {/* ---------- Details column ---------- */}
                     <div className="flex flex-col">
                         <span className="w-fit rounded-full border border-[#D4AF37]/40 bg-[#D4AF37]/10 px-3 py-1 text-xs font-medium tracking-wide text-[#D4AF37]">
-                            {product.category}
+                            {Product.category}
                         </span>
 
                         <h1 className="mt-4 text-2xl font-semibold leading-tight text-white sm:text-3xl">
-                            {product.title}
+                            {Product.title}
                         </h1>
 
                         <p className="mt-2 text-xs text-neutral-500">
-                            Listed on {formatDate(product.createdAt)} · ID: {product._id}
+                            Listed on {formatDate(Product.createdAt)} · ID: {Product._id}
                         </p>
 
                         <p className="mt-4 text-3xl font-bold text-[#D4AF37]">
-                            ${product.price.toFixed(2)}
+                            ${Product.price}
                         </p>
 
                         <p className="mt-5 leading-relaxed text-neutral-400">
-                            {product.description}
+                            {Product.description}
                         </p>
 
                         {/* Features */}
-                        {product.features.length > 0 && (
+                        {Product.features?.length > 0 && (
                             <div className="mt-6">
                                 <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-neutral-300">
                                     Features
                                 </h2>
                                 <ul className="space-y-2">
-                                    {product.features.map((feature, i) => (
+                                    {Product.features.map((feature, i) => (
                                         <li
                                             key={i}
                                             className="flex items-start gap-2 text-sm text-neutral-400"
