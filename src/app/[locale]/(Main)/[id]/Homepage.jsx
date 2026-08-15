@@ -13,6 +13,9 @@ import {
     ImageOff,
     PackageX,
 } from "lucide-react";
+import { authClient } from "@/lib/auth-client";
+import { PostCart } from "@/lib/Action/PostData/PostCart";
+import toast from "react-hot-toast";
 
 // ---------- Helpers ----------
 function toDriveEmbedUrl(url) {
@@ -60,7 +63,9 @@ export default function ProductDetailsPage({ Product }) {
     const [activeMedia, setActiveMedia] = useState("image");
     const [quantity, setQuantity] = useState(1);
     const [wishlisted, setWishlisted] = useState(false);
-    const [cartMessage, setCartMessage] = useState(null);
+
+    const { data: session } = authClient.useSession();
+    const user = session?.user;
 
     // ---------- Not found state ----------
     if (!Product) {
@@ -73,11 +78,24 @@ export default function ProductDetailsPage({ Product }) {
     }
 
     const embedVideoUrl = toDriveEmbedUrl(Product.video);
+    const handleAddToCart = async (product) => {
+        if (user.role === "Admin") {
+            toast.error('Admin Can not add to cart');
+            return;
+        }
+        const Data = {
+            ...product, email: user.email
+        }
 
-    const handleAddToCart = () => {
-        // TODO: wire to your cart state / API
-        setCartMessage(`Added ${quantity} × ${Product.title} to cart`);
-        setTimeout(() => setCartMessage(null), 2500);
+        const result = await PostCart(Data)
+
+        if (result) {
+
+            toast.success(`Product Added In Cart Successfully`);
+            setTimeout(() => { }, 2000);
+        } else {
+            toast.error(result.message);
+        }
     };
 
     const handleBuyNow = () => {
@@ -223,7 +241,7 @@ export default function ProductDetailsPage({ Product }) {
                                 Buy Now
                             </button>
                             <button
-                                onClick={handleAddToCart}
+                                onClick={() => handleAddToCart(Product)}
                                 className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-[#D4AF37] px-6 py-3.5 text-sm font-semibold text-[#D4AF37] transition hover:bg-[#D4AF37]/10 active:scale-[0.98]"
                             >
                                 <ShoppingCart className="h-4 w-4" />
@@ -247,9 +265,7 @@ export default function ProductDetailsPage({ Product }) {
                             </button>
                         </div>
 
-                        {cartMessage && (
-                            <p className="mt-3 text-sm text-[#D4AF37]">{cartMessage}</p>
-                        )}
+
                     </div>
                 </div>
             </div>

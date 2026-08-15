@@ -6,12 +6,18 @@ import Link from 'next/link';
 import { ShoppingCart, Eye, Check, Heart, Tag } from 'lucide-react';
 import { useTranslations } from 'next-intl';
 import toast from 'react-hot-toast';
+import { authClient } from '@/lib/auth-client';
+import { PostCart } from '@/lib/Action/PostData/PostCart';
 
 export default function ProductCard({ product }) {
   const t = useTranslations('ProductShowing');
   const [isAdded, setIsAdded] = useState(false);
   const [isWishlisted, setIsWishlisted] = useState(false);
   const [imageError, setImageError] = useState(false);
+
+  // User Data 
+  const { data: session } = authClient.useSession();
+  const user = session?.user;
 
   // Normalize product properties cleanly
   const id = product._id || product.id || '1';
@@ -22,10 +28,24 @@ export default function ProductCard({ product }) {
     ? product.image
     : 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800&auto=format&fit=crop';
 
-  const handleAddToCart = () => {
-    setIsAdded(true);
-    toast.success(`${title} ${t('addedToCart')}`);
-    setTimeout(() => setIsAdded(false), 2000);
+  const handleAddToCart = async (product) => {
+    if (user.role === "Admin") {
+      toast.error('Admin Can not add to cart');
+      return;
+    }
+    const Data = {
+      ...product, email: user.email
+    }
+
+    const result = await PostCart(Data)
+
+    if (result) {
+      setIsAdded(true);
+      toast.success(`${title} ${t('addedToCart')}`);
+      setTimeout(() => setIsAdded(false), 2000);
+    } else {
+      toast.error(result.message);
+    }
   };
 
   const handleToggleWishlist = () => {
@@ -52,8 +72,8 @@ export default function ProductCard({ product }) {
           onClick={handleToggleWishlist}
           aria-label="Add to wishlist"
           className={`absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-200 backdrop-blur-md shadow-md ${isWishlisted
-              ? 'border-red-500/50 bg-red-500/20 text-red-500'
-              : 'border-neutral-700 bg-neutral-950/70 text-neutral-300 hover:border-amber-400 hover:text-amber-400'
+            ? 'border-red-500/50 bg-red-500/20 text-red-500'
+            : 'border-neutral-700 bg-neutral-950/70 text-neutral-300 hover:border-amber-400 hover:text-amber-400'
             }`}
         >
           <Heart size={16} className={isWishlisted ? 'fill-red-500' : ''} />
@@ -114,11 +134,11 @@ export default function ProductCard({ product }) {
           {/* Add to Cart Button */}
           <button
             type="button"
-            onClick={handleAddToCart}
+            onClick={() => handleAddToCart(product)}
             disabled={isAdded}
             className={`inline-flex items-center justify-center gap-1.5 rounded-xl px-3 py-2.5 text-xs font-bold transition-all duration-200 active:scale-95 ${isAdded
-                ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
-                : 'bg-amber-400 text-neutral-950 hover:bg-amber-300 hover:shadow-lg hover:shadow-amber-400/20'
+              ? 'bg-emerald-500 text-white shadow-md shadow-emerald-500/20'
+              : 'bg-amber-400 text-neutral-950 hover:bg-amber-300 hover:shadow-lg hover:shadow-amber-400/20'
               }`}
           >
             {isAdded ? (
