@@ -26,12 +26,12 @@ export default function Signup() {
             name: formData.name,
             email: formData.email,
             password: formData.password,
-            callbackURL: "/Signin",
+            callbackURL: "/",
         });
 
         if (data?.user) {
             alert(t("messages.success"));
-            router.push("/Signin");
+            router.push("/");
         } else if (error) {
             alert(t("messages.failed", { error: error.message }));
         }
