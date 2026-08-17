@@ -13,7 +13,7 @@ export default async function Cart() {
     const email = User?.email
     const t = await getTranslations("CartPage");
     const data = await GetCartByEmail(email);
-    console.log(data)
+
 
     return (
         <section className="container mx-auto px-4 py-10">

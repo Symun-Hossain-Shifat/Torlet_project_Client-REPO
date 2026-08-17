@@ -2,8 +2,14 @@
 
 import { useEffect, useState } from "react";
 import Image from "next/image";
+import { Trash2 } from "lucide-react";
+import { DeleteCart } from "@/lib/Action/DeleteData/DeleteCart";
+import toast from "react-hot-toast";
+
+import { useRouter } from "next/navigation";
 
 export default function CartShowSection({ data }) {
+
     const [cartItems, setCartItems] = useState(
         (data || []).map((item) => ({ ...item, quantity: item.quantity || 1 }))
     );
@@ -39,48 +45,36 @@ export default function CartShowSection({ data }) {
 
     };
 
+    const router = useRouter();
+
     const handleRemove = async (id) => {
-        setRemovingId(id);
         try {
-            // Replace with your actual delete endpoint
-            const res = await fetch(`/api/cart/${id}`, { method: "DELETE" });
+            setRemovingId(id);
 
-            if (!res.ok) throw new Error("Failed to remove item");
+            const res = await DeleteCart(id);
 
-            setCartItems((prev) => prev.filter((item) => item.id !== id));
-        } catch (err) {
-            console.error(err);
-            // Optionally show a toast/error message here
+            console.log("Delete response:", res);
+
+            if (res?.success || res?.deletedCount === 1) {
+                toast.success("Item removed from cart");
+
+                setCartItems((prev) =>
+                    prev.filter((item) => item._id !== id)
+                );
+
+                router.refresh();
+            } else {
+                toast.error(res?.message || "Failed to remove item");
+            }
+        } catch (error) {
+            console.error("Delete cart error:", error);
+            toast.error("Failed to remove item");
         } finally {
             setRemovingId(null);
         }
     };
 
-    if (!cartItems || cartItems.length === 0) {
-        return (
-            <div className="flex min-h-[400px] flex-col items-center justify-center rounded-xl border border-yellow-500/20 bg-black px-6 text-center">
-                <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-yellow-500/30">
-                    <svg
-                        className="h-7 w-7 text-yellow-500"
-                        fill="none"
-                        viewBox="0 0 24 24"
-                        stroke="currentColor"
-                    >
-                        <path
-                            strokeLinecap="round"
-                            strokeLinejoin="round"
-                            strokeWidth={1.5}
-                            d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z"
-                        />
-                    </svg>
-                </div>
-                <h3 className="text-lg font-semibold text-white">Your cart is empty</h3>
-                <p className="mt-1 text-sm text-gray-400">
-                    Items you add to your cart will show up here.
-                </p>
-            </div>
-        );
-    }
+
 
     return (
         <div className="space-y-6">
@@ -121,45 +115,11 @@ export default function CartShowSection({ data }) {
                                     <button
                                         type="button"
                                         aria-label="Remove item"
-                                        disabled={removingId === item.id}
-                                        onClick={() => handleRemove(item.id)}
+                                        disabled={removingId === item._id}
+                                        onClick={() => handleRemove(item._id)}
                                         className="rounded-full p-1.5 text-gray-500 hover:bg-neutral-900 hover:text-red-400 disabled:cursor-not-allowed"
-                                    >
-                                        {removingId === item.id ? (
-                                            <svg
-                                                className="h-4 w-4 animate-spin text-red-400"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                            >
-                                                <circle
-                                                    className="opacity-25"
-                                                    cx="12"
-                                                    cy="12"
-                                                    r="10"
-                                                    stroke="currentColor"
-                                                    strokeWidth="4"
-                                                />
-                                                <path
-                                                    className="opacity-75"
-                                                    fill="currentColor"
-                                                    d="M4 12a8 8 0 018-8v4a4 4 0 00-4 4H4z"
-                                                />
-                                            </svg>
-                                        ) : (
-                                            <svg
-                                                className="h-4 w-4"
-                                                fill="none"
-                                                viewBox="0 0 24 24"
-                                                stroke="currentColor"
-                                            >
-                                                <path
-                                                    strokeLinecap="round"
-                                                    strokeLinejoin="round"
-                                                    strokeWidth={2}
-                                                    d="M19 7l-.867 12.142A2 2 0 0116.138 21H7.862a2 2 0 01-1.995-1.858L5 7m5 4v6m4-6v6M9.5 4h5a1 1 0 011 1v2h-7V5a1 1 0 011-1zM4 7h16"
-                                                />
-                                            </svg>
-                                        )}
+                                    ><Trash2 size={15} />
+
                                     </button>
                                 </div>
 

@@ -79,8 +79,13 @@ export default function ProductDetailsPage({ Product }) {
 
     const embedVideoUrl = toDriveEmbedUrl(Product.video);
     const handleAddToCart = async (product) => {
+        if (!user) {
+            toast.error("Please login first");
+            return;
+        }
+
         if (user.role === "Admin") {
-            toast.error('Admin Can not add to cart');
+            toast.error("Admin Can not add to cart");
             return;
         }
         const Data = {

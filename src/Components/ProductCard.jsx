@@ -29,8 +29,13 @@ export default function ProductCard({ product }) {
     : 'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800&auto=format&fit=crop';
 
   const handleAddToCart = async (product) => {
+    if (!user) {
+      toast.error("Please login first");
+      return;
+    }
+
     if (user.role === "Admin") {
-      toast.error('Admin Can not add to cart');
+      toast.error("Admin Can not add to cart");
       return;
     }
     const Data = {
