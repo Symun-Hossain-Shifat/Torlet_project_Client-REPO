@@ -4,43 +4,7 @@ import { Icon } from "@iconify/react";
 import { useState } from "react";
 
 // Swap this for real data from your API/DB.
-const initialProducts = [
-    {
-        id: 1,
-        name: "Wireless Mechanical Keyboard",
-        price: 89.99,
-        category: "Electronics",
-        postedAt: "2026-08-02",
-    },
-    {
-        id: 2,
-        name: "Ceramic Pour-Over Coffee Set",
-        price: 42.5,
-        category: "Home & Kitchen",
-        postedAt: "2026-07-28",
-    },
-    {
-        id: 3,
-        name: "Weatherproof Hiking Backpack",
-        price: 129.0,
-        category: "Outdoor",
-        postedAt: "2026-07-19",
-    },
-    {
-        id: 4,
-        name: "Minimalist Leather Wallet",
-        price: 34.0,
-        category: "Accessories",
-        postedAt: "2026-07-11",
-    },
-    {
-        id: 5,
-        name: "Adjustable Standing Desk",
-        price: 249.99,
-        category: "Furniture",
-        postedAt: "2026-06-30",
-    },
-];
+
 
 function formatPrice(value) {
     return new Intl.NumberFormat("en-US", {
@@ -57,8 +21,8 @@ function formatDate(value) {
     });
 }
 
-export function ProductsTable() {
-    const [products, setProducts] = useState(initialProducts);
+export function ProductsTable({ products }) {
+
 
     function handleEdit(product) {
         // Hook up to your edit flow (open a modal, route to an edit page, etc.)
@@ -84,13 +48,13 @@ export function ProductsTable() {
             <ul className="divide-y divide-white/[0.06]">
                 {products.map((product) => (
                     <li
-                        key={product.id}
+                        key={product._id}
                         className="flex flex-col gap-3 px-5 py-4 transition-colors hover:bg-white/[0.03] sm:grid sm:grid-cols-[minmax(0,2.2fr)_1fr_1fr_1fr_auto] sm:items-center sm:gap-4"
                     >
                         {/* Product name */}
                         <div className="min-w-0">
                             <p className="truncate text-sm font-medium text-zinc-100">
-                                {product.name}
+                                {product.title}
                             </p>
                             {/* Inline meta shown only on mobile, since the grid columns collapse */}
                             <p className="mt-0.5 text-xs text-zinc-500 sm:hidden">
@@ -111,7 +75,8 @@ export function ProductsTable() {
 
                         {/* Posted date — hidden on mobile (shown inline under the name instead) */}
                         <div className="hidden text-sm text-zinc-400 sm:block">
-                            {formatDate(product.postedAt)}
+                            {formatDate(product.createdAt
+                            )}
                         </div>
 
                         {/* Actions */}

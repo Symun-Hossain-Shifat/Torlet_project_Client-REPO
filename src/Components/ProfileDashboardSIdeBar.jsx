@@ -32,7 +32,7 @@ export function SideNavigation({ plan, Userinfo }) {
         { href: "/ProfileDashboard/Admin/Addproduct", icon: BiRepost, label: t("Addproduct") },
         { href: "/ProfileDashboard/Admin/User", icon: BsPeople, label: t("manageUser") },
         { href: "/ProfileDashboard/Admin/Products", icon: FiBookOpen, label: t("manageProduct") },
-        { href: "/ProfileDashboard/Admin/Report", icon: BsFileEarmarkBarGraph, label: t("manageReport") },
+
         { href: "/ProfileDashboard/Admin/OrderHistory", icon: AiOutlineTransaction, label: t("orderHistory") },
 
     ];

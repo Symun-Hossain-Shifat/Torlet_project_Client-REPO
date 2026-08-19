@@ -36,7 +36,7 @@ export default async function ProductManagePage() {
                     </div>
                 ) : (
                     <>
-                        <ProductsTable></ProductsTable>
+                        <ProductsTable products={Products}></ProductsTable>
                     </>
                 )
             }
