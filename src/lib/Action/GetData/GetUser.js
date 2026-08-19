@@ -10,3 +10,10 @@ export const GetUserInserver = async () => {
     const User = session?.user;
     return User
 }
+
+
+export const GetAllUserInformation = async () => {
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/user`)
+    const data = await res.json()
+    return data
+}

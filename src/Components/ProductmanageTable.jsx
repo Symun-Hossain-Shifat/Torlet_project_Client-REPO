@@ -36,7 +36,7 @@ export function ProductsTable({ products }) {
     return (
         <div className="w-full rounded-xl border border-white/10 bg-[#0A0A0A] text-zinc-100">
             {/* Header row — desktop / tablet only */}
-            <div className="hidden border-b border-white/10 bg-[#111114] px-5 py-3 text-xs font-medium uppercase tracking-wide text-zinc-500 sm:grid sm:grid-cols-[minmax(0,2.2fr)_1fr_1fr_1fr_auto] sm:gap-4">
+            <div className="hidden text-left border-b border-white/10 bg-[#111114] px-5 py-3 text-xs font-medium uppercase tracking-wide text-zinc-500 sm:grid sm:grid-cols-[minmax(0,2.2fr)_1fr_1fr_1fr_auto] sm:gap-4">
                 <span>Product</span>
                 <span>Price</span>
                 <span>Category</span>
