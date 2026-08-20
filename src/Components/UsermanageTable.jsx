@@ -1,168 +1,126 @@
 "use client";
 
-import {
-
-    Button,
-    Chip,
-    Table,
-    TableBody,
-    TableCell,
-    TableColumn,
-    TableHeader,
-    TableRow,
-
-} from "@heroui/react";
-
 export default function UsermanageTable({ User }) {
     const users = Array.isArray(User) ? User : [];
 
-    const formatDate = (dateString) => {
-        return new Date(dateString).toLocaleDateString("en-US", {
+    function formatDate(value) {
+        if (!value) return "N/A";
+        return new Date(value).toLocaleDateString("en-US", {
             year: "numeric",
             month: "short",
             day: "numeric",
         });
-    };
+    }
+
+    function handleBlockToggle(user) {
+        // Hook up to your block/unblock API call here.
+        console.log("Toggle block for", user._id);
+    }
 
     return (
-        <div className="w-full">
-            <h1 className="text-xl md:text-2xl font-semibold mb-4">
-                Manage Users
-            </h1>
-
-            {/* Table view - md and up */}
-            <div className="hidden md:block w-full overflow-x-auto">
-                <Table aria-label="User management table" className="min-w-full">
-                    <TableHeader>
-                        <TableColumn>NAME</TableColumn>
-                        <TableColumn>EMAIL</TableColumn>
-                        <TableColumn>ROLE</TableColumn>
-                        <TableColumn>EMAIL VERIFIED</TableColumn>
-                        <TableColumn>STATUS</TableColumn>
-                        <TableColumn>JOINED</TableColumn>
-                        <TableColumn>ACTION</TableColumn>
-                    </TableHeader>
-                    <TableBody emptyContent="No users found">
-                        {users.map((user) => (
-                            <TableRow key={user._id}>
-                                <TableCell>
-                                    <div className="flex items-center gap-3">
-                                        <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-semibold">
-                                            {user.name?.charAt(0)?.toUpperCase()}
-                                        </div>
-
-                                        <span className="font-medium">
-                                            {user.name}
-                                        </span>
-                                    </div>
-                                </TableCell>
-                                <TableCell>
-                                    <span className="text-sm text-default-600">
-                                        {user.email}
-                                    </span>
-                                </TableCell>
-                                <TableCell>
-                                    <Chip size="sm" variant="flat" color="primary">
-                                        {user.role}
-                                    </Chip>
-                                </TableCell>
-                                <TableCell>
-                                    <Chip
-                                        size="sm"
-                                        variant="flat"
-                                        color={user.emailVerified ? "success" : "warning"}
-                                    >
-                                        {user.emailVerified ? "Verified" : "Unverified"}
-                                    </Chip>
-                                </TableCell>
-                                <TableCell>
-                                    <Chip
-                                        size="sm"
-                                        variant="flat"
-                                        color={user.isBlocked ? "danger" : "success"}
-                                    >
-                                        {user.isBlocked ? "Blocked" : "Active"}
-                                    </Chip>
-                                </TableCell>
-                                <TableCell>
-                                    <span className="text-sm text-default-500">
-                                        {formatDate(user.createdAt)}
-                                    </span>
-                                </TableCell>
-                                <TableCell>
-                                    <Button
-                                        size="sm"
-                                        variant="flat"
-                                        color={user.isBlocked ? "success" : "danger"}
-                                    >
-                                        {user.isBlocked ? "Unblock" : "Block"}
-                                    </Button>
-                                </TableCell>
-                            </TableRow>
-                        ))}
-                    </TableBody>
-                </Table>
+        <div className="w-full rounded-xl border border-white/10 bg-[#0A0A0A] text-zinc-100">
+            {/* Header row — desktop / tablet only */}
+            <div className="hidden text-left border-b border-white/10 bg-[#111114] px-5 py-3 text-xs font-medium uppercase tracking-wide text-zinc-500 sm:grid sm:grid-cols-[minmax(0,2fr)_minmax(0,2.4fr)_0.9fr_1.1fr_0.9fr_1fr_auto] sm:gap-4">
+                <span>Name</span>
+                <span>Email</span>
+                <span>Role</span>
+                <span>Verified</span>
+                <span>Status</span>
+                <span>Joined</span>
+                <span className="text-right">Action</span>
             </div>
 
-            {/* Card view - below md */}
-            <div className="md:hidden flex flex-col gap-3">
-                {users.length === 0 && (
-                    <p className="text-center text-default-400 py-6">
-                        No users found
-                    </p>
-                )}
+            {/* Rows */}
+            <ul className="divide-y divide-white/[0.06]">
                 {users.map((user) => (
-                    <div
+                    <li
                         key={user._id}
-                        className="border border-default-200 rounded-xl p-4 flex flex-col gap-3"
+                        className="flex flex-col gap-3 px-5 py-4 transition-colors hover:bg-white/[0.03] sm:grid sm:grid-cols-[minmax(0,2fr)_minmax(0,2.4fr)_0.9fr_1.1fr_0.9fr_1fr_auto] sm:items-center sm:gap-4"
                     >
-                        <div className="flex items-center justify-between">
-                            <div className="flex items-center gap-3">
-                                <div className="w-10 h-10 rounded-full bg-primary text-white flex items-center justify-center font-semibold">
-                                    {user.name?.charAt(0)?.toUpperCase()}
-                                </div>
-
-                                <span className="font-medium">
-                                    {user.name}
-                                </span>
+                        {/* Name */}
+                        <div className="flex min-w-0 items-center gap-3">
+                            <div className="flex size-9 shrink-0 items-center justify-center rounded-full bg-indigo-500/20 text-sm font-semibold text-indigo-300">
+                                {user.name?.charAt(0)?.toUpperCase()}
                             </div>
-                            <Chip
-                                size="sm"
-                                variant="flat"
-                                color={user.isBlocked ? "danger" : "success"}
-                            >
-                                {user.isBlocked ? "Blocked" : "Active"}
-                            </Chip>
+                            <div className="min-w-0">
+                                <p className="truncate text-sm font-medium text-zinc-100">
+                                    {user.name}
+                                </p>
+                                {/* Inline meta shown only on mobile, since the grid columns collapse */}
+                                <p className="mt-0.5 truncate text-xs text-zinc-500 sm:hidden">
+                                    {user.email}
+                                </p>
+                            </div>
                         </div>
 
-                        <div className="flex flex-wrap gap-2">
-                            <Chip size="sm" variant="flat" color="primary">
+                        {/* Email — hidden on mobile (shown inline under the name instead) */}
+                        <div className="hidden truncate text-sm text-zinc-400 sm:block">
+                            {user.email}
+                        </div>
+
+                        {/* Role */}
+                        <div className="text-sm text-zinc-300">
+                            <span className="text-zinc-500 sm:hidden">Role: </span>
+                            <span className="inline-flex items-center rounded-md border border-indigo-400/20 bg-indigo-500/10 px-2 py-0.5 text-xs font-medium text-indigo-300">
                                 {user.role}
-                            </Chip>
-                            <Chip
-                                size="sm"
-                                variant="flat"
-                                color={user.emailVerified ? "success" : "warning"}
+                            </span>
+                        </div>
+
+                        {/* Email verified */}
+                        <div className="text-sm text-zinc-300">
+                            <span className="text-zinc-500 sm:hidden">Verified: </span>
+                            <span
+                                className={`inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium ${user.emailVerified
+                                        ? "border-emerald-400/20 bg-emerald-500/10 text-emerald-300"
+                                        : "border-amber-400/20 bg-amber-500/10 text-amber-300"
+                                    }`}
                             >
                                 {user.emailVerified ? "Verified" : "Unverified"}
-                            </Chip>
+                            </span>
                         </div>
 
-                        <p className="text-xs text-default-400">
-                            Joined {formatDate(user.createdAt)}
-                        </p>
+                        {/* Status */}
+                        <div className="text-sm text-zinc-300">
+                            <span className="text-zinc-500 sm:hidden">Status: </span>
+                            <span
+                                className={`inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium ${user.isBlocked
+                                        ? "border-rose-400/20 bg-rose-500/10 text-rose-400"
+                                        : "border-emerald-400/20 bg-emerald-500/10 text-emerald-300"
+                                    }`}
+                            >
+                                {user.isBlocked ? "Blocked" : "Active"}
+                            </span>
+                        </div>
 
-                        <Button
-                            size="sm"
-                            variant="flat"
-                            color={user.isBlocked ? "success" : "danger"}
-                            className="w-full"
-                        >
-                            {user.isBlocked ? "Unblock" : "Block"}
-                        </Button>
-                    </div>
+                        {/* Joined */}
+                        <div className="text-sm text-zinc-400">
+                            <span className="text-zinc-500 sm:hidden">Joined: </span>
+                            {formatDate(user.createdAt)}
+                        </div>
+
+                        {/* Action */}
+                        <div className="sm:justify-self-end">
+                            <button
+                                type="button"
+                                onClick={() => handleBlockToggle(user)}
+                                className={`inline-flex w-full items-center justify-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors sm:w-auto ${user.isBlocked
+                                        ? "border-emerald-400/20 bg-emerald-500/10 text-emerald-300 hover:border-emerald-400/40 hover:bg-emerald-500/20"
+                                        : "border-rose-400/20 bg-rose-500/10 text-rose-400 hover:border-rose-400/40 hover:bg-rose-500/20"
+                                    }`}
+                            >
+                                {user.isBlocked ? "Unblock" : "Block"}
+                            </button>
+                        </div>
+                    </li>
                 ))}
-            </div>
+            </ul>
+
+            {/* Empty state */}
+            {users.length === 0 && (
+                <div className="px-5 py-10 text-center text-sm text-zinc-500">
+                    No users found.
+                </div>
+            )}
         </div>
     );
 }
