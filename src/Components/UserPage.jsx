@@ -2,13 +2,14 @@ import Link from "next/link";
 import { Users } from "lucide-react";
 import { useTranslations } from "next-intl";
 import { GetAllUserInformation } from "@/lib/Action/GetData/GetUser";
+import UsermanageTable from "./UsermanageTable";
 
 export default async function UsermanagePage() {
     const t = useTranslations("AdminUsers");
 
     const User = await GetAllUserInformation();
 
-    console.log("Users:", User);
+
 
     return (
         <div>
@@ -41,7 +42,7 @@ export default async function UsermanagePage() {
             ) : (
                 <div>
                     {/* Users থাকলে এখানে দেখাবে */}
-                    <h1>Users Found</h1>
+                    <UsermanageTable User={User} />
                 </div>
             )}
         </div>
