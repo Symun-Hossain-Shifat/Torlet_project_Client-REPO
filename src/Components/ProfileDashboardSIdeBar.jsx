@@ -2,7 +2,7 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Button, Drawer, Tooltip } from "@heroui/react";
+
 import { useTranslations } from "next-intl";
 
 import {
@@ -15,6 +15,8 @@ import { IoMenu } from "react-icons/io5";
 
 import { FiBookOpen } from "react-icons/fi";
 import { AiOutlineTransaction } from "react-icons/ai";
+import { Button, Drawer, Tooltip } from "@heroui/react";
+import { MenuIcon } from "lucide-react";
 
 export function SideNavigation({ plan, Userinfo }) {
     const pathname = usePathname();
@@ -32,7 +34,6 @@ export function SideNavigation({ plan, Userinfo }) {
         { href: "/ProfileDashboard/Admin/Addproduct", icon: BiRepost, label: t("Addproduct") },
         { href: "/ProfileDashboard/Admin/User", icon: BsPeople, label: t("manageUser") },
         { href: "/ProfileDashboard/Admin/Products", icon: FiBookOpen, label: t("manageProduct") },
-
         { href: "/ProfileDashboard/Admin/OrderHistory", icon: AiOutlineTransaction, label: t("orderHistory") },
 
     ];
@@ -114,35 +115,39 @@ export function SideNavigation({ plan, Userinfo }) {
     return (
         <>
             {/* Mobile top bar (< md): app bar with drawer trigger */}
-            <header className="flex md:hidden items-center justify-between gap-3 border-b border-gray-800 bg-black px-4 py-3">
-                <div className="flex items-center gap-2 min-w-0">
+            <header className="flex items-center justify-between gap-3 border-b border-gray-800 bg-black px-4 py-3 md:hidden">
+                <div className="flex min-w-0 items-center gap-2">
                     <div className="flex h-8 w-8 shrink-0 items-center justify-center rounded-full bg-orange-500 text-xs font-semibold text-white">
                         {initials}
                     </div>
+
                     <span className="truncate text-sm font-medium text-white">
                         {user?.name || t("navigation")}
                     </span>
                 </div>
 
                 <Drawer>
-                    <Button
-                        isIconOnly
-                        aria-label={t("navigation")}
-                        className="shrink-0 bg-orange-500 text-white"
-                    >
-                        <IoMenu className="text-lg" />
-                    </Button>
+                    <Drawer.Trigger>
+                        <span
+                            aria-label="Navigation"
+                            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-md bg-orange-500 text-white"
+                        >
+                            <MenuIcon />
+                        </span>
+                    </Drawer.Trigger>
 
                     <Drawer.Backdrop>
                         <Drawer.Content placement="left">
                             <Drawer.Dialog className="w-[85vw] max-w-xs bg-black">
                                 <Drawer.CloseTrigger />
+
                                 <Drawer.Header>
                                     <Drawer.Heading className="text-white">
                                         {t("navigation")}
                                     </Drawer.Heading>
                                 </Drawer.Header>
-                                <Drawer.Body className="px-2 bg-black">
+
+                                <Drawer.Body className="bg-black px-2">
                                     {renderUserCard()}
                                     {renderNavLinks()}
                                 </Drawer.Body>
@@ -151,7 +156,6 @@ export function SideNavigation({ plan, Userinfo }) {
                     </Drawer.Backdrop>
                 </Drawer>
             </header>
-
             {/* Tablet rail (md to lg): icon-only collapsed sidebar */}
             <aside className="hidden md:flex lg:hidden w-16 shrink-0 flex-col items-center border-r border-gray-800 bg-black py-4">
                 <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-full bg-orange-500 text-sm font-semibold text-white">
