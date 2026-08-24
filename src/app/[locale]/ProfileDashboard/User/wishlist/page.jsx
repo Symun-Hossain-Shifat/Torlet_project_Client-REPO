@@ -35,7 +35,7 @@ export default function Wishlist() {
                     </p>
 
                     <Link
-                        href="/shop"
+                        href="/"
                         className="mt-8 inline-flex items-center rounded-lg bg-black px-6 py-3 font-medium text-white transition-colors duration-200 hover:bg-gray-800"
                     >
                         {t("explore")}

@@ -8,6 +8,7 @@ import { useTranslations } from 'next-intl';
 import toast from 'react-hot-toast';
 import { authClient } from '@/lib/auth-client';
 import { PostCart } from '@/lib/Action/PostData/PostCart';
+import PostWishlist from '@/lib/Action/PostData/PostWishlist';
 
 export default function ProductCard({ product }) {
   const t = useTranslations('ProductShowing');
@@ -53,10 +54,27 @@ export default function ProductCard({ product }) {
     }
   };
 
-  const handleToggleWishlist = () => {
-    setIsWishlisted(!isWishlisted);
-    if (!isWishlisted) {
-      toast.success('Added to Wishlist!');
+  const handleToggleWishlist = async (product) => {
+    if (!user) {
+      toast.error("Please login first");
+      return;
+    }
+
+    if (user.role === "Admin") {
+      toast.error("Admin Can not add to WishList");
+      return;
+    }
+    const Data = {
+      ...product, email: user.email
+    }
+
+    const result = await PostWishlist(Data)
+    if (result) {
+      setIsWishlisted(true);
+      toast.success(`${title} ${t('addedToCart')}`);
+      setTimeout(() => setIsWishlisted(false), 2000);
+    } else {
+      toast.error(result.message);
     }
   };
 
@@ -74,7 +92,7 @@ export default function ProductCard({ product }) {
         {/* Wishlist Quick Action */}
         <button
           type="button"
-          onClick={handleToggleWishlist}
+          onClick={() => handleToggleWishlist(product)}
           aria-label="Add to wishlist"
           className={`absolute right-3 top-3 z-10 flex h-9 w-9 items-center justify-center rounded-full border transition-all duration-200 backdrop-blur-md shadow-md ${isWishlisted
             ? 'border-red-500/50 bg-red-500/20 text-red-500'

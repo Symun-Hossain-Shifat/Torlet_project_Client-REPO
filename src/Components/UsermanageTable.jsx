@@ -24,7 +24,7 @@ export default function UsermanageTable({ User }) {
 
         if (user?.role === "User") {
             const result = await UpdateUser(email, isBlocked)
-            cons
+
             if (result.modifiedCount === 1) {
                 toast.success(`User ${isBlocked === true ? 'Blocked' : 'Unblocked'} Successfully`)
                 router.refresh()

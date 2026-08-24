@@ -59,7 +59,7 @@ export default function Login() {
 
         const session = await authClient.getSession();
 
-        if (session.data?.user?.isBlocked) {
+        if (session.data?.user?.isBlocked === true) {
             alert(
                 t("messages.blockedGeneral"),
                 {
