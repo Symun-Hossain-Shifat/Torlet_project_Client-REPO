@@ -1,8 +1,14 @@
 "use client";
 
+import UpdateUser from "@/lib/Action/EditData/EditUser";
+import { useRouter } from "next/navigation";
+
+
+import toast from "react-hot-toast";
+
 export default function UsermanageTable({ User }) {
     const users = Array.isArray(User) ? User : [];
-
+    const router = useRouter()
     function formatDate(value) {
         if (!value) return "N/A";
         return new Date(value).toLocaleDateString("en-US", {
@@ -12,9 +18,21 @@ export default function UsermanageTable({ User }) {
         });
     }
 
-    function handleBlockToggle(user) {
-        // Hook up to your block/unblock API call here.
-        console.log("Toggle block for", user._id);
+    async function handleBlockToggle(user) {
+        const email = user?.email
+        const isBlocked = user?.isBlocked === false ? true : false
+
+        if (user?.role === "User") {
+            const result = await UpdateUser(email, isBlocked)
+            cons
+            if (result.modifiedCount === 1) {
+                toast.success(`User ${isBlocked === true ? 'Blocked' : 'Unblocked'} Successfully`)
+                router.refresh()
+            }
+        } else {
+            toast.error('Admin Cannot Be Blocked')
+        }
+
     }
 
     return (
@@ -71,8 +89,8 @@ export default function UsermanageTable({ User }) {
                             <span className="text-zinc-500 sm:hidden">Verified: </span>
                             <span
                                 className={`inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium ${user.emailVerified
-                                        ? "border-emerald-400/20 bg-emerald-500/10 text-emerald-300"
-                                        : "border-amber-400/20 bg-amber-500/10 text-amber-300"
+                                    ? "border-emerald-400/20 bg-emerald-500/10 text-emerald-300"
+                                    : "border-amber-400/20 bg-amber-500/10 text-amber-300"
                                     }`}
                             >
                                 {user.emailVerified ? "Verified" : "Unverified"}
@@ -84,8 +102,8 @@ export default function UsermanageTable({ User }) {
                             <span className="text-zinc-500 sm:hidden">Status: </span>
                             <span
                                 className={`inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium ${user.isBlocked
-                                        ? "border-rose-400/20 bg-rose-500/10 text-rose-400"
-                                        : "border-emerald-400/20 bg-emerald-500/10 text-emerald-300"
+                                    ? "border-rose-400/20 bg-rose-500/10 text-rose-400"
+                                    : "border-emerald-400/20 bg-emerald-500/10 text-emerald-300"
                                     }`}
                             >
                                 {user.isBlocked ? "Blocked" : "Active"}
@@ -104,8 +122,8 @@ export default function UsermanageTable({ User }) {
                                 type="button"
                                 onClick={() => handleBlockToggle(user)}
                                 className={`inline-flex w-full items-center justify-center gap-1.5 rounded-lg border px-3 py-1.5 text-xs font-medium transition-colors sm:w-auto ${user.isBlocked
-                                        ? "border-emerald-400/20 bg-emerald-500/10 text-emerald-300 hover:border-emerald-400/40 hover:bg-emerald-500/20"
-                                        : "border-rose-400/20 bg-rose-500/10 text-rose-400 hover:border-rose-400/40 hover:bg-rose-500/20"
+                                    ? "border-emerald-400/20 bg-emerald-500/10 text-emerald-300 hover:border-emerald-400/40 hover:bg-emerald-500/20"
+                                    : "border-rose-400/20 bg-rose-500/10 text-rose-400 hover:border-rose-400/40 hover:bg-rose-500/20"
                                     }`}
                             >
                                 {user.isBlocked ? "Unblock" : "Block"}
