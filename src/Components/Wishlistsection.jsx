@@ -2,6 +2,7 @@
 import Link from "next/link";
 import { Heart } from "lucide-react";
 import { useTranslations } from "next-intl";
+import WishlistCard from "./WishlistCard";
 
 export default function UserWishlist({ Data }) {
 
@@ -17,30 +18,38 @@ export default function UserWishlist({ Data }) {
                     {t("subtitle")}
                 </p>
             </div>
+            {
+                Data.length === 0 ? (
+                    < div className="flex min-h-[55vh] items-center justify-center">
+                        <div className="max-w-md text-center">
+                            <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-red-50">
+                                <Heart className="h-12 w-12 text-red-400" />
+                            </div>
 
-            {/* Empty Wishlist */}
-            <div className="flex min-h-[55vh] items-center justify-center">
-                <div className="max-w-md text-center">
-                    <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-red-50">
-                        <Heart className="h-12 w-12 text-red-400" />
+                            <h2 className="mt-6 text-2xl font-semibold text-gray-900">
+                                {t("emptyTitle")}
+                            </h2>
+
+                            <p className="mt-3 leading-relaxed text-gray-500">
+                                {t("emptyDesc")}
+                            </p>
+
+                            <Link
+                                href="/"
+                                className="mt-8 inline-flex items-center rounded-lg bg-black px-6 py-3 font-medium text-white transition-colors duration-200 hover:bg-gray-800"
+                            >
+                                {t("explore")}
+                            </Link>
+                        </div>
                     </div>
+                ) : (
 
-                    <h2 className="mt-6 text-2xl font-semibold text-gray-900">
-                        {t("emptyTitle")}
-                    </h2>
+                    < > {Data.map(item => <WishlistCard key={item._id} item={item}></WishlistCard>)}
+                    </>
 
-                    <p className="mt-3 leading-relaxed text-gray-500">
-                        {t("emptyDesc")}
-                    </p>
+                )
+            }
 
-                    <Link
-                        href="/"
-                        className="mt-8 inline-flex items-center rounded-lg bg-black px-6 py-3 font-medium text-white transition-colors duration-200 hover:bg-gray-800"
-                    >
-                        {t("explore")}
-                    </Link>
-                </div>
-            </div>
-        </section>
+        </section >
     )
 }
