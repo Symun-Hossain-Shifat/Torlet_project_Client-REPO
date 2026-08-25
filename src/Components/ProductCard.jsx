@@ -71,7 +71,7 @@ export default function ProductCard({ product }) {
     const result = await PostWishlist(Data)
     if (result) {
       setIsWishlisted(true);
-      toast.success(`${title} ${t('addedToCart')}`);
+      toast.success(`${title} Wishlisted`);
       setTimeout(() => setIsWishlisted(false), 2000);
     } else {
       toast.error(result.message);
