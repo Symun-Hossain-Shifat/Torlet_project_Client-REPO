@@ -1,7 +1,7 @@
 "use client";
 
 import { Icon } from "@iconify/react";
-import { useState } from "react";
+
 
 // Swap this for real data from your API/DB.
 
@@ -23,11 +23,6 @@ function formatDate(value) {
 
 export function ProductsTable({ products }) {
 
-
-    function handleEdit(product) {
-        // Hook up to your edit flow (open a modal, route to an edit page, etc.)
-        console.log("Edit product", product.id);
-    }
 
     function handleDelete(id) {
         setProducts((prev) => prev.filter((p) => p.id !== id));
@@ -81,14 +76,7 @@ export function ProductsTable({ products }) {
 
                         {/* Actions */}
                         <div className="flex items-center gap-2 sm:justify-end">
-                            <button
-                                type="button"
-                                onClick={() => handleEdit(product)}
-                                className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-white/5 px-3 py-1.5 text-xs font-medium text-zinc-200 transition-colors hover:border-indigo-400/40 hover:bg-indigo-500/10 hover:text-indigo-300"
-                            >
-                                <Icon className="size-3.5" icon="gravity-ui:pencil" />
-                                Edit
-                            </button>
+
                             <button
                                 type="button"
                                 onClick={() => handleDelete(product.id)}

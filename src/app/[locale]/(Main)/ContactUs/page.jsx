@@ -4,12 +4,23 @@ import { useState } from "react"
 import { useTranslations } from "next-intl"
 
 export default function ContactUsPage() {
-    const [status, setStatus] = useState("idle")
+    const [status, setStatus] = useState(null)
+
     const t = useTranslations("ContactUs")
 
-    function handleSubmit(e) {
+    async function handleSubmit(e) {
         e.preventDefault()
-        setStatus("sent")
+        const formData = new FormData(e.target)
+
+        const data = {
+            name: formData.get("name"),
+            email: formData.get("email"),
+            reason: formData.get("reason"),
+            message: formData.get("message"),
+        }
+
+        console.log(data)
+        setStatus('Sent')
     }
 
     const reasons = [
@@ -103,11 +114,26 @@ export default function ContactUsPage() {
 
                     {/* Form */}
                     <form onSubmit={handleSubmit} className="space-y-5">
+                        {/* Name & Email */}
                         <div className="grid sm:grid-cols-2 gap-5">
-                            <Field label={t("form.name")} id="name" type="text" required />
-                            <Field label={t("form.email")} id="email" type="email" required />
+                            <Field
+                                label={t("form.name")}
+                                id="name"
+                                name="name"
+                                type="text"
+                                required
+                            />
+
+                            <Field
+                                label={t("form.email")}
+                                id="email"
+                                name="email"
+                                type="email"
+                                required
+                            />
                         </div>
 
+                        {/* Reason */}
                         <div>
                             <label
                                 htmlFor="reason"
@@ -115,22 +141,37 @@ export default function ContactUsPage() {
                             >
                                 {t("form.about")}
                             </label>
+
                             <select
                                 id="reason"
-                                className="mt-2 w-full bg-transparent border-b border-[#0E4749]/20 py-2 text-[#1C2526] focus:outline-none focus:border-[#A9814A] transition-colors"
+                                name="reason"
                                 defaultValue=""
                                 required
+                                className="mt-2 w-full bg-transparent border-b border-[#0E4749]/20 py-2 text-[#1C2526] focus:outline-none focus:border-[#A9814A] transition-colors"
                             >
                                 <option value="" disabled>
                                     {t("form.selectOne")}
                                 </option>
-                                <option value="product">{t("form.reasonProduct")}</option>
-                                <option value="warranty">{t("form.reasonWarranty")}</option>
-                                <option value="trade">{t("form.reasonTrade")}</option>
-                                <option value="other">{t("form.reasonOther")}</option>
+
+                                <option value="product">
+                                    {t("form.reasonProduct")}
+                                </option>
+
+                                <option value="warranty">
+                                    {t("form.reasonWarranty")}
+                                </option>
+
+                                <option value="trade">
+                                    {t("form.reasonTrade")}
+                                </option>
+
+                                <option value="other">
+                                    {t("form.reasonOther")}
+                                </option>
                             </select>
                         </div>
 
+                        {/* Message */}
                         <div>
                             <label
                                 htmlFor="message"
@@ -138,24 +179,46 @@ export default function ContactUsPage() {
                             >
                                 {t("form.message")}
                             </label>
+
                             <textarea
                                 id="message"
+                                name="message"
                                 rows={5}
                                 required
                                 className="mt-2 w-full bg-transparent border-b border-[#0E4749]/20 py-2 text-[#1C2526] focus:outline-none focus:border-[#A9814A] transition-colors resize-none"
                             />
                         </div>
 
+                        {/* Submit Button */}
                         <button
                             type="submit"
-                            className="mt-4 bg-[#0E4749] text-[#FAF9F6] px-8 py-3 text-sm uppercase tracking-wider hover:bg-[#0a3839] transition-colors"
+                            disabled={status === "sending"}
+                            className="mt-4 bg-[#0E4749] text-[#FAF9F6] px-8 py-3 text-sm uppercase tracking-wider hover:bg-[#0a3839] transition-colors disabled:opacity-60 disabled:cursor-not-allowed"
                         >
-                            {status === "sent" ? t("form.sent") : t("form.send")}
+                            {status === "sending"
+                                ? t("form.sending")
+                                : status === "sent"
+                                    ? t("form.sent")
+                                    : t("form.send")}
                         </button>
 
+                        {/* Success Message */}
                         {status === "sent" && (
-                            <p className="text-sm text-[#5B6666]">
+                            <p
+                                className="text-sm text-[#5B6666]"
+                                role="status"
+                            >
                                 {t("form.success")}
+                            </p>
+                        )}
+
+                        {/* Error Message */}
+                        {status === "error" && (
+                            <p
+                                className="text-sm text-red-600"
+                                role="alert"
+                            >
+                                {t("form.error")}
                             </p>
                         )}
                     </form>
@@ -165,7 +228,7 @@ export default function ContactUsPage() {
     )
 }
 
-function Field({ label, id, type, required }) {
+function Field({ label, id, name, type, required }) {
     return (
         <div>
             <label
@@ -174,8 +237,10 @@ function Field({ label, id, type, required }) {
             >
                 {label}
             </label>
+
             <input
                 id={id}
+                name={name}
                 type={type}
                 required={required}
                 className="mt-2 w-full bg-transparent border-b border-[#0E4749]/20 py-2 text-[#1C2526] focus:outline-none focus:border-[#A9814A] transition-colors"
