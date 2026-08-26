@@ -2,6 +2,8 @@
 
 import { useState } from "react"
 import { useTranslations } from "next-intl"
+import postContact from "@/lib/Action/PostData/PostContact"
+import toast from "react-hot-toast"
 
 export default function ContactUsPage() {
     const [status, setStatus] = useState(null)
@@ -19,7 +21,15 @@ export default function ContactUsPage() {
             message: formData.get("message"),
         }
 
-        console.log(data)
+
+        const result = await postContact(data)
+
+        if (result.acknowledged === true) {
+            toast.success(`Messeage Sent Successfully`)
+            e.target.reset()
+        } else {
+            toast.error(`Something Went Wrong`)
+        }
         setStatus('Sent')
     }
 
