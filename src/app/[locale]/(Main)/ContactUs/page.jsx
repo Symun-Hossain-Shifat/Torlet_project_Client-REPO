@@ -4,13 +4,18 @@ import { useState } from "react"
 import { useTranslations } from "next-intl"
 import postContact from "@/lib/Action/PostData/PostContact"
 import toast from "react-hot-toast"
+import { authClient } from "@/lib/auth-client"
+
 
 export default function ContactUsPage() {
     const [status, setStatus] = useState(null)
-
+    const { data: session } = authClient.useSession();
+    const user = session?.user;
     const t = useTranslations("ContactUs")
 
     async function handleSubmit(e) {
+
+
         e.preventDefault()
         const formData = new FormData(e.target)
 
@@ -20,7 +25,10 @@ export default function ContactUsPage() {
             reason: formData.get("reason"),
             message: formData.get("message"),
         }
-
+        if (user?.role === 'Admin') {
+            toast.error(`You are not authorized to contact us`)
+            return
+        }
 
         const result = await postContact(data)
 
