@@ -17,7 +17,9 @@ export default async function LocaleLayout({ children, params }) {
   return (
     <NextIntlClientProvider messages={messages}>
       <Toaster position="bottom-right" toastOptions={{ style: { background: '#171717', color: '#fff', border: '1px solid #333' } }} />
-      {children}
+      <div dir="ltr" lang={locale}>
+        {children}
+      </div>
     </NextIntlClientProvider>
   );
 }

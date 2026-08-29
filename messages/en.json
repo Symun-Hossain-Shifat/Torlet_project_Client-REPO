@@ -357,6 +357,7 @@
     "manageProduct": "Manage Product",
     "manageReport": "Manage Report",
     "orderHistory": "Order History",
+    "messages": "Messages",
     "navigation": "Navigation",
     "welcome": "Welcome back 👋"
   },
@@ -401,5 +402,12 @@
     "emptyTitle": "No Reports Available",
     "emptyDesc": "Product reports will appear here once your store has products, inventory updates, and sales activity to analyze.",
     "manageProducts": "Manage Products"
+  },
+  "AdminMessages": {
+    "title": "Messages",
+    "subtitle": "View and respond to customer inquiries, feedback, and support messages.",
+    "emptyTitle": "No Messages Found",
+    "emptyDesc": "You don't have any messages or customer inquiries at the moment. New messages will appear here.",
+    "backToDashboard": "Back to Dashboard"
   }
 }

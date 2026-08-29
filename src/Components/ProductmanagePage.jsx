@@ -2,12 +2,12 @@ import { GetProduct } from "@/lib/Action/GetData/GetProduct";
 import Link from "next/link";
 import { PackageSearch } from "lucide-react";
 import { ProductsTable } from "./ProductmanageTable";
-
-
+import { getTranslations } from "next-intl/server";
 
 export default async function ProductManagePage() {
-    const Products = await GetProduct()
-    console.log(Products)
+    const t = await getTranslations("AdminProducts");
+    const Products = await GetProduct();
+    console.log(Products);
     return (
         <div>
             {

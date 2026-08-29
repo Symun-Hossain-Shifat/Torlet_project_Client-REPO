@@ -7,6 +7,7 @@ import { useTranslations } from "next-intl";
 
 import {
     BiHeart,
+    BiMessage,
     BiRepost,
 } from "react-icons/bi";
 import { BsFileEarmarkBarGraph, BsHouse, BsPeople } from "react-icons/bs";
@@ -35,6 +36,7 @@ export function SideNavigation({ plan, Userinfo }) {
         { href: "/ProfileDashboard/Admin/User", icon: BsPeople, label: t("manageUser") },
         { href: "/ProfileDashboard/Admin/Products", icon: FiBookOpen, label: t("manageProduct") },
         { href: "/ProfileDashboard/Admin/OrderHistory", icon: AiOutlineTransaction, label: t("orderHistory") },
+        { href: "/ProfileDashboard/Admin/Messages", icon: BiMessage, label: t("messages") },
 
     ];
 
@@ -53,7 +55,7 @@ export function SideNavigation({ plan, Userinfo }) {
                 return (
                     <Link
                         href={item.href}
-                        key={item.label}
+                        key={item.href}
                         onClick={onNavigate}
                         className={`flex items-center gap-3 rounded-xl px-3 py-2.5 text-sm font-medium transition-all duration-200 ${isActive
                             ? "bg-orange-500/15 text-orange-400"
@@ -74,7 +76,7 @@ export function SideNavigation({ plan, Userinfo }) {
             {FinalLinks.map((item) => {
                 const isActive = pathname === item.href;
                 return (
-                    <Tooltip key={item.label} content={item.label} placement="right">
+                    <Tooltip key={item.href} content={item.label} placement="right">
                         <Link
                             href={item.href}
                             aria-label={item.label}
