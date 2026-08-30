@@ -13,7 +13,7 @@ export default function ContactInfoShowingPage({ complaint }) {
     };
 
     return (
-        <div className="max-w-2xl my-10 mx-auto p-6 bg-white rounded-xl shadow-sm border border-gray-200">
+        <div className="w-full my-4 mx-auto p-6 bg-white rounded-xl shadow-sm border border-gray-200">
             <div className="flex items-center justify-between mb-4">
                 <div>
                     <h2 className="text-lg font-semibold text-gray-900">

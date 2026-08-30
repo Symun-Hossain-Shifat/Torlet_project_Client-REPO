@@ -45,17 +45,17 @@ export default function WishlistCard({ item }) {
         }
     };
     return (
-        <div className="group relative my-10 flex flex-col overflow-hidden rounded-xl border border-white/10 bg-black transition-colors hover:border-white/20 sm:flex-row">
+        <div className="group relative my-5 flex flex-col overflow-hidden rounded-xl border border-white/10 bg-black transition-colors duration-200 hover:border-white/20 sm:flex-row">
             {/* Image */}
             <Link
                 href={`/products/${productId}`}
-                className="relative aspect-square w-full shrink-0 overflow-hidden bg-neutral-900 sm:aspect-auto sm:w-40 md:w-48"
+                className="relative aspect-[4/3] w-full shrink-0 overflow-hidden bg-neutral-900 sm:aspect-square sm:w-36 md:w-44 lg:w-48"
             >
                 <Image
                     src={image}
                     alt={title}
                     fill
-                    sizes="(max-width: 640px) 100vw, 192px"
+                    sizes="(max-width: 640px) 100vw, (max-width: 768px) 144px, 192px"
                     className="object-cover transition-transform duration-300 group-hover:scale-105"
                 />
                 {category && (
@@ -66,11 +66,11 @@ export default function WishlistCard({ item }) {
             </Link>
 
             {/* Content */}
-            <div className="flex flex-1 flex-col justify-between gap-3 p-4">
+            <div className="flex flex-1 flex-col justify-between  gap-3 p-4 sm:p-5">
                 <div>
-                    <div className="flex items-start justify-between gap-2">
-                        <Link href={`/products/${productId}`}>
-                            <h3 className="line-clamp-2 text-base font-semibold text-white transition-colors hover:text-neutral-300 sm:text-lg">
+                    <div className="flex items-start justify-between gap-3">
+                        <Link href={`/products/${productId}`} className="min-w-0">
+                            <h3 className="line-clamp-2 text-base font-semibold leading-snug text-white transition-colors hover:text-neutral-300 sm:text-lg">
                                 {title}
                             </h3>
                         </Link>
@@ -79,7 +79,7 @@ export default function WishlistCard({ item }) {
                             type="button"
                             onClick={() => onRemove?.(_id, productId)}
                             aria-label="Remove from wishlist"
-                            className="shrink-0 rounded-full p-2 text-neutral-400 transition-colors hover:bg-white/10 hover:text-red-400"
+                            className="shrink-0 rounded-full p-2 text-neutral-400 transition-colors hover:bg-white/10 hover:text-red-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
                         >
                             <Heart className="h-5 w-5 fill-red-500 text-red-500" />
                         </button>
@@ -92,7 +92,7 @@ export default function WishlistCard({ item }) {
                     )}
                 </div>
 
-                <div className="flex items-center justify-between gap-3">
+                <div className="flex flex-wrap items-center justify-between gap-3">
                     <span className="text-lg font-bold text-white">
                         ৳{Number(price).toLocaleString("en-BD")}
                     </span>
@@ -102,7 +102,7 @@ export default function WishlistCard({ item }) {
                             type="button"
                             onClick={() => onRemove?.(_id, productId)}
                             aria-label="Remove item"
-                            className="rounded-lg border border-white/10 p-2 text-neutral-400 transition-colors hover:border-red-400/40 hover:text-red-400"
+                            className="rounded-lg border border-white/10 p-2 text-neutral-400 transition-colors hover:border-red-400/40 hover:text-red-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
                         >
                             <Trash2 className="h-4 w-4" />
                         </button>
@@ -110,10 +110,10 @@ export default function WishlistCard({ item }) {
                         <button
                             type="button"
                             onClick={() => handleAddToCart(item)}
-                            className="flex items-center gap-2 rounded-xl border border-white/20 bg-white/10 px-4 py-2 text-sm font-medium backdrop-blur-md transition-all duration-200 hover:bg-white/20"
+                            className="flex items-center justify-center gap-2 rounded-xl border border-white/20 bg-white/10 px-3 py-2 text-sm font-medium text-white backdrop-blur-md transition-all duration-200 hover:bg-white/20 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30 sm:px-4"
                         >
-                            <ShoppingCart className="h-4 w-4" />
-                            <span className="hidden sm:inline">Add to Cart</span>
+                            <ShoppingCart className="h-4 w-4 shrink-0" />
+                            <span className="hidden md:inline">Add to Cart</span>
                         </button>
                     </div>
                 </div>
