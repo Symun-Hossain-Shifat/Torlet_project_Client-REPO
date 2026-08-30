@@ -16,6 +16,7 @@ import {
 import { authClient } from "@/lib/auth-client";
 import { PostCart } from "@/lib/Action/PostData/PostCart";
 import toast from "react-hot-toast";
+import PostWishlist from "@/lib/Action/PostData/PostWishlist";
 
 // ---------- Helpers ----------
 function toDriveEmbedUrl(url) {
@@ -108,9 +109,28 @@ export default function ProductDetailsPage({ Product }) {
         console.log("Buy now:", { id: Product._id, quantity });
     };
 
-    const handleToggleWishlist = () => {
-        // TODO: wire to your wishlist state / API
-        setWishlisted((prev) => !prev);
+    const handleToggleWishlist = async (product) => {
+        if (!user) {
+            toast.error("Please login first");
+            return;
+        }
+
+        if (user.role === "Admin") {
+            toast.error("Admin Can not add to WishList");
+            return;
+        }
+        const Data = {
+            ...product, email: user.email
+        }
+
+        const result = await PostWishlist(Data)
+        if (result) {
+
+            toast.success(`${Product.title} Wishlisted`);
+
+        } else {
+            toast.error(result.message);
+        }
     };
 
     return (
@@ -253,7 +273,7 @@ export default function ProductDetailsPage({ Product }) {
                                 Add to Cart
                             </button>
                             <button
-                                onClick={handleToggleWishlist}
+                                onClick={() => handleToggleWishlist(Product)}
                                 aria-label="Toggle wishlist"
                                 className={`flex items-center justify-center gap-2 rounded-xl border px-5 py-3.5 text-sm font-semibold transition active:scale-[0.98] ${wishlisted
                                     ? "border-red-500 text-red-500"

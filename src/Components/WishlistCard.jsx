@@ -6,11 +6,15 @@ import { Heart, ShoppingCart, Trash2 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { PostCart } from "@/lib/Action/PostData/PostCart";
 import toast from "react-hot-toast";
+import DeleteWishlist from "@/lib/Action/DeleteData/DeleteWishlist";
+import { useRouter } from "next/navigation";
+
 
 export default function WishlistCard({ item }) {
     if (!item) return null;
     const { data: session } = authClient.useSession();
     const user = session?.user;
+    const router = useRouter()
     const {
         _id,
         productId,
@@ -44,6 +48,24 @@ export default function WishlistCard({ item }) {
             toast.error(result.message);
         }
     };
+
+
+
+    const HandleDeleteWishlist = async (id) => {
+        if (!user) {
+            toast.error("Please login first");
+            return;
+        }
+
+
+        const result = await DeleteWishlist(id)
+        if (result) {
+            toast.success('Product Removed From Wishlist Successfully');
+            router.refresh();
+        } else {
+            toast.error(result.message);
+        }
+    }
     return (
         <div className="group relative my-5 flex flex-col overflow-hidden rounded-xl border border-white/10 bg-black transition-colors duration-200 hover:border-white/20 sm:flex-row">
             {/* Image */}
@@ -100,7 +122,7 @@ export default function WishlistCard({ item }) {
                     <div className="flex items-center gap-2">
                         <button
                             type="button"
-                            onClick={() => onRemove?.(_id, productId)}
+                            onClick={() => HandleDeleteWishlist(item._id)}
                             aria-label="Remove item"
                             className="rounded-lg border border-white/10 p-2 text-neutral-400 transition-colors hover:border-red-400/40 hover:text-red-400 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-white/30"
                         >
