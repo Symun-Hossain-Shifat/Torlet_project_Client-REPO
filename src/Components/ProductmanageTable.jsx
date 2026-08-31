@@ -1,6 +1,9 @@
 "use client";
 
+import Deleteproduct from "@/lib/Action/DeleteData/DeleteProduct";
 import { Icon } from "@iconify/react";
+import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
 
 
 // Swap this for real data from your API/DB.
@@ -23,10 +26,17 @@ function formatDate(value) {
 
 export function ProductsTable({ products }) {
 
-
-    function handleDelete(id) {
-        setProducts((prev) => prev.filter((p) => p.id !== id));
+    const router = useRouter();
+    const handleDelete = async (id) => {
+        const result = await Deleteproduct(id)
+        if (result.acknowledged === true) {
+            toast.success("Product deleted successfully");
+            router.refresh();
+        } else {
+            toast.error("Product deleted failed");
+        }
     }
+
 
     return (
         <div className="w-full rounded-xl border border-white/10 bg-[#0A0A0A] text-zinc-100">
@@ -79,7 +89,7 @@ export function ProductsTable({ products }) {
 
                             <button
                                 type="button"
-                                onClick={() => handleDelete(product.id)}
+                                onClick={() => handleDelete(product._id)}
                                 className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-rose-500/10 px-3 py-1.5 text-xs font-medium text-rose-400 transition-colors hover:border-rose-400/40 hover:bg-rose-500/20"
                             >
                                 <Icon className="size-3.5" icon="gravity-ui:trash-bin" />
