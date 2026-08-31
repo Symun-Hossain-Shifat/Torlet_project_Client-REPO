@@ -9,7 +9,7 @@ import ContactInfoShowingPage from "./Contactinfoshowingpage";
 export default async function ContactInfoMainPage() {
     const t = await getTranslations("AdminMessages");
     const Data = await getContactInfo()
-    console.log(Data)
+
     return (
         <>
             {
