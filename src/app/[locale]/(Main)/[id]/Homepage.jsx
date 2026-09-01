@@ -259,7 +259,7 @@ export default function ProductDetailsPage({ Product }) {
                         {/* Actions */}
                         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                             <button
-                                onClick={handleBuyNow}
+                                onClick='/Order'
                                 className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#D4AF37] px-6 py-3.5 text-sm font-semibold text-black transition hover:bg-[#c4a030] active:scale-[0.98]"
                             >
                                 <Zap className="h-4 w-4" />
