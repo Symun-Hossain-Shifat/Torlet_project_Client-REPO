@@ -17,6 +17,7 @@ import { authClient } from "@/lib/auth-client";
 import { PostCart } from "@/lib/Action/PostData/PostCart";
 import toast from "react-hot-toast";
 import PostWishlist from "@/lib/Action/PostData/PostWishlist";
+import { useRouter } from "next/navigation";
 
 // ---------- Helpers ----------
 function toDriveEmbedUrl(url) {
@@ -33,6 +34,7 @@ function formatDate(dateString) {
         day: "numeric",
     });
 }
+
 
 // ---------- Fallback image wrapper (swap for your existing ProductImage) ----------
 function ProductImage({ src, alt }) {
@@ -64,7 +66,7 @@ export default function ProductDetailsPage({ Product }) {
     const [activeMedia, setActiveMedia] = useState("image");
     const [quantity, setQuantity] = useState(1);
     const [wishlisted, setWishlisted] = useState(false);
-
+    const router = useRouter()
     const { data: session } = authClient.useSession();
     const user = session?.user;
 
@@ -104,10 +106,19 @@ export default function ProductDetailsPage({ Product }) {
         }
     };
 
-    const handleBuyNow = () => {
-        // TODO: route to checkout, e.g. router.push(`/checkout?productId=${Product._id}&qty=${quantity}`)
-        console.log("Buy now:", { id: Product._id, quantity });
-    };
+    const handleClick = () => {
+        if (!user) {
+            toast.error("Please login first");
+            router.push('/Signin')
+            return;
+        }
+        if (user?.role === 'Admin') {
+            toast.error("Admin Can not Order");
+
+            return;
+        }
+        router.push('/Order')
+    }
 
     const handleToggleWishlist = async (product) => {
         if (!user) {
@@ -259,7 +270,7 @@ export default function ProductDetailsPage({ Product }) {
                         {/* Actions */}
                         <div className="mt-8 flex flex-col gap-3 sm:flex-row">
                             <button
-                                onClick='/Order'
+                                onClick={handleClick}
                                 className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#D4AF37] px-6 py-3.5 text-sm font-semibold text-black transition hover:bg-[#c4a030] active:scale-[0.98]"
                             >
                                 <Zap className="h-4 w-4" />

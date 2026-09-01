@@ -7,9 +7,12 @@ import { DeleteCart } from "@/lib/Action/DeleteData/DeleteCart";
 import toast from "react-hot-toast";
 
 import { useRouter } from "next/navigation";
+import { authClient } from "@/lib/auth-client";
 
 export default function CartShowSection({ data }) {
-
+    const router = useRouter()
+    const { data: session } = authClient.useSession();
+    const user = session?.user;
     const [cartItems, setCartItems] = useState(
         (data || []).map((item) => ({ ...item, quantity: item.quantity || 1 }))
     );
@@ -45,7 +48,7 @@ export default function CartShowSection({ data }) {
 
     };
 
-    const router = useRouter();
+
 
     const handleRemove = async (id) => {
         try {
@@ -75,6 +78,19 @@ export default function CartShowSection({ data }) {
     };
 
 
+    const handleClick = () => {
+        if (!user) {
+            toast.error("Please login first");
+            router.push('/Signin')
+            return;
+        }
+        if (user?.role === 'Admin') {
+            toast.error("Admin Can not Order");
+
+            return;
+        }
+        router.push('/Order')
+    }
 
     return (
         <div className="space-y-6">
@@ -191,6 +207,7 @@ export default function CartShowSection({ data }) {
 
                 <button
                     type="button"
+                    onClick={handleClick}
                     className="rounded-lg bg-yellow-500 px-8 py-3 text-sm font-semibold text-black transition-opacity hover:opacity-90"
                 >
                     Order Now
