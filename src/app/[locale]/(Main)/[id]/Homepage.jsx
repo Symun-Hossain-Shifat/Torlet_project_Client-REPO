@@ -274,7 +274,7 @@ export default function ProductDetailsPage({ Product }) {
                                 className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#D4AF37] px-6 py-3.5 text-sm font-semibold text-black transition hover:bg-[#c4a030] active:scale-[0.98]"
                             >
                                 <Zap className="h-4 w-4" />
-                                Buy Now
+                                Order Now
                             </button>
                             <button
                                 onClick={() => handleAddToCart(Product)}
