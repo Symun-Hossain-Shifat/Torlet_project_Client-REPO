@@ -62,14 +62,15 @@ function ProductImage({ src, alt }) {
 }
 
 export default function ProductDetailsPage({ Product }) {
-    console.log(Product)
+
     const [activeMedia, setActiveMedia] = useState("image");
     const [quantity, setQuantity] = useState(1);
+
     const [wishlisted, setWishlisted] = useState(false);
     const router = useRouter()
     const { data: session } = authClient.useSession();
     const user = session?.user;
-
+    const totalPrice = Product.price * quantity;
     // ---------- Not found state ----------
     if (!Product) {
         return (
@@ -109,16 +110,25 @@ export default function ProductDetailsPage({ Product }) {
     const handleClick = () => {
         if (!user) {
             toast.error("Please login first");
-            router.push('/Signin')
+            router.push("/Signin");
             return;
         }
-        if (user?.role === 'Admin') {
-            toast.error("Admin Can not Order");
 
+        if (user?.role === "Admin") {
+            toast.error("Admin Can not Order");
             return;
         }
-        router.push('/Order')
-    }
+
+        const orderData = [
+            {
+                Product: Product.title,
+                price: totalPrice,
+                quantity: quantity,
+            },
+        ];
+
+        router.push(`/Order?data=${encodeURIComponent(JSON.stringify(orderData))}`);
+    };
 
     const handleToggleWishlist = async (product) => {
         if (!user) {
@@ -143,6 +153,8 @@ export default function ProductDetailsPage({ Product }) {
             toast.error(result.message);
         }
     };
+
+
 
     return (
         <div className="min-h-screen bg-black text-neutral-100">
@@ -211,11 +223,11 @@ export default function ProductDetailsPage({ Product }) {
                         </h1>
 
                         <p className="mt-2 text-xs text-neutral-500">
-                            Listed on {formatDate(Product.createdAt)} · ID: {Product._id}
+                            Listed on {formatDate(Product.createdAt)}
                         </p>
 
                         <p className="mt-4 text-3xl font-bold text-[#D4AF37]">
-                            ${Product.price}
+                            ${totalPrice.toFixed(2)}
                         </p>
 
                         <p className="mt-5 leading-relaxed text-neutral-400">

@@ -1,12 +1,24 @@
 'use client'
 import { authClient } from "@/lib/auth-client";
 import { Mail, User, MapPin, Phone, CheckCircle2 } from "lucide-react";
+import { useSearchParams } from "next/navigation";
 
 export default function OrderForm() {
     const { data: session } = authClient.useSession();
     const user = session?.user;
     const name = user?.name;
     const email = user?.email;
+
+    const searchParams = useSearchParams();
+
+    const data = searchParams.get("data");
+
+    const orderData = data ? JSON.parse(decodeURIComponent(data)) : [];
+
+    console.log(orderData);
+
+
+
     return (
         <div className="min-h-screen bg-neutral-950 flex items-center justify-center p-6">
             <div className="w-full max-w-md">
@@ -101,7 +113,8 @@ export default function OrderForm() {
                     {/* Total */}
                     <div className="flex items-center justify-between rounded-lg bg-neutral-900 border border-neutral-800 px-4 py-3">
                         <span className="text-sm text-neutral-400">Total</span>
-                        <span className="text-lg font-semibold text-amber-400">$0.00</span>
+                        <span className="text-lg font-semibold text-amber-400">${orderData[0]?.price
+                        }</span>
                     </div>
 
                     <div className="flex gap-3 pt-1">
@@ -124,7 +137,7 @@ export default function OrderForm() {
                 <div className="mt-5 flex items-start gap-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 px-4 py-3">
                     <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
                     <p className="text-sm text-emerald-300">
-                        Order placed for Home Jersey × 1 — total $45.00. A confirmation will be sent to jane@example.com.
+                        Order placed for {orderData[0].Product} × {orderData[0].quantity} — total ${orderData[0].price}.
                     </p>
                 </div>
             </div>
