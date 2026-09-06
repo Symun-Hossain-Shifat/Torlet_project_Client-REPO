@@ -67,7 +67,7 @@ export default function Navbar({
                         <LanguageSwitcher />
 
                         <IconLink
-                            href="/ProfileDashboard/User/wishlist"
+                            href={user ? "/ProfileDashboard/User/wishlist" : '/Signin'}
                             label={t("wishlist")}
                             count={wishlistCount}
                         >
@@ -75,7 +75,7 @@ export default function Navbar({
                         </IconLink>
 
                         <IconLink
-                            href="/ProfileDashboard/User/Cart"
+                            href={user ? "/ProfileDashboard/User/Cart" : '/Signin'}
                             label={t("cart")}
                             count={cartCount}
                         >
@@ -111,11 +111,11 @@ export default function Navbar({
                     <Menu size={22} />
                 </BottomTabButton>
 
-                <BottomTabLink href="/ProfileDashboard/User/wishlist" label={t("wishlist")} count={wishlistCount}>
+                <BottomTabLink href={user ? "/ProfileDashboard/User/wishlist" : '/Signin'} label={t("wishlist")} count={wishlistCount}>
                     <Heart size={22} />
                 </BottomTabLink>
 
-                <BottomTabLink href="/ProfileDashboard/User/Cart" label={t("cart")} count={cartCount}>
+                <BottomTabLink href={user ? "/ProfileDashboard/User/Cart" : '/Signin'} label={t("cart")} count={cartCount}>
                     <ShoppingCart size={22} />
                 </BottomTabLink>
 

@@ -122,6 +122,7 @@ export default function ProductDetailsPage({ Product }) {
         const orderData = [
             {
                 Product: Product.title,
+                image: Product.image,
                 price: totalPrice,
                 quantity: quantity,
             },
