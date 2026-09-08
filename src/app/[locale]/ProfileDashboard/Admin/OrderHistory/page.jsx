@@ -1,12 +1,14 @@
-"use client";
 
-import Link from "next/link";
-import { ReceiptText } from "lucide-react";
-import { useTranslations } from "next-intl";
 
-export default function TransactionPage() {
-    const t = useTranslations("AdminTransactions");
 
+import OrderShowsection from "@/Components/OrderShowsection";
+import GetOrder from "@/lib/Action/GetData/GetOrder";
+import { getTranslations } from "next-intl/server";
+
+export default async function TransactionPage() {
+    const t = await getTranslations("AdminTransactions");
+    const Data = await GetOrder()
+    console.log(Data)
     return (
         <section className="container mx-auto px-4 py-10">
             {/* Page Heading */}
@@ -19,29 +21,8 @@ export default function TransactionPage() {
                 </p>
             </div>
 
-            {/* Empty State */}
-            <div className="flex min-h-[55vh] items-center justify-center">
-                <div className="max-w-md text-center">
-                    <div className="mx-auto flex h-24 w-24 items-center justify-center rounded-full bg-violet-50">
-                        <ReceiptText className="h-12 w-12 text-violet-500" />
-                    </div>
 
-                    <h2 className="mt-6 text-2xl font-semibold text-gray-900">
-                        {t("emptyTitle")}
-                    </h2>
-
-                    <p className="mt-3 leading-relaxed text-gray-500">
-                        {t("emptyDesc")}
-                    </p>
-
-                    <Link
-                        href="/dashboard/product-management"
-                        className="mt-8 inline-flex items-center rounded-lg bg-black px-6 py-3 font-medium text-white transition-colors duration-200 hover:bg-gray-800"
-                    >
-                        {t("viewProducts")}
-                    </Link>
-                </div>
-            </div>
+            <OrderShowsection></OrderShowsection>
         </section>
     );
 }

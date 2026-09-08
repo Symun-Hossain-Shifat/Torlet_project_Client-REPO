@@ -91,7 +91,7 @@ export default function CartShowSection({ data }) {
         }
         router.push('/Order')
     }
-
+    console.log(cartItems)
     return (
         <div className="space-y-6">
             {/* Cart items */}

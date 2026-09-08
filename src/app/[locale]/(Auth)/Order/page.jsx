@@ -7,8 +7,7 @@ import { authClient } from "@/lib/auth-client";
 import { Mail, User, MapPin, Phone, CheckCircle2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 
-// If you don't already have a toast lib wired up, install one (e.g. `sonner`)
-// and import it here. Left as-is since it was already referenced in your code.
+
 
 function OrderConfirmedModal({ redirectDelay = 4 }) {
     const router = useRouter();

@@ -28,6 +28,7 @@ export function SideNavigation({ plan, Userinfo }) {
         { href: "/ProfileDashboard/User", icon: BsHouse, label: t("overview") },
         { href: "/ProfileDashboard/User/Cart", icon: CgShoppingCart, label: t("cart") },
         { href: "/ProfileDashboard/User/wishlist", icon: BiHeart, label: t("wishlist") },
+        { href: '/ProfileDashboard/User/Order', icon: AiOutlineTransaction, label: t("orderHistory") }
     ];
 
     const AdminNavItems = [
