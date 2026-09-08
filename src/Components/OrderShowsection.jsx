@@ -2,8 +2,11 @@ import Link from "next/link";
 import { ReceiptText } from "lucide-react";
 import { getTranslations } from "next-intl/server";
 import AdminOrderTable from "./AdminOrdertable";
+import { GetUserInserver } from "@/lib/Action/GetData/GetUser";
+import UserOrderTable from "./UserOrdertable";
 
 export default async function OrderShowsection({ Data }) {
+    const user = await GetUserInserver();
     const t = await getTranslations("AdminTransactions");
 
     return (
@@ -33,7 +36,7 @@ export default async function OrderShowsection({ Data }) {
                 </div>
             ) : (
                 <div >
-                    <AdminOrderTable Data={Data} />
+                    {user?.role === 'Admin' ? <AdminOrderTable Data={Data} /> : <UserOrderTable Data={Data} />}
                 </div>
             )}
         </>
