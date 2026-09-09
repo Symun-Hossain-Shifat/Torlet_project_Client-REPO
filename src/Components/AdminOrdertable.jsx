@@ -14,11 +14,11 @@ export default function AdminOrderTable({ Data }) {
                 <thead>
                     <tr className="border-b border-gray-800 text-xs uppercase tracking-wide text-gray-400">
                         <th className="px-4 py-3">Product</th>
-                        <th className="px-4 py-3">Customer</th>
+                        <th className="text-center py-3">Customer</th>
                         <th className="px-4 py-3">Contact</th>
                         <th className="px-4 py-3">Address</th>
-                        <th className="px-4 py-3">Qty</th>
-                        <th className="px-4 py-3">Price</th>
+                        <th className="px-2 py-3">Qty</th>
+                        <th className="px-2 py-3">Price</th>
                         <th className="px-4 py-3">Status</th>
                         <th className="px-4 py-3">Date</th>
                         <th className="px-4 py-3 text-center">Actions</th>
@@ -30,7 +30,7 @@ export default function AdminOrderTable({ Data }) {
                             key={order._id}
                             className="border-b border-gray-900 hover:bg-gray-900/50"
                         >
-                            <td className="flex items-center gap-3 px-4 py-3">
+                            <td className="flex items-center mr-5 gap-3 px-4 py-3">
                                 <Image
                                     src={order.image}
                                     alt={order.product}
@@ -43,7 +43,7 @@ export default function AdminOrderTable({ Data }) {
                                 </span>
                             </td>
 
-                            <td className="px-4 py-3">
+                            <td className="px-4 py-3 text-center">
                                 <div className="text-white">{order.name}</div>
                                 <div className="text-xs text-gray-500">
                                     {order.email}
@@ -56,9 +56,9 @@ export default function AdminOrderTable({ Data }) {
                                 {order.address}
                             </td>
 
-                            <td className="px-4 py-3">{order.quantity}</td>
+                            <td className=" text-center py-3">{order.quantity}</td>
 
-                            <td className="px-4 py-3">${order.price}</td>
+                            <td className=" text-center py-3">${order.price}</td>
 
                             <td className="px-4 py-3">
                                 <span className="rounded-full bg-yellow-500/10 px-3 py-1 text-xs font-medium text-yellow-400">
