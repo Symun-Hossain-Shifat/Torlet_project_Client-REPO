@@ -41,7 +41,7 @@ export default function Banner() {
             {/* Search Icon Feild */}
 
 
-            <div className="mx-auto mt-5 w-10/12">
+            <div className="mx-auto mt-5 w-10/12 md:hidden">
                 <div className="relative">
                     <Search
                         size={20}

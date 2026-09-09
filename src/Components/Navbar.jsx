@@ -10,6 +10,8 @@ import {
     Store,
     Menu,
     UserRoundKey,
+    Search,
+    LogIn,
 } from "lucide-react";
 import { authClient } from "@/lib/auth-client";
 import { useTranslations } from "next-intl";
@@ -37,75 +39,130 @@ export default function Navbar({
         <>
             {/* ---------- Top header ---------- */}
             <header className="sticky top-0 z-40 w-full border-b border-neutral-800 bg-neutral-950/95 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/80">
+                <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
 
-                <div className="mx-auto grid h-16 max-w-7xl grid-cols-3 items-center px-4 sm:px-6 lg:px-8">
-                    {/* Left */}
-                    <div className="flex justify-start">
-                        <Link href="/" className="flex items-center gap-2">
-                            <Store size={22} className="text-amber-400" />
+                    {/* Logo */}
+                    <div className="shrink-0">
+                        <Link
+                            href="/"
+                            className="flex items-center gap-2"
+                        >
+                            <Store
+                                size={22}
+                                className="text-amber-400"
+                            />
+
                             <span className="text-lg font-semibold tracking-tight text-white">
                                 {t("title")}
                             </span>
                         </Link>
                     </div>
 
-                    {/* Middle */}
-                    <div className="hidden md:flex justify-center items-center gap-8">
+                    {/* Search */}
+                    <div className="flex flex-1 justify-center hidden md:flex">
+                        <div className="relative w-full max-w-2xl">
+                            <Search
+                                size={20}
+                                className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+                            />
 
-                        <div className="mx-auto mt-5 w-10/12">
-                            <div className="relative">
-                                <Search
-                                    size={20}
-                                    className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
-                                />
-
-                                <input
-                                    type="text"
-                                    placeholder="Search products..."
-                                    className="w-full rounded-xl border border-gray-700 bg-black py-3 pl-12 pr-5 text-white placeholder:text-gray-400 transition-all duration-200 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30"
-                                />
-                            </div>
+                            <input
+                                type="text"
+                                placeholder="Search products..."
+                                className="
+            w-full
+            rounded-xl
+            border border-gray-700
+            bg-black
+            py-2.5
+            pl-12
+            pr-5
+            text-sm
+            text-white
+            placeholder:text-gray-400
+            transition-all
+            duration-200
+            focus:border-amber-400
+            focus:outline-none
+            focus:ring-2
+            focus:ring-amber-400/30
+          "
+                            />
                         </div>
-
                     </div>
 
-                    {/* Right */}
-                    <div className="hidden md:flex justify-end items-center gap-3">
+                    {/* Right Actions */}
+                    <div className="hidden shrink-0 items-center gap-3 md:flex">
+
+                        {/* Language */}
                         <LanguageSwitcher />
 
+                        {/* Wishlist */}
                         <IconLink
-                            href={user ? "/ProfileDashboard/User/wishlist" : '/Signin'}
+                            href={user ? "/ProfileDashboard/User/wishlist" : "/Signin"}
                             label={t("wishlist")}
                             count={wishlistCount}
                         >
                             <Heart size={20} />
                         </IconLink>
 
+                        {/* Cart */}
                         <IconLink
-                            href={user ? "/ProfileDashboard/User/Cart" : '/Signin'}
+                            href={user ? "/ProfileDashboard/User/Cart" : "/Signin"}
                             label={t("cart")}
                             count={cartCount}
                         >
                             <ShoppingCart size={20} />
                         </IconLink>
 
+                        {/* Profile / Login */}
                         {user ? (
                             <Link
                                 href={`/ProfileDashboard/${role}`}
-                                className="inline-flex items-center gap-2 rounded-full border border-neutral-700 px-3 py-1.5 text-sm font-medium text-neutral-200 hover:border-amber-400 hover:text-amber-400"
+                                className="
+            inline-flex
+            items-center
+            gap-2
+            rounded-full
+            border
+            border-neutral-700
+            px-3
+            py-1.5
+            text-sm
+            font-medium
+            text-neutral-200
+            transition
+            hover:border-amber-400
+            hover:text-amber-400
+          "
                             >
                                 <User size={18} />
-                                <span>{t("profile")}</span>
+
+                                <span>
+                                    {t("profile")}
+                                </span>
                             </Link>
                         ) : (
                             <Link
                                 href="/Signin"
-                                className="rounded-full bg-amber-400 px-4 py-1.5 text-sm font-semibold text-neutral-950 hover:bg-amber-300"
+                                className="
+            rounded-full
+            bg-amber-400
+            px-4
+            py-1.5
+            text-sm
+            font-semibold
+            text-neutral-950
+            transition
+            hover:bg-amber-300
+          "
                             >
                                 {t("login")}
                             </Link>
                         )}
                     </div>
+
+
                 </div>
             </header>
 
