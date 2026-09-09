@@ -47,6 +47,8 @@ export default function Footer() {
         { label: t("links.terms"), href: "/TermsAndConditionsPage" },
         { label: t("links.contact"), href: "/ContactUs" },
         { label: t("links.news"), href: "/News" },
+        { label: t("links.blog"), href: "/Blog" },
+        { label: t("links.aboutUs"), href: "/AboutUs" },
     ];
 
     const SOCIAL_LINKS = [
