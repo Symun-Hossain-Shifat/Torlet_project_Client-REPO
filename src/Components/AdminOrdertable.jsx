@@ -4,13 +4,21 @@ import { Check, Trash2 } from "lucide-react";
 import DeleteOrder from "@/lib/Action/DeleteData/DeleteOrder";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
+import EditOrder from "@/lib/Action/EditData/EditOrder";
 
 
 
 export default function AdminOrderTable({ Data }) {
     const router = useRouter();
-    const HandleOrderDelete = async (id) => {
-        const result = await DeleteOrder(id);
+    const HandleOrderDelete = async (order) => {
+        const id = order._id;
+        const status = order.status
+        if (status === 'pending') {
+            toast.error('Pending Order Cannot Delete');
+            return
+        }
+
+        const result = await DeleteOrder(id)
 
         if (result.deletedCount === 1) {
             toast.success("Order Deleted Successfully");
@@ -18,6 +26,24 @@ export default function AdminOrderTable({ Data }) {
         } else {
             toast.error("Order Not Deleted");
         }
+    }
+    const HandleApprove = async (order) => {
+        const id = order._id;
+        const status = 'Approved';
+        const result = await EditOrder(id, status)
+        if (order.status === 'Approved') {
+            toast.error('Order Already Approved')
+            return
+        }
+
+        if (result.modifiedCount === 1) {
+            toast.success("Order Approved");
+            router.refresh()
+        } else {
+            toast.error("Order Not Approved");
+        }
+
+
     }
     return (
         <div className="w-full overflow-x-auto rounded-xl border border-gray-800 bg-black p-4">
@@ -76,7 +102,7 @@ export default function AdminOrderTable({ Data }) {
                             <td className=" text-center py-3">${order.price}</td>
 
                             <td className="px-4 py-3">
-                                <span className="rounded-full bg-yellow-500/10 px-3 py-1 text-xs font-medium text-yellow-400">
+                                <span className={`${order.status === 'pending' ? 'bg-yellow-500/10 px-3 py-1 text-xs font-medium text-yellow-400' : order.status === 'Approved' ? 'bg-green-500/10 px-3 py-1 text-xs font-medium text-green-400' : 'bg-red-500/10 px-3 py-1 text-xs font-medium text-red-400'}`}>
                                     {order.status}
                                 </span>
                             </td>
@@ -92,13 +118,14 @@ export default function AdminOrderTable({ Data }) {
                                     <button
                                         className="rounded-lg bg-green-600/20 p-2 text-green-400 transition-colors hover:bg-green-600/30"
                                         title="Approve"
+                                        onClick={() => { HandleApprove(order) }}
                                     >
                                         <Check className="h-4 w-4" />
                                     </button>
                                     <button
                                         className="rounded-lg bg-red-600/20 p-2 text-red-400 transition-colors hover:bg-red-600/30"
                                         title="Delete"
-                                        onClick={() => { HandleOrderDelete(order._id) }}
+                                        onClick={() => { HandleOrderDelete(order) }}
                                     >
                                         <Trash2 className="h-4 w-4" />
                                     </button>

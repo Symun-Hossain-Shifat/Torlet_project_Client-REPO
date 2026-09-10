@@ -60,12 +60,12 @@ export default function UserOrderTable({ Data }) {
 
                             <td className="px-4 py-3">${order.price}</td>
 
+
                             <td className="px-4 py-3">
-                                <span className="rounded-full bg-yellow-500/10 px-3 py-1 text-xs font-medium text-yellow-400">
+                                <span className={`${order.status === 'pending' ? 'bg-yellow-500/10 px-3 py-1 text-xs font-medium text-yellow-400' : order.status === 'Approved' ? 'bg-green-500/10 px-3 py-1 text-xs font-medium text-green-400' : 'bg-red-500/10 px-3 py-1 text-xs font-medium text-red-400'}`}>
                                     {order.status}
                                 </span>
                             </td>
-
                             <td className="px-4 py-3 text-gray-400">
                                 {order.CreatedAt
                                     ? new Date(order.CreatedAt).toLocaleDateString("en-GB")
