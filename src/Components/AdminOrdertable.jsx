@@ -1,9 +1,24 @@
+'use client'
 import Image from "next/image";
 import { Check, Trash2 } from "lucide-react";
+import DeleteOrder from "@/lib/Action/DeleteData/DeleteOrder";
+import toast from "react-hot-toast";
+import { useRouter } from "next/navigation";
 
 
 
 export default function AdminOrderTable({ Data }) {
+    const router = useRouter();
+    const HandleOrderDelete = async (id) => {
+        const result = await DeleteOrder(id);
+
+        if (result.deletedCount === 1) {
+            toast.success("Order Deleted Successfully");
+            router.refresh()
+        } else {
+            toast.error("Order Not Deleted");
+        }
+    }
     return (
         <div className="w-full overflow-x-auto rounded-xl border border-gray-800 bg-black p-4">
             <h1 className="mb-4 text-xl font-semibold text-white">
@@ -83,6 +98,7 @@ export default function AdminOrderTable({ Data }) {
                                     <button
                                         className="rounded-lg bg-red-600/20 p-2 text-red-400 transition-colors hover:bg-red-600/30"
                                         title="Delete"
+                                        onClick={() => { HandleOrderDelete(order._id) }}
                                     >
                                         <Trash2 className="h-4 w-4" />
                                     </button>
