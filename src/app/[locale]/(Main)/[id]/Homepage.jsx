@@ -70,7 +70,7 @@ export default function ProductDetailsPage({ Product }) {
     const router = useRouter()
     const { data: session } = authClient.useSession();
     const user = session?.user;
-    const totalPrice = Product.price * quantity;
+
     // ---------- Not found state ----------
     if (!Product) {
         return (
@@ -80,6 +80,8 @@ export default function ProductDetailsPage({ Product }) {
             </div>
         );
     }
+
+    const totalPrice = Product.price * quantity;
 
     const embedVideoUrl = toDriveEmbedUrl(Product.video);
     const handleAddToCart = async (product) => {

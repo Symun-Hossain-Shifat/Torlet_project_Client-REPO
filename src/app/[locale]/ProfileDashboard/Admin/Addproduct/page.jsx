@@ -5,12 +5,68 @@ import { Upload, X, Plus } from "lucide-react";
 import { PostProduct } from "@/lib/Action/PostData/PostProduct";
 
 const CATEGORIES = [
-    "Jerseys",
-    "Sneakers",
-    "Electronics",
-    "Home & Living",
-    "Fashion",
-    "Accessories",
+    "Men's Fashion",
+    "Women's Fashion",
+    "Kids & Baby",
+    "Shoes & Sneakers",
+    "Bags & Accessories",
+
+    "Smartphones & Tablets",
+    "Computers & Laptops",
+    "Mobile Accessories",
+    "Smart Gadgets",
+    "Cameras & Audio",
+
+    "Furniture",
+    "Home Decor",
+    "Kitchen & Dining",
+    "Lighting",
+    "Home Appliances",
+
+    "Skincare",
+    "Makeup",
+    "Hair Care",
+    "Fragrances",
+    "Personal Care",
+
+    "Fruits & Vegetables",
+    "Snacks & Beverages",
+    "Rice & Grains",
+    "Cooking Essentials",
+    "Dairy & Eggs",
+
+    "Fitness Equipment",
+    "Sports Equipment",
+    "Gym Accessories",
+    "Health Care",
+    "Outdoor & Exercise",
+
+    "Baby Clothing",
+    "Toys",
+    "Baby Care",
+    "School Supplies",
+    "Kids Shoes",
+
+    "Car Accessories",
+    "Motorcycle Accessories",
+    "Car Parts",
+    "Car Care",
+    "Helmets & Safety",
+
+    "Books",
+    "Academic Books",
+    "Notebooks",
+    "Pens & Writing",
+    "Office Supplies",
+
+
+
+    "Watches",
+    "Necklaces",
+    "Rings",
+    "Bracelets",
+    "Sunglasses",
+
 ];
 
 export default function ProductForm() {
