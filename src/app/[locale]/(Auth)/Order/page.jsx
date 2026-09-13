@@ -6,6 +6,7 @@ import PostOrder from "@/lib/Action/PostData/PlaceOrder";
 import { authClient } from "@/lib/auth-client";
 import { Mail, User, MapPin, Phone, CheckCircle2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
+import toast from "react-hot-toast";
 
 
 
@@ -95,7 +96,7 @@ export default function OrderForm() {
         if (result) {
             setShowConfirmation(true); // show congrats modal; it handles the redirect itself
         } else {
-            // toast.error("Failed to place order");
+            toast.error("Failed to place order");
         }
     }
 

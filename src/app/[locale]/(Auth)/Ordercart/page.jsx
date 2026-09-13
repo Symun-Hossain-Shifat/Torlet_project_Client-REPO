@@ -1,9 +1,59 @@
 'use client'
 
+import { useState, useEffect } from "react";
+import PostOrder from "@/lib/Action/PostData/PlaceOrder";
 import { authClient } from "@/lib/auth-client";
 import { Mail, User, MapPin, Phone, CheckCircle2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
+import toast from "react-hot-toast";
 
+function OrderConfirmedModal({ redirectDelay = 4 }) {
+    const router = useRouter();
+    const [secondsLeft, setSecondsLeft] = useState(redirectDelay);
+
+    useEffect(() => {
+        if (secondsLeft <= 0) {
+            router.push("/");
+            return;
+        }
+        const timer = setTimeout(() => setSecondsLeft((s) => s - 1), 1000);
+        return () => clearTimeout(timer);
+    }, [secondsLeft, router]);
+
+    return (
+        <div className="fixed inset-0 z-50 flex items-center justify-center bg-black/80 backdrop-blur-sm px-4">
+            <div className="w-full max-w-md rounded-2xl border border-neutral-800 bg-neutral-950 p-8 text-center shadow-2xl">
+                <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center rounded-full bg-emerald-500/10">
+                    <CheckCircle2 className="h-10 w-10 text-emerald-400" />
+                </div>
+
+                <h2 className="text-2xl font-semibold text-neutral-100">Order Confirmed!</h2>
+                <p className="mt-2 text-sm text-neutral-400">
+                    🎉 Congratulations! Your order has been placed successfully.
+                </p>
+
+                <p className="mt-6 text-sm text-neutral-500">
+                    Redirecting to homepage in{" "}
+                    <span className="font-semibold text-neutral-200">{secondsLeft}</span>s
+                </p>
+
+                <div className="mt-4 h-1 w-full overflow-hidden rounded-full bg-neutral-800">
+                    <div
+                        className="h-full bg-amber-500 transition-all duration-1000 ease-linear"
+                        style={{ width: `${(secondsLeft / redirectDelay) * 100}%` }}
+                    />
+                </div>
+
+                <button
+                    onClick={() => router.push("/")}
+                    className="mt-6 w-full rounded-lg bg-amber-500 py-2.5 text-sm font-medium text-neutral-950 transition hover:bg-amber-400"
+                >
+                    Go to Homepage Now
+                </button>
+            </div>
+        </div>
+    );
+}
 
 export default function OrderForm() {
     const { data: session } = authClient.useSession();
@@ -12,29 +62,40 @@ export default function OrderForm() {
     const email = user?.email;
     const router = useRouter();
     const searchParams = useSearchParams();
-    //   const [showConfirmation, setShowConfirmation] = useState(false);
+    const [showConfirmation, setShowConfirmation] = useState(false);
+    const [isSubmitting, setIsSubmitting] = useState(false);
 
-    const data = searchParams.get("data");
+    const rawData = searchParams.get("data");
+    const Data = rawData ? JSON.parse(decodeURIComponent(rawData)) : {};
 
-    const Data = data ? JSON.parse(decodeURIComponent(data)) : [];
-    const { orderData, totalPrice } = Data;
-
+    // ✅ safe fallbacks — works whether the sender sends {orderData, totalPrice}
+    // or just a plain orderData array
+    const orderData = Array.isArray(Data) ? Data : Data?.orderData || [];
+    const totalPrice =
+        Data?.totalPrice ??
+        orderData.reduce((sum, item) => sum + item.price * item.quantity, 0);
 
     const handleSubmit = async (e) => {
-        e.preventDefault()
-        const form = e.target
-        const name = form.name.value
-        const email = form.email.value
-        const address = form.address.value
-        const mobile = form.mobile.value
-        const data = {
-            name,
-            email,
-            address,
-            mobile
+        e.preventDefault();
+
+        if (orderData.length === 0) {
+            toast.error("No items to order");
+            return;
         }
-        const result = orderData.map((item) => ({
-            ...data,
+
+        const form = e.target;
+        const address = form.address.value.trim();
+        const mobile = form.mobile.value.trim();
+
+        if (!address || !mobile) {
+            toast.error("Please fill in address and mobile number");
+            return;
+        }
+
+        const customerInfo = { name, email, address, mobile };
+
+        const payload = orderData.map((item) => ({
+            ...customerInfo,
             product: item.Product,
             price: item.price * item.quantity,
             quantity: item.quantity,
@@ -42,10 +103,24 @@ export default function OrderForm() {
             status: "pending",
         }));
 
-        console.log(result);
+        try {
+            setIsSubmitting(true);
+            const results = await Promise.all(payload.map((item) => PostOrder(item)));
 
+            const allSucceeded = results.every(Boolean);
 
-    }
+            if (allSucceeded) {
+                setShowConfirmation(true); // shows the congrats modal; it handles the redirect itself
+            } else {
+                toast.error("Some items failed to order. Please try again.");
+            }
+        } catch (error) {
+            console.error("Order submission error:", error);
+            toast.error("Failed to place order");
+        } finally {
+            setIsSubmitting(false);
+        }
+    };
 
     return (
         <div className="min-h-screen bg-neutral-950 flex items-center justify-center p-6">
@@ -54,6 +129,7 @@ export default function OrderForm() {
                     <h1 className="text-2xl font-semibold text-neutral-100">Place your order</h1>
                     <p className="text-sm text-neutral-500 mt-1">Fill in your details and pick an item.</p>
                 </div>
+
                 <form onSubmit={handleSubmit} className="space-y-5">
                     {/* Name */}
                     <div>
@@ -64,6 +140,7 @@ export default function OrderForm() {
                             <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
                             <input
                                 id="name"
+                                name="name"
                                 type="text"
                                 defaultValue={name}
                                 readOnly
@@ -81,6 +158,7 @@ export default function OrderForm() {
                             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
                             <input
                                 id="email"
+                                name="email"
                                 type="email"
                                 defaultValue={email}
                                 readOnly
@@ -98,6 +176,7 @@ export default function OrderForm() {
                             <MapPin className="absolute left-3 top-3 w-4 h-4 text-neutral-500" />
                             <textarea
                                 id="address"
+                                name="address"
                                 rows={2}
                                 placeholder="House, road, area, city"
                                 required
@@ -115,6 +194,7 @@ export default function OrderForm() {
                             <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
                             <input
                                 id="mobile"
+                                name="mobile"
                                 type="tel"
                                 placeholder="+8801XXXXXXXXX"
                                 required
@@ -126,16 +206,18 @@ export default function OrderForm() {
                     {/* Total */}
                     <div className="flex items-center justify-between rounded-lg bg-neutral-900 border border-neutral-800 px-4 py-3">
                         <span className="text-sm text-neutral-400">Total</span>
-                        <span className="text-lg font-semibold text-amber-400">${totalPrice
-                        }</span>
+                        <span className="text-lg font-semibold text-amber-400">
+                            ৳{totalPrice.toLocaleString()}
+                        </span>
                     </div>
 
                     <div className="flex gap-3 pt-1">
                         <button
                             type="submit"
-                            className="flex-1 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-neutral-950 text-sm font-medium transition-colors"
+                            disabled={isSubmitting}
+                            className="flex-1 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-neutral-950 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60"
                         >
-                            Confirm order
+                            {isSubmitting ? "Placing order..." : "Confirm order"}
                         </button>
                         <button
                             type="button"
@@ -147,13 +229,23 @@ export default function OrderForm() {
                     </div>
                 </form>
 
-                <div className="mt-5 flex items-start gap-2.5 rounded-lg bg-emerald-500/10 border border-emerald-500/30 px-4 py-3">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
-                    <p className="text-sm text-emerald-300">
-                        Order placed for Product × 1 — total $0.
-                    </p>
-                </div>
+                {/* Order summary — shows every item, not just one */}
+                {orderData.length > 0 && (
+                    <div className="mt-5 space-y-2 rounded-lg bg-emerald-500/10 border border-emerald-500/30 px-4 py-3">
+                        {orderData.map((item, idx) => (
+                            <div key={idx} className="flex items-start gap-2.5">
+                                <CheckCircle2 className="w-4 h-4 text-emerald-400 mt-0.5 shrink-0" />
+                                <p className="text-sm text-emerald-300">
+                                    {item.Product} × {item.quantity} — ৳
+                                    {(item.price * item.quantity).toLocaleString()}
+                                </p>
+                            </div>
+                        ))}
+                    </div>
+                )}
             </div>
+
+            {showConfirmation && <OrderConfirmedModal redirectDelay={4} />}
         </div>
     );
 }
