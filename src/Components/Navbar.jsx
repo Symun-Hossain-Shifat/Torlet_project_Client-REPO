@@ -136,32 +136,35 @@ export default function Navbar({
             <header className="sticky top-0 z-40 w-full border-b border-neutral-800 bg-neutral-950/95 backdrop-blur supports-[backdrop-filter]:bg-neutral-950/80">
                 <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
 
-                    {/* Category menu icon — desktop/tablet only. On mobile this is NOT shown up top; it lives in the bottom bar instead. */}
-                    <button
-                        type="button"
-                        onClick={() => setIsCategoryDrawerOpen(true)}
-                        aria-label="Open categories"
-                        className="hidden shrink-0 items-center justify-center rounded-full py-2 text-neutral-200  md:inline-flex"
-                    >
-                        <Menu size={18} />
-                    </button>
-
-                    {/* Logo */}
-                    <div className="shrink-0">
-                        <Link
-                            href="/"
-                            className="flex items-center gap-2"
+                    <div className="flex items-center gap-2">
+                        {/* Category menu icon — desktop/tablet only. */}
+                        <button
+                            type="button"
+                            onClick={() => setIsCategoryDrawerOpen(true)}
+                            aria-label="Open categories"
+                            className="hidden shrink-0 items-center justify-center rounded-full py-2 text-neutral-200 md:inline-flex"
                         >
-                            <Store
-                                size={22}
-                                className="text-amber-400"
-                            />
+                            <Menu size={18} />
+                        </button>
 
-                            <span className="text-lg font-semibold tracking-tight text-white">
-                                {t("title")}
-                            </span>
-                        </Link>
+                        {/* Logo */}
+                        <div className="shrink-0">
+                            <Link
+                                href="/"
+                                className="flex items-center gap-2"
+                            >
+                                <Store
+                                    size={22}
+                                    className="text-amber-400"
+                                />
+
+                                <span className="text-lg font-semibold tracking-tight text-white">
+                                    {t("title")}
+                                </span>
+                            </Link>
+                        </div>
                     </div>
+
 
                     {/* Search */}
                     <div className="flex flex-1 justify-center hidden md:flex">

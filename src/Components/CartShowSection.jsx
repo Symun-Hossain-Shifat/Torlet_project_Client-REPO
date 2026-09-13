@@ -89,9 +89,24 @@ export default function CartShowSection({ data }) {
 
             return;
         }
-        router.push('/Order')
+
+        const totalPrice = cartItems.reduce((total, item) => total + item.price * item.quantity, 0);
+
+
+        const orderData = cartItems.map((item) => ({
+            Product: item.title,
+            image: item.image,
+            price: item.price,
+            quantity: item.quantity,
+        }));
+        const data = {
+            orderData,
+            totalPrice
+        }
+
+        router.push(`/Ordercart?data=${encodeURIComponent(JSON.stringify(data))}`);
     }
-    console.log(cartItems)
+
     return (
         <div className="space-y-6">
             {/* Cart items */}
