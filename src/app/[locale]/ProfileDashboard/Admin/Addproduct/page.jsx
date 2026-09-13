@@ -5,69 +5,64 @@ import { Upload, X, Plus } from "lucide-react";
 import { PostProduct } from "@/lib/Action/PostData/PostProduct";
 
 const CATEGORIES = [
+
     "Men's Fashion",
     "Women's Fashion",
     "Kids & Baby",
+    "T-Shirts",
     "Shoes & Sneakers",
-    "Bags & Accessories",
+    "Bags",
+    "Watches",
+    "Sunglasses",
+
 
     "Smartphones & Tablets",
     "Computers & Laptops",
-    "Mobile Accessories",
     "Smart Gadgets",
-    "Cameras & Audio",
+    "Home Appliances",
+    "Headphones & Earbuds",
+    "Gaming",
 
     "Furniture",
     "Home Decor",
     "Kitchen & Dining",
+    "Bedding & Bath",
     "Lighting",
-    "Home Appliances",
 
     "Skincare",
     "Makeup",
-    "Hair Care",
-    "Fragrances",
-    "Personal Care",
+    "Hair & Personal Care",
+    "Health & Wellness",
 
-    "Fruits & Vegetables",
-    "Snacks & Beverages",
-    "Rice & Grains",
+    "Fresh Fruits",
+    "Fresh Vegetables",
+    "Snacks",
+    "Beverages",
     "Cooking Essentials",
-    "Dairy & Eggs",
 
     "Fitness Equipment",
     "Sports Equipment",
-    "Gym Accessories",
-    "Health Care",
-    "Outdoor & Exercise",
+    "Yoga & Exercise",
 
     "Baby Clothing",
+    "Kids Clothing",
     "Toys",
-    "Baby Care",
     "School Supplies",
-    "Kids Shoes",
-
-    "Car Accessories",
-    "Motorcycle Accessories",
-    "Car Parts",
-    "Car Care",
-    "Helmets & Safety",
 
     "Books",
-    "Academic Books",
-    "Notebooks",
-    "Pens & Writing",
     "Office Supplies",
+    "Notebooks & Diaries",
 
+    "Football",
+    "Cricket",
+    "Sportswear",
 
-
-    "Watches",
     "Necklaces",
+    "Earrings",
     "Rings",
-    "Bracelets",
-    "Sunglasses",
-
-];
+    "Wallets",
+    "Belts",
+]
 
 export default function ProductForm() {
     const [title, setTitle] = useState("");

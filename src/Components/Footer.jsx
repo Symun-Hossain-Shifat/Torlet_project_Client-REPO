@@ -52,9 +52,9 @@ export default function Footer() {
     ];
 
     const SOCIAL_LINKS = [
-        { label: t("social.instagram"), href: "https://instagram.com", icon: FaInstagram },
-        { label: t("social.facebook"), href: "https://facebook.com", icon: FaFacebookF },
-        { label: t("social.twitter"), href: "https://twitter.com", icon: FaTwitter },
+        { label: t("social.instagram"), href: "https://www.instagram.com/torle.tcom?stkn=MTFzNTd6ZXpoaGpyNg%3D%3D&utm_source=qr", icon: FaInstagram },
+        { label: t("social.facebook"), href: "https://www.facebook.com/torlet.page?mibextid=wwXIfr&rdid=eOFlfvoCj7XQMTnZ&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F19FinNjZBp%2F%3Fmibextid%3DwwXIfr#", icon: FaFacebookF },
+        { label: t("social.twitter"), href: "https://x.com/mdmozhar?s=11", icon: FaTwitter },
         { label: t("social.linkedin"), href: "https://linkedin.com", icon: FaLinkedinIn },
         { label: t("social.news"), href: "/News", icon: FaNewspaper },
     ];
