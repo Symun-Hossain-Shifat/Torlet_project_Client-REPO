@@ -2,13 +2,18 @@
 import Banner from "@/Components/Banner";
 import WhyChooseUs from "@/Components/Chooseus";
 import { ProductShowing } from "@/Components/ProductShowing";
-import Image from "next/image";
+import { GetProduct } from "@/lib/Action/GetData/GetProduct";
 
-export default function Home() {
+
+
+
+export default async function Home() {
+  const fetchedProducts = await GetProduct();
+
   return (
     <div>
       <Banner></Banner>
-      <ProductShowing></ProductShowing>
+      <ProductShowing fetchedProducts={fetchedProducts}></ProductShowing>
       <WhyChooseUs></WhyChooseUs>
     </div>
   );

@@ -1,13 +1,18 @@
+'use client'
 
-import { GetProduct } from "@/lib/Action/GetData/GetProduct";
 import ProductCard from "./ProductCard";
-import { getTranslations } from "next-intl/server";
+
 import { PackageOpen, Sparkles } from "lucide-react";
+import { useCategory } from "@/context/CategoryContext";
+import { useTranslations } from "next-intl";
 
-export const ProductShowing = async () => {
-    const t = await getTranslations("ProductShowing");
 
-    const fetchedProducts = await GetProduct();
+export const ProductShowing = ({ fetchedProducts }) => {
+    const t = useTranslations("ProductShowing");
+
+    const { selectedCategory } = useCategory();
+    const category = selectedCategory || 'All';
+    console.log(category);
     const products = Array.isArray(fetchedProducts) ? fetchedProducts : [];
     const hasProducts = products.length > 0;
 

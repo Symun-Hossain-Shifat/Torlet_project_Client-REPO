@@ -1,7 +1,12 @@
+
+
+
+
 "use client";
 
 import { useState } from "react";
 import Link from "next/link";
+
 import {
     X,
     Heart,
@@ -16,10 +21,12 @@ import {
 import { authClient } from "@/lib/auth-client";
 import { useTranslations } from "next-intl";
 import LanguageSwitcher from "@/Components/LanguageSwitcher";
+import { useCategory } from "@/context/CategoryContext";
+
 
 /**
  * Full category list (parent categories + subcategories) shown inside
- * the category drawer. UI only — no filtering logic wired up.
+ * the category drawer.
  */
 const CATEGORIES = [
     {
@@ -130,6 +137,9 @@ export default function Navbar({
     const role = user?.role;
     const t = useTranslations("Navbar");
 
+    const { handleCategorySelect } = useCategory();
+
+
     return (
         <>
             {/* ---------- Top header ---------- */}
@@ -137,7 +147,6 @@ export default function Navbar({
                 <div className="mx-auto flex h-16 max-w-7xl items-center gap-4 px-4 sm:px-6 lg:px-8">
 
                     <div className="flex items-center gap-2">
-                        {/* Category menu icon — desktop/tablet only. */}
                         <button
                             type="button"
                             onClick={() => setIsCategoryDrawerOpen(true)}
@@ -147,7 +156,6 @@ export default function Navbar({
                             <Menu size={18} />
                         </button>
 
-                        {/* Logo */}
                         <div className="shrink-0">
                             <Link
                                 href="/"
@@ -164,7 +172,6 @@ export default function Navbar({
                             </Link>
                         </div>
                     </div>
-
 
                     {/* Search */}
                     <div className="flex flex-1 justify-center hidden md:flex">
@@ -201,11 +208,8 @@ export default function Navbar({
 
                     {/* Right Actions */}
                     <div className="hidden shrink-0 items-center gap-3 md:flex">
-
-                        {/* Language */}
                         <LanguageSwitcher />
 
-                        {/* Wishlist */}
                         <IconLink
                             href={user ? "/ProfileDashboard/User/wishlist" : "/Signin"}
                             label={t("wishlist")}
@@ -214,7 +218,6 @@ export default function Navbar({
                             <Heart size={20} />
                         </IconLink>
 
-                        {/* Cart */}
                         <IconLink
                             href={user ? "/ProfileDashboard/User/Cart" : "/Signin"}
                             label={t("cart")}
@@ -223,7 +226,6 @@ export default function Navbar({
                             <ShoppingCart size={20} />
                         </IconLink>
 
-                        {/* Profile / Login */}
                         {user ? (
                             <Link
                                 href={`/ProfileDashboard/${role}`}
@@ -245,10 +247,7 @@ export default function Navbar({
           "
                             >
                                 <User size={18} />
-
-                                <span>
-                                    {t("profile")}
-                                </span>
+                                <span>{t("profile")}</span>
                             </Link>
                         ) : (
                             <Link
@@ -270,11 +269,10 @@ export default function Navbar({
                         )}
                     </div>
 
-
                 </div>
             </header>
 
-            {/* ---------- Mobile bottom tab bar: Categories (+ language nested under it), Wishlist, Cart, Profile/Login ---------- */}
+            {/* ---------- Mobile bottom tab bar ---------- */}
             <nav className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around border-t border-neutral-800 bg-neutral-950 py-2 md:hidden">
                 <BottomTabButton
                     label="Categories"
@@ -299,26 +297,23 @@ export default function Navbar({
                 </BottomTabLink>
             </nav>
 
-            {/* ---------- Category drawer (opens from the left; same drawer for header button and bottom-bar button) ---------- */}
+            {/* ---------- Category drawer ---------- */}
             <div
                 className={`fixed inset-0 z-[60] ${isCategoryDrawerOpen ? "pointer-events-auto" : "pointer-events-none"
                     }`}
             >
-                {/* Overlay */}
                 <div
                     onClick={() => setIsCategoryDrawerOpen(false)}
                     className={`absolute inset-0 bg-black/60 transition-opacity duration-300 ${isCategoryDrawerOpen ? "opacity-100" : "opacity-0"
                         }`}
                 />
 
-                {/* Panel */}
                 <aside
                     className={`absolute left-0 top-0 flex h-dvh w-80 max-w-[85%] flex-col overflow-hidden bg-neutral-900 shadow-xl transition-transform duration-300 ease-in-out ${isCategoryDrawerOpen
                         ? "translate-x-0"
                         : "-translate-x-full"
                         }`}
                 >
-                    {/* Header */}
                     <div className="flex shrink-0 items-center justify-between border-b border-neutral-800 px-4 py-4">
                         <span className="text-base font-semibold text-white">
                             Categories
@@ -334,10 +329,7 @@ export default function Navbar({
                         </button>
                     </div>
 
-                    {/* EVERYTHING SCROLLS */}
                     <div className="min-h-0 flex-1 overflow-y-auto overscroll-contain">
-
-                        {/* Categories */}
                         <div className="p-2">
                             {CATEGORIES.map((group) => (
                                 <details
@@ -355,23 +347,26 @@ export default function Navbar({
 
                                     <div className="flex flex-col gap-0.5 pb-2 pl-3">
                                         {group.subcategories.map((sub) => (
-                                            <span
+                                            <button
                                                 key={sub}
-                                                className="cursor-pointer rounded-md px-3 py-2 text-sm text-neutral-400 hover:bg-neutral-800 hover:text-amber-400"
+                                                type="button"
+                                                onClick={() => {
+                                                    handleCategorySelect(sub);
+                                                    setIsCategoryDrawerOpen(false);
+                                                }}
+                                                className="cursor-pointer rounded-md px-3 py-2 text-left text-sm text-neutral-400 hover:bg-neutral-800 hover:text-amber-400"
                                             >
                                                 {sub}
-                                            </span>
+                                            </button>
                                         ))}
                                     </div>
                                 </details>
                             ))}
                         </div>
 
-                        {/* Language Switcher — THIS WILL SCROLL */}
                         <div className="block md:hidden border-t border-neutral-800 p-4">
                             <LanguageSwitcher />
                         </div>
-
                     </div>
                 </aside>
             </div>
@@ -379,7 +374,6 @@ export default function Navbar({
     );
 }
 
-// Desktop icon button (header)
 function IconLink({ href, label, count = 0, children }) {
     return (
         <Link
@@ -397,7 +391,6 @@ function IconLink({ href, label, count = 0, children }) {
     );
 }
 
-// Mobile bottom bar item that navigates (Link)
 function BottomTabLink({ href, label, count = 0, children }) {
     return (
         <Link
@@ -418,7 +411,6 @@ function BottomTabLink({ href, label, count = 0, children }) {
     );
 }
 
-// Mobile bottom bar item that triggers an action
 function BottomTabButton({ label, onClick, children }) {
     return (
         <button
