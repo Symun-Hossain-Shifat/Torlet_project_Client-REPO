@@ -12,8 +12,8 @@ export const ProductShowing = ({ fetchedProducts }) => {
 
     const { selectedCategory } = useCategory();
     const category = selectedCategory || 'All';
-    console.log(category);
-    const products = Array.isArray(fetchedProducts) ? fetchedProducts : [];
+
+    const products = category === 'All' ? fetchedProducts : fetchedProducts.filter((product) => product.category === category);
     const hasProducts = products.length > 0;
 
     return (

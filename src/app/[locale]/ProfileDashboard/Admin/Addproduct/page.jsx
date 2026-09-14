@@ -22,6 +22,8 @@ const CATEGORIES = [
     "Home Appliances",
     "Headphones & Earbuds",
     "Gaming",
+    "Smart Watch",
+    "Camera & Drone",
 
     "Furniture",
     "Home Decor",
