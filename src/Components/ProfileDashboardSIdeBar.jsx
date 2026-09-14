@@ -18,6 +18,7 @@ import { FiBookOpen } from "react-icons/fi";
 import { AiOutlineTransaction } from "react-icons/ai";
 import { Button, Drawer, Tooltip } from "@heroui/react";
 import { MenuIcon } from "lucide-react";
+import LanguageSwitcher from "@/Components/LanguageSwitcher";
 
 export function SideNavigation({ plan, Userinfo }) {
     const pathname = usePathname();
@@ -129,48 +130,62 @@ export function SideNavigation({ plan, Userinfo }) {
                     </span>
                 </div>
 
-                <Drawer>
-                    <Drawer.Trigger>
-                        <span
-                            aria-label="Navigation"
-                            className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-md bg-orange-500 text-white"
-                        >
-                            <MenuIcon />
-                        </span>
-                    </Drawer.Trigger>
+                <div className="flex items-center gap-2">
 
-                    <Drawer.Backdrop>
-                        <Drawer.Content placement="left">
-                            <Drawer.Dialog className="w-[85vw] max-w-xs bg-black">
-                                <Drawer.CloseTrigger />
+                    <Drawer>
+                        <Drawer.Trigger>
+                            <span
 
-                                <Drawer.Header>
-                                    <Drawer.Heading className="text-white">
-                                        {t("navigation")}
-                                    </Drawer.Heading>
-                                </Drawer.Header>
+                                className="flex h-10 w-10 cursor-pointer items-center justify-center rounded-md bg-orange-500 text-white"
+                            >
+                                <MenuIcon />
+                            </span>
+                        </Drawer.Trigger>
 
-                                <Drawer.Body className="bg-black px-2">
-                                    {renderUserCard()}
-                                    {renderNavLinks()}
-                                </Drawer.Body>
-                            </Drawer.Dialog>
-                        </Drawer.Content>
-                    </Drawer.Backdrop>
-                </Drawer>
+                        <Drawer.Backdrop>
+                            <Drawer.Content placement="left">
+                                <Drawer.Dialog className="w-[85vw] max-w-xs bg-black">
+                                    <Drawer.CloseTrigger />
+
+                                    <Drawer.Header>
+
+                                    </Drawer.Header>
+
+                                    <Drawer.Body className="bg-black px-2 flex flex-col gap-4">
+                                        {renderUserCard()}
+                                        {renderNavLinks()}
+                                        <div className="mt-auto border-t border-gray-800 pt-4">
+                                            <LanguageSwitcher />
+                                        </div>
+                                    </Drawer.Body>
+                                </Drawer.Dialog>
+                            </Drawer.Content>
+                        </Drawer.Backdrop>
+                    </Drawer>
+                </div>
             </header>
             {/* Tablet rail (md to lg): icon-only collapsed sidebar */}
-            <aside className="hidden md:flex lg:hidden w-16 shrink-0 flex-col items-center border-r border-gray-800 bg-black py-4">
-                <div className="mb-4 flex h-9 w-9 items-center justify-center rounded-full bg-orange-500 text-sm font-semibold text-white">
-                    {initials}
+            <aside className="hidden md:flex lg:hidden w-16 shrink-0 flex-col items-center justify-between border-r border-gray-800 bg-black py-4">
+                <div className="flex flex-col items-center gap-4 w-full">
+                    <div className="flex h-9 w-9 items-center justify-center rounded-full bg-orange-500 text-sm font-semibold text-white">
+                        {initials}
+                    </div>
+                    {renderNavIcons()}
                 </div>
-                {renderNavIcons()}
+                <div className="mt-auto pt-4">
+                    <LanguageSwitcher />
+                </div>
             </aside>
 
             {/* Desktop sidebar (lg+): full labeled sidebar */}
-            <aside className="hidden lg:flex lg:flex-col w-56 xl:w-64 shrink-0 border-r border-gray-800 bg-black p-4">
-                {renderUserCard()}
-                {renderNavLinks()}
+            <aside className="hidden lg:flex lg:flex-col justify-between w-56 xl:w-64 shrink-0 border-r border-gray-800 bg-black p-4">
+                <div className="flex flex-col">
+                    {renderUserCard()}
+                    {renderNavLinks()}
+                </div>
+                <div className="mt-auto pt-4 border-t border-gray-800">
+                    <LanguageSwitcher />
+                </div>
             </aside>
         </>
     );

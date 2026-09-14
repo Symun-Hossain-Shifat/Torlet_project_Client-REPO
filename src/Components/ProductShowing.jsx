@@ -56,14 +56,25 @@ export const ProductShowing = ({ fetchedProducts }) => {
 /**
  * Shown when no products have been posted yet (empty DB or fetch failure).
  */
+
+
+
+
 const EmptyProductState = ({ message }) => (
-    <div className="flex flex-col items-center justify-center rounded-2xl border border-dashed border-neutral-800 bg-neutral-900/50 px-6 py-16 text-center">
-        <div className="mb-4 flex h-16 w-16 items-center justify-center rounded-full border border-neutral-800 bg-neutral-900">
-            <PackageOpen size={28} className="text-neutral-500" />
+    <div className="relative overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-900/40 p-8 text-center backdrop-blur-md sm:p-12">
+        {/* Glow effect in background */}
+        <div className="pointer-events-none absolute -top-12 left-1/2 h-32 w-32 -translate-x-1/2 rounded-full bg-amber-400/10 blur-3xl" />
+
+        <div className="relative z-10 mx-auto flex max-w-sm flex-col items-center">
+            <div className="mb-4 flex h-20 w-20 items-center justify-center rounded-2xl border border-neutral-700/50 bg-neutral-900/80 shadow-2xl shadow-amber-400/5">
+                <PackageOpen size={36} className="text-amber-400" />
+            </div>
+
+            <h3 className="text-lg font-bold text-white">Stock Updating</h3>
+            <p className="mt-1 text-sm font-medium text-neutral-300">{message}</p>
+            <p className="mt-2 text-xs text-neutral-500">
+                We are restocking soon. Check back in a little while!
+            </p>
         </div>
-        <p className="text-base font-medium text-neutral-300">{message}</p>
-        <p className="mt-1 text-sm text-neutral-500">
-            New products will be displayed here.
-        </p>
     </div>
 );

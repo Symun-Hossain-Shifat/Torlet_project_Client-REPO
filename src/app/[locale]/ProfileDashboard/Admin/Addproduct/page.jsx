@@ -154,7 +154,7 @@ export default function ProductForm() {
                         type="text"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        placeholder="e.g. Argentina Home Jersey 2026"
+                        placeholder="Product Title... "
                         required
                         className="w-full bg-neutral-900 border border-neutral-800 focus:border-yellow-500 outline-none rounded-lg px-3 py-2.5 text-sm placeholder-neutral-600 transition-colors"
                     />

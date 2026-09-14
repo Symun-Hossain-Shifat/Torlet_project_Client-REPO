@@ -167,7 +167,7 @@ export default function Footer() {
                                 <li key={social.label}>
                                     <a
                                         href={social.href}
-                                        target="_blank"
+
                                         rel="noopener noreferrer"
                                         className="inline-flex items-center gap-2 text-neutral-500 hover:text-amber-400"
                                     >

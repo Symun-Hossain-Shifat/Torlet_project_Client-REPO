@@ -50,13 +50,13 @@ export default function LanguageSwitcher() {
             onClick={() => setIsOpen(false)}
             className="fixed inset-0 z-40 bg-transparent"
           />
-          <div className="absolute right-0 mt-2 w-32 origin-top-right rounded-xl border border-neutral-800 bg-neutral-950 p-1 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
+          <div className="absolute right-0 rtl:right-auto rtl:left-0 mt-2 w-32 origin-top-right rtl:origin-top-left rounded-xl border border-neutral-800 bg-neutral-950 p-1 shadow-xl ring-1 ring-black ring-opacity-5 focus:outline-none z-50">
             {languages.map((lang) => (
               <button
                 key={lang.code}
                 type="button"
                 onClick={() => handleLanguageChange(lang.code)}
-                className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left text-xs font-semibold transition ${lang.code === locale
+                className={`flex w-full items-center gap-2 rounded-lg px-3 py-2 text-left rtl:text-right text-xs font-semibold transition ${lang.code === locale
                   ? 'bg-amber-400/10 text-amber-400'
                   : 'text-neutral-400 hover:bg-neutral-900 hover:text-neutral-200'
                   }`}

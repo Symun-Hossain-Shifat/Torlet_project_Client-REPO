@@ -30,101 +30,101 @@ import { useCategory } from "@/context/CategoryContext";
  */
 const CATEGORIES = [
     {
-        name: "Fashion & Apparel",
+        key: "FashionApparel",
         subcategories: [
-            "Men's Fashion",
-            "Women's Fashion",
-            "Kids & Baby",
-            "T-Shirts",
-            "Shoes & Sneakers",
-            "Bags",
-            "Watches",
-            "Sunglasses",
+            { key: "MensFashion", name: "Men's Fashion" },
+            { key: "WomensFashion", name: "Women's Fashion" },
+            { key: "KidsBaby", name: "Kids & Baby" },
+            { key: "TShirts", name: "T-Shirts" },
+            { key: "ShoesSneakers", name: "Shoes & Sneakers" },
+            { key: "Bags", name: "Bags" },
+            { key: "Watches", name: "Watches" },
+            { key: "Sunglasses", name: "Sunglasses" },
         ],
     },
     {
-        name: "Electronics & Gadgets",
+        key: "ElectronicsGadgets",
         subcategories: [
-            "Smartphones & Tablets",
-            "Computers & Laptops",
-            "Smart Gadgets",
-            "Home Appliances",
-            "Headphones & Earbuds",
-            "Gaming",
-            "Smart Watch",
-            "Camera & Drone"
+            { key: "SmartphonesTablets", name: "Smartphones & Tablets" },
+            { key: "ComputersLaptops", name: "Computers & Laptops" },
+            { key: "SmartGadgets", name: "Smart Gadgets" },
+            { key: "HomeAppliances", name: "Home Appliances" },
+            { key: "HeadphonesEarbuds", name: "Headphones & Earbuds" },
+            { key: "Gaming", name: "Gaming" },
+            { key: "SmartWatch", name: "Smart Watch" },
+            { key: "CameraDrone", name: "Camera & Drone" },
         ],
     },
     {
-        name: "Home & Living",
+        key: "HomeLiving",
         subcategories: [
-            "Furniture",
-            "Home Decor",
-            "Kitchen & Dining",
-            "Bedding & Bath",
-            "Lighting",
+            { key: "Furniture", name: "Furniture" },
+            { key: "HomeDecor", name: "Home Decor" },
+            { key: "KitchenDining", name: "Kitchen & Dining" },
+            { key: "BeddingBath", name: "Bedding & Bath" },
+            { key: "Lighting", name: "Lighting" },
         ],
     },
     {
-        name: "Beauty & Personal Care",
+        key: "BeautyPersonalCare",
         subcategories: [
-            "Skincare",
-            "Makeup",
-            "Hair & Personal Care",
-            "Health & Wellness",
+            { key: "Skincare", name: "Skincare" },
+            { key: "Makeup", name: "Makeup" },
+            { key: "HairPersonalCare", name: "Hair & Personal Care" },
+            { key: "HealthWellness", name: "Health & Wellness" },
         ],
     },
     {
-        name: "Groceries & Food",
+        key: "GroceriesFood",
         subcategories: [
-            "Fresh Fruits",
-            "Fresh Vegetables",
-            "Snacks",
-            "Beverages",
-            "Cooking Essentials",
+            { key: "FreshFruits", name: "Fresh Fruits" },
+            { key: "FreshVegetables", name: "Fresh Vegetables" },
+            { key: "Snacks", name: "Snacks" },
+            { key: "Beverages", name: "Beverages" },
+            { key: "CookingEssentials", name: "Cooking Essentials" },
         ],
     },
     {
-        name: "Health & Fitness",
+        key: "HealthFitness",
         subcategories: [
-            "Fitness Equipment",
-            "Sports Equipment",
-            "Yoga & Exercise",
+            { key: "FitnessEquipment", name: "Fitness Equipment" },
+            { key: "SportsEquipment", name: "Sports Equipment" },
+            { key: "YogaExercise", name: "Yoga & Exercise" },
         ],
     },
     {
-        name: "Baby & Kids",
+        key: "BabyKids",
         subcategories: [
-            "Baby Clothing",
-            "Kids Clothing",
-            "Toys",
-            "School Supplies",
+            { key: "BabyClothing", name: "Baby Clothing" },
+            { key: "KidsClothing", name: "Kids Clothing" },
+            { key: "Toys", name: "Toys" },
+            { key: "SchoolSupplies", name: "School Supplies" },
         ],
     },
     {
-        name: "Books & Stationery",
+        key: "BooksStationery",
         subcategories: [
-            "Books",
-            "Office Supplies",
-            "Notebooks & Diaries",
+            { key: "Books", name: "Books" },
+            { key: "OfficeSupplies", name: "Office Supplies" },
+            { key: "NotebooksDiaries", name: "Notebooks & Diaries" },
         ],
     },
     {
-        name: "Sports & Outdoor",
+        key: "SportsOutdoor",
         subcategories: [
-            "Football",
-            "Cricket",
-            "Sportswear",
+            { key: "Football", name: "Football" },
+            { key: "Cricket", name: "Cricket" },
+            { key: "Sportswear", name: "Sportswear" },
         ],
     },
     {
-        name: "Jewelry & Accessories",
+        key: "JewelryAccessories",
         subcategories: [
-            "Necklaces",
-            "Earrings",
-            "Rings",
-            "Wallets",
-            "Belts",
+            { key: "Necklaces", name: "Necklaces" },
+            { key: "Earrings", name: "Earrings" },
+            { key: "Rings", name: "Rings" },
+            { key: "Wallets", name: "Wallets" },
+            { key: "Belts", name: "Belts" },
         ],
     },
 ];
@@ -138,6 +138,7 @@ export default function Navbar({
     const user = session?.user;
     const role = user?.role;
     const t = useTranslations("Navbar");
+    const tCat = useTranslations("CategoriesList");
 
     const { handleCategorySelect } = useCategory();
 
@@ -209,29 +210,32 @@ export default function Navbar({
                     </div>
 
                     {/* Right Actions */}
-                    <div className="hidden shrink-0 items-center gap-3 md:flex">
-                        <LanguageSwitcher />
+                    <div className="flex shrink-0 items-center gap-2 sm:gap-3">
 
-                        <IconLink
-                            href={user ? "/ProfileDashboard/User/wishlist" : "/Signin"}
-                            label={t("wishlist")}
-                            count={wishlistCount}
-                        >
-                            <Heart size={20} />
-                        </IconLink>
 
-                        <IconLink
-                            href={user ? "/ProfileDashboard/User/Cart" : "/Signin"}
-                            label={t("cart")}
-                            count={cartCount}
-                        >
-                            <ShoppingCart size={20} />
-                        </IconLink>
+                        <div className="hidden shrink-0 items-center gap-3 md:flex">
+                            <LanguageSwitcher />
 
-                        {user ? (
-                            <Link
-                                href={`/ProfileDashboard/${role}`}
-                                className="
+                            <IconLink
+                                href={user ? "/ProfileDashboard/User/wishlist" : "/Signin"}
+                                label={t("wishlist")}
+                                count={wishlistCount}
+                            >
+                                <Heart size={20} />
+                            </IconLink>
+
+                            <IconLink
+                                href={user ? "/ProfileDashboard/User/Cart" : "/Signin"}
+                                label={t("cart")}
+                                count={cartCount}
+                            >
+                                <ShoppingCart size={20} />
+                            </IconLink>
+
+                            {user ? (
+                                <Link
+                                    href={`/ProfileDashboard/${role}`}
+                                    className="
             inline-flex
             items-center
             gap-2
@@ -247,14 +251,14 @@ export default function Navbar({
             hover:border-amber-400
             hover:text-amber-400
           "
-                            >
-                                <User size={18} />
-                                <span>{t("profile")}</span>
-                            </Link>
-                        ) : (
-                            <Link
-                                href="/Signin"
-                                className="
+                                >
+                                    <User size={18} />
+                                    <span>{t("profile")}</span>
+                                </Link>
+                            ) : (
+                                <Link
+                                    href="/Signin"
+                                    className="
             rounded-full
             bg-amber-400
             px-4
@@ -265,10 +269,11 @@ export default function Navbar({
             transition
             hover:bg-amber-300
           "
-                            >
-                                {t("login")}
-                            </Link>
-                        )}
+                                >
+                                    {t("login")}
+                                </Link>
+                            )}
+                        </div>
                     </div>
 
                 </div>
@@ -318,7 +323,7 @@ export default function Navbar({
                 >
                     <div className="flex shrink-0 items-center justify-between border-b border-neutral-800 px-4 py-4">
                         <span className="text-base font-semibold text-white">
-                            Categories
+                            {t("categories")}
                         </span>
 
                         <button
@@ -335,11 +340,11 @@ export default function Navbar({
                         <div className="p-2">
                             {CATEGORIES.map((group) => (
                                 <details
-                                    key={group.name}
+                                    key={group.key}
                                     className="group border-b border-neutral-800 last:border-b-0"
                                 >
                                     <summary className="flex cursor-pointer list-none items-center justify-between px-3 py-3 text-sm font-semibold text-neutral-200 hover:text-amber-400">
-                                        <span>{group.name}</span>
+                                        <span>{tCat(group.key)}</span>
 
                                         <ChevronDown
                                             size={16}
@@ -350,15 +355,15 @@ export default function Navbar({
                                     <div className="flex flex-col gap-0.5 pb-2 pl-3">
                                         {group.subcategories.map((sub) => (
                                             <button
-                                                key={sub}
+                                                key={sub.key}
                                                 type="button"
                                                 onClick={() => {
-                                                    handleCategorySelect(sub);
+                                                    handleCategorySelect(sub.name);
                                                     setIsCategoryDrawerOpen(false);
                                                 }}
                                                 className="cursor-pointer rounded-md px-3 py-2 text-left text-sm text-neutral-400 hover:bg-neutral-800 hover:text-amber-400"
                                             >
-                                                {sub}
+                                                {tCat(sub.key)}
                                             </button>
                                         ))}
                                     </div>

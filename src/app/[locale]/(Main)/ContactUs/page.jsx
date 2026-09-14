@@ -167,24 +167,40 @@ export default function ContactUsPage() {
                                 required
                                 className="mt-2 w-full bg-transparent border-b border-[#0E4749]/20 py-2 text-[#1C2526] focus:outline-none focus:border-[#A9814A] transition-colors"
                             >
-                                <option value="" disabled>
+                                <option value="" disabled className="text-gray-900 bg-white">
                                     {t("form.selectOne")}
                                 </option>
 
-                                <option value="product">
+                                <option value="Order Issue" className="text-gray-900 bg-white">
+                                    {t("form.reasonOrder")}
+                                </option>
+
+                                <option value="Payment Issue" className="text-gray-900 bg-white">
+                                    {t("form.reasonPayment")}
+                                </option>
+
+                                <option value="Product Inquiry" className="text-gray-900 bg-white">
                                     {t("form.reasonProduct")}
                                 </option>
 
-                                <option value="warranty">
-                                    {t("form.reasonWarranty")}
+                                <option value="Delivery Issue" className="text-gray-900 bg-white">
+                                    {t("form.reasonDelivery")}
                                 </option>
 
-                                <option value="trade">
-                                    {t("form.reasonTrade")}
+                                <option value="Return & Refund" className="text-gray-900 bg-white">
+                                    {t("form.reasonReturn")}
                                 </option>
 
-                                <option value="other">
-                                    {t("form.reasonOther")}
+                                <option value="Account Issue" className="text-gray-900 bg-white">
+                                    {t("form.reasonAccount")}
+                                </option>
+
+                                <option value="Complaint" className="text-gray-900 bg-white">
+                                    {t("form.reasonComplaint")}
+                                </option>
+
+                                <option value="General Inquiry" className="text-gray-900 bg-white">
+                                    {t("form.reasonGeneral")}
                                 </option>
                             </select>
                         </div>

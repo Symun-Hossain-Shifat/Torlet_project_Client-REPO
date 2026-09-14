@@ -3,6 +3,7 @@
 import Link from "next/link";
 import { BsShieldLock, BsArrowLeft, BsHouse } from "react-icons/bs";
 import { useTranslations } from "next-intl";
+import LanguageSwitcher from "@/Components/LanguageSwitcher";
 
 export default function UnauthorizedPage() {
     const t = useTranslations("Unauthorized");
@@ -13,6 +14,10 @@ export default function UnauthorizedPage() {
 
                 {/* Background Ambient Glow */}
                 <div className="pointer-events-none absolute -top-20 left-1/2 -translate-x-1/2 h-64 w-64 rounded-full bg-red-500/10 blur-3xl" />
+
+                <div className="mb-4 flex justify-end">
+                    <LanguageSwitcher />
+                </div>
 
                 {/* Main Card */}
                 <div className="relative z-10 rounded-3xl border border-neutral-800 bg-neutral-950 p-8 sm:p-10 shadow-2xl">
