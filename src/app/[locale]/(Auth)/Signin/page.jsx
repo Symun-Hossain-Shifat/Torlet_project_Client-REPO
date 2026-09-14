@@ -7,7 +7,8 @@ import { FcGoogle } from "react-icons/fc";
 import { authClient } from "@/lib/auth-client";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import LanguageSwitcher from "@/Components/LanguageSwitcher";
+
+import { useTranslations } from "next-intl";
 
 export default function Login() {
     const [showPassword, setShowPassword] = useState(false);
@@ -76,14 +77,14 @@ export default function Login() {
         <div className="flex min-h-screen w-full items-center justify-center bg-neutral-950 px-4 py-12">
             <div className="w-full max-w-md">
                 {/* Header & Logo & Language Toggle */}
-                <div className="mb-8 flex items-center justify-between">
-                    <Link href="/" className="flex items-center gap-2">
+                <div className="mb-8 flex items-center ">
+                    <Link href="/" className="flex items-center gap-2 mx-auto">
                         <Store size={24} className="text-amber-400" />
                         <span className="text-xl font-bold tracking-tight text-white">
                             {t("logo")}
                         </span>
                     </Link>
-                    <LanguageSwitcher />
+
                 </div>
 
                 <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-8">

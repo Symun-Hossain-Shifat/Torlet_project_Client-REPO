@@ -7,7 +7,8 @@ import { FcGoogle } from "react-icons/fc";
 import { authClient } from "@/lib/auth-client";
 import toast from "react-hot-toast";
 import { useRouter } from "next/navigation";
-import LanguageSwitcher from "@/Components/LanguageSwitcher";
+
+import { useTranslations } from "next-intl";
 
 export default function Signup() {
     const [showPassword, setShowPassword] = useState(false);
@@ -60,24 +61,21 @@ export default function Signup() {
     return (
         <div className="flex min-h-screen w-full items-center justify-center bg-neutral-950 px-4 py-12">
             <div className="w-full max-w-md">
-                {/* Header & Logo & Language Toggle */}
-                <div className="mb-8 flex items-center justify-between">
+                {/* Header & Logo */}
+                <div className="mb-8 flex items-center justify-center">
                     <Link href="/" className="flex items-center gap-2">
                         <Store size={24} className="text-amber-400" />
                         <span className="text-xl font-bold tracking-tight text-white">
                             {t("logo")}
                         </span>
                     </Link>
-                    <LanguageSwitcher />
                 </div>
 
-                <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-8">
+                <div className="rounded-2xl border border-neutral-800 bg-neutral-900 p-8 shadow-xl shadow-black/20">
                     <h1 className="text-2xl font-bold text-white">{t("title")}</h1>
-                    <p className="mt-1 text-sm text-neutral-500">
-                        {t("desc")}
-                    </p>
+                    <p className="mt-1.5 text-sm text-neutral-500">{t("desc")}</p>
 
-                    <form onSubmit={handleSubmit} className="mt-6 space-y-4">
+                    <form onSubmit={handleSubmit} className="mt-7 space-y-5">
                         {/* Name */}
                         <div>
                             <label
@@ -99,7 +97,7 @@ export default function Signup() {
                                     value={formData.name}
                                     onChange={handleChange}
                                     placeholder={t("namePlaceholder")}
-                                    className="w-full rounded-lg border border-neutral-700 bg-neutral-950 py-2.5 pl-10 pr-3 text-sm text-white placeholder-neutral-600 outline-none transition-colors focus:border-amber-400"
+                                    className="w-full rounded-lg border border-neutral-700 bg-neutral-950 py-2.5 pl-10 pr-3 text-sm text-white placeholder-neutral-600 outline-none ring-amber-400/20 transition-colors focus:border-amber-400 focus:ring-4"
                                 />
                             </div>
                         </div>
@@ -125,7 +123,7 @@ export default function Signup() {
                                     value={formData.email}
                                     onChange={handleChange}
                                     placeholder={t("emailPlaceholder")}
-                                    className="w-full rounded-lg border border-neutral-700 bg-neutral-950 py-2.5 pl-10 pr-3 text-sm text-white placeholder-neutral-600 outline-none transition-colors focus:border-amber-400"
+                                    className="w-full rounded-lg border border-neutral-700 bg-neutral-950 py-2.5 pl-10 pr-3 text-sm text-white placeholder-neutral-600 outline-none ring-amber-400/20 transition-colors focus:border-amber-400 focus:ring-4"
                                 />
                             </div>
                         </div>
@@ -151,13 +149,13 @@ export default function Signup() {
                                     value={formData.password}
                                     onChange={handleChange}
                                     placeholder={t("passwordPlaceholder")}
-                                    className="w-full rounded-lg border border-neutral-700 bg-neutral-950 py-2.5 pl-10 pr-10 text-sm text-white placeholder-neutral-600 outline-none transition-colors focus:border-amber-400"
+                                    className="w-full rounded-lg border border-neutral-700 bg-neutral-950 py-2.5 pl-10 pr-10 text-sm text-white placeholder-neutral-600 outline-none ring-amber-400/20 transition-colors focus:border-amber-400 focus:ring-4"
                                 />
                                 <button
                                     type="button"
                                     onClick={() => setShowPassword((prev) => !prev)}
                                     aria-label={showPassword ? "Hide password" : "Show password"}
-                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 hover:text-amber-400"
+                                    className="absolute right-3 top-1/2 -translate-y-1/2 text-neutral-500 transition-colors hover:text-amber-400"
                                 >
                                     {showPassword ? <EyeOff size={17} /> : <Eye size={17} />}
                                 </button>
@@ -166,7 +164,7 @@ export default function Signup() {
 
                         <button
                             type="submit"
-                            className="w-full rounded-lg bg-amber-400 py-2.5 text-sm font-semibold text-neutral-950 transition-colors hover:bg-amber-300"
+                            className="w-full rounded-lg bg-amber-400 py-2.5 text-sm font-semibold text-neutral-950 transition-colors hover:bg-amber-300 active:bg-amber-500"
                         >
                             {t("signupButton")}
                         </button>
@@ -183,7 +181,7 @@ export default function Signup() {
                     <button
                         type="button"
                         onClick={HandleGoogleSignin}
-                        className="flex w-full items-center justify-center gap-3 rounded-lg border border-neutral-700 bg-white py-2.5 text-sm font-semibold text-neutral-800 transition-colors hover:bg-neutral-100"
+                        className="flex w-full items-center justify-center gap-3 rounded-lg border border-neutral-700 bg-white py-2.5 text-sm font-semibold text-neutral-800 transition-colors hover:bg-neutral-100 active:bg-neutral-200"
                     >
                         <FcGoogle size={18} />
                         {t("googleButton")}
@@ -193,7 +191,7 @@ export default function Signup() {
                         {t("loginPrompt")}{" "}
                         <Link
                             href="/Signin"
-                            className="font-semibold text-amber-400 hover:text-amber-300"
+                            className="font-semibold text-amber-400 transition-colors hover:text-amber-300"
                         >
                             {t("loginLink")}
                         </Link>
