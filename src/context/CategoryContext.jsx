@@ -6,9 +6,12 @@ const CategoryContext = createContext();
 
 export function CategoryProvider({ children }) {
     const [selectedCategory, setSelectedCategory] = useState("");
-
+    const [searchValue, setSearchValue] = useState("");
     const handleCategorySelect = (subCategoryName) => {
         setSelectedCategory(subCategoryName);
+    };
+    const handleSearchChange = (value) => {
+        setSearchValue(value);
     };
 
     return (
@@ -16,6 +19,8 @@ export function CategoryProvider({ children }) {
             value={{
                 selectedCategory,
                 handleCategorySelect,
+                handleSearchChange,
+                searchValue
             }}
         >
             {children}

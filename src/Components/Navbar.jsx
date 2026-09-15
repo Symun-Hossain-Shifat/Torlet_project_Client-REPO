@@ -139,9 +139,8 @@ export default function Navbar({
     const role = user?.role;
     const t = useTranslations("Navbar");
     const tCat = useTranslations("CategoriesList");
-    const [searchValue, setSearchValue] = useState("");
-    const { handleCategorySelect } = useCategory();
-    console.log(searchValue)
+    const { handleCategorySelect, handleSearchChange } = useCategory();
+
 
     return (
         <>
@@ -188,8 +187,8 @@ export default function Navbar({
                             <input
                                 type="text"
                                 placeholder="Search products..."
-                                value={searchValue}
-                                onChange={(e) => setSearchValue(e.target.value)}
+
+                                onChange={(e) => handleSearchChange(e.target.value)}
                                 className="w-full rounded-4xl border border-gray-700 bg-black py-3 pl-12 pr-5 text-white placeholder:text-gray-400 transition-all duration-200 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30"
                             />
                         </div>
@@ -208,8 +207,8 @@ export default function Navbar({
                             <input
                                 type="text"
                                 placeholder="Search products..."
-                                value={searchValue}
-                                onChange={(e) => setSearchValue(e.target.value)}
+
+                                onChange={(e) => handleSearchChange(e.target.value)}
                                 className="
             w-full
             rounded-xl

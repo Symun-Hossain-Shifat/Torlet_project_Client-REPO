@@ -1,4 +1,3 @@
-
 'use client'
 
 import { useState, useMemo, useEffect } from "react";
@@ -13,26 +12,39 @@ const PRODUCTS_PER_PAGE = 6;
 export const ProductShowing = ({ fetchedProducts }) => {
     const t = useTranslations("ProductShowing");
 
-    const { selectedCategory } = useCategory();
+    const { selectedCategory, searchValue } = useCategory();
+
     const category = selectedCategory || 'All';
+    const query = (searchValue || '').trim().toLowerCase();
 
     const [currentPage, setCurrentPage] = useState(1);
 
-    const products = useMemo(
-        () =>
-            category === 'All'
-                ? fetchedProducts
-                : fetchedProducts.filter((product) => product.category === category),
-        [category, fetchedProducts]
-    );
+    const products = useMemo(() => {
+        let result = category === 'All'
+            ? fetchedProducts
+            : fetchedProducts.filter((product) => product.category === category);
+
+        if (query) {
+            result = result.filter((product) => {
+                const name = product.name || product.title || "";
+                const description = product.description || "";
+                return (
+                    name.toLowerCase().includes(query) ||
+                    description.toLowerCase().includes(query)
+                );
+            });
+        }
+
+        return result;
+    }, [category, query, fetchedProducts]);
 
     const hasProducts = products.length > 0;
     const totalPages = Math.max(1, Math.ceil(products.length / PRODUCTS_PER_PAGE));
 
-    // Reset to page 1 whenever the category (and thus the filtered list) changes
+    // Reset to page 1 whenever the category or search query (and thus the filtered list) changes
     useEffect(() => {
         setCurrentPage(1);
-    }, [category]);
+    }, [category, query]);
 
     const paginatedProducts = useMemo(() => {
         const start = (currentPage - 1) * PRODUCTS_PER_PAGE;
