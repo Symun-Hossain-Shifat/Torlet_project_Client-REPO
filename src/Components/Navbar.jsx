@@ -139,9 +139,9 @@ export default function Navbar({
     const role = user?.role;
     const t = useTranslations("Navbar");
     const tCat = useTranslations("CategoriesList");
-
+    const [searchValue, setSearchValue] = useState("");
     const { handleCategorySelect } = useCategory();
-
+    console.log(searchValue)
 
     return (
         <>
@@ -175,6 +175,27 @@ export default function Navbar({
                             </Link>
                         </div>
                     </div>
+                    {/* Search Icon Feild */}
+
+
+                    <div className=" md:hidden block ml-auto  ">
+                        <div className="relative">
+                            <Search
+                                size={20}
+                                className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400"
+                            />
+
+                            <input
+                                type="text"
+                                placeholder="Search products..."
+                                value={searchValue}
+                                onChange={(e) => setSearchValue(e.target.value)}
+                                className="w-full rounded-4xl border border-gray-700 bg-black py-3 pl-12 pr-5 text-white placeholder:text-gray-400 transition-all duration-200 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30"
+                            />
+                        </div>
+                    </div>
+
+
 
                     {/* Search */}
                     <div className="flex flex-1 justify-center hidden md:flex">
@@ -187,6 +208,8 @@ export default function Navbar({
                             <input
                                 type="text"
                                 placeholder="Search products..."
+                                value={searchValue}
+                                onChange={(e) => setSearchValue(e.target.value)}
                                 className="
             w-full
             rounded-xl
@@ -278,6 +301,9 @@ export default function Navbar({
 
                 </div>
             </header>
+
+
+
 
             {/* ---------- Mobile bottom tab bar ---------- */}
             <nav className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around border-t border-neutral-800 bg-neutral-950 py-2 md:hidden">
