@@ -123,7 +123,7 @@ export default function PrivacyPolicyPage() {
                 <div className="mt-20 pt-8 border-t border-[#0E4749]/10 text-sm text-[#5B6666]">
                     <p>
                         {t.rich("questions", {
-                            email: (chunks) => <span className="text-[#0E4749]">privacy@torlet.com</span>
+                            email: (chunks) => <span className="text-[#0E4749]"> mozharislam0@gmail.com</span>
                         })}
                     </p>
                 </div>

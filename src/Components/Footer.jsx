@@ -56,7 +56,7 @@ export default function Footer() {
         { label: t("social.facebook"), href: "https://www.facebook.com/torlet.page?mibextid=wwXIfr&rdid=eOFlfvoCj7XQMTnZ&share_url=https%3A%2F%2Fwww.facebook.com%2Fshare%2F19FinNjZBp%2F%3Fmibextid%3DwwXIfr#", icon: FaFacebookF },
         { label: t("social.twitter"), href: "https://x.com/mdmozhar?s=11", icon: FaTwitter },
         { label: t("social.linkedin"), href: "https://linkedin.com", icon: FaLinkedinIn },
-        { label: t("social.news"), href: "/News", icon: FaNewspaper },
+
     ];
 
     return (
@@ -168,6 +168,7 @@ export default function Footer() {
                                     <a
                                         href={social.href}
 
+                                        target="blank"
                                         rel="noopener noreferrer"
                                         className="inline-flex items-center gap-2 text-neutral-500 hover:text-amber-400"
                                     >

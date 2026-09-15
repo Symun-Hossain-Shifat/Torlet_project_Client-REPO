@@ -1,11 +1,14 @@
+
 'use client'
 
+import { useState, useMemo, useEffect } from "react";
 import ProductCard from "./ProductCard";
 
-import { PackageOpen, Sparkles } from "lucide-react";
+import { PackageOpen, Sparkles, ChevronLeft, ChevronRight } from "lucide-react";
 import { useCategory } from "@/context/CategoryContext";
 import { useTranslations } from "next-intl";
 
+const PRODUCTS_PER_PAGE = 6;
 
 export const ProductShowing = ({ fetchedProducts }) => {
     const t = useTranslations("ProductShowing");
@@ -13,11 +16,38 @@ export const ProductShowing = ({ fetchedProducts }) => {
     const { selectedCategory } = useCategory();
     const category = selectedCategory || 'All';
 
-    const products = category === 'All' ? fetchedProducts : fetchedProducts.filter((product) => product.category === category);
+    const [currentPage, setCurrentPage] = useState(1);
+
+    const products = useMemo(
+        () =>
+            category === 'All'
+                ? fetchedProducts
+                : fetchedProducts.filter((product) => product.category === category),
+        [category, fetchedProducts]
+    );
+
     const hasProducts = products.length > 0;
+    const totalPages = Math.max(1, Math.ceil(products.length / PRODUCTS_PER_PAGE));
+
+    // Reset to page 1 whenever the category (and thus the filtered list) changes
+    useEffect(() => {
+        setCurrentPage(1);
+    }, [category]);
+
+    const paginatedProducts = useMemo(() => {
+        const start = (currentPage - 1) * PRODUCTS_PER_PAGE;
+        return products.slice(start, start + PRODUCTS_PER_PAGE);
+    }, [products, currentPage]);
+
+    const handlePageChange = (page) => {
+        if (page < 1 || page > totalPages || page === currentPage) return;
+        setCurrentPage(page);
+        // Scroll back to the top of the section for better UX
+        document.getElementById("product-showing-section")?.scrollIntoView({ behavior: "smooth", block: "start" });
+    };
 
     return (
-        <section className="bg-neutral-950 py-12 sm:py-16 lg:py-20 text-white">
+        <section id="product-showing-section" className="bg-neutral-950 py-12 sm:py-16 lg:py-20 text-white">
             <div className="mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
 
                 {/* Section Header */}
@@ -36,14 +66,24 @@ export const ProductShowing = ({ fetchedProducts }) => {
 
                 {/* Product Grid or Empty State */}
                 {hasProducts ? (
-                    <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
-                        {products.map((product, index) => (
-                            <ProductCard
-                                key={product._id || product.id || index}
-                                product={product}
+                    <>
+                        <div className="grid grid-cols-1 gap-6 sm:gap-8 md:grid-cols-2 lg:grid-cols-3">
+                            {paginatedProducts.map((product, index) => (
+                                <ProductCard
+                                    key={product._id || product.id || index}
+                                    product={product}
+                                />
+                            ))}
+                        </div>
+
+                        {totalPages > 1 && (
+                            <Pagination
+                                currentPage={currentPage}
+                                totalPages={totalPages}
+                                onPageChange={handlePageChange}
                             />
-                        ))}
-                    </div>
+                        )}
+                    </>
                 ) : (
                     <EmptyProductState message={t("noProducts")} />
                 )}
@@ -54,12 +94,77 @@ export const ProductShowing = ({ fetchedProducts }) => {
 };
 
 /**
+ * Pagination controls — matches the black/gold theme used across the section.
+ */
+const Pagination = ({ currentPage, totalPages, onPageChange }) => {
+    // Build a compact page list: always show first, last, current, and neighbors; collapse the rest with "..."
+    const pageNumbers = useMemo(() => {
+        const pages = [];
+        const addPage = (p) => pages.push(p);
+
+        for (let i = 1; i <= totalPages; i++) {
+            if (
+                i === 1 ||
+                i === totalPages ||
+                (i >= currentPage - 1 && i <= currentPage + 1)
+            ) {
+                addPage(i);
+            } else if (pages[pages.length - 1] !== "...") {
+                addPage("...");
+            }
+        }
+        return pages;
+    }, [currentPage, totalPages]);
+
+    return (
+        <div className="mt-10 flex items-center justify-center gap-2 sm:mt-14">
+            <button
+                type="button"
+                onClick={() => onPageChange(currentPage - 1)}
+                disabled={currentPage === 1}
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-800 bg-neutral-900/60 text-neutral-300 transition-colors hover:border-amber-400/40 hover:text-amber-400 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-neutral-800 disabled:hover:text-neutral-300"
+                aria-label="Previous page"
+            >
+                <ChevronLeft size={16} />
+            </button>
+
+            {pageNumbers.map((page, idx) =>
+                page === "..." ? (
+                    <span key={`ellipsis-${idx}`} className="px-2 text-sm text-neutral-600">
+                        ...
+                    </span>
+                ) : (
+                    <button
+                        key={page}
+                        type="button"
+                        onClick={() => onPageChange(page)}
+                        className={`flex h-9 w-9 items-center justify-center rounded-lg border text-sm font-semibold transition-colors ${page === currentPage
+                            ? "border-amber-400/40 bg-amber-400/10 text-amber-400"
+                            : "border-neutral-800 bg-neutral-900/60 text-neutral-300 hover:border-amber-400/40 hover:text-amber-400"
+                            }`}
+                        aria-current={page === currentPage ? "page" : undefined}
+                    >
+                        {page}
+                    </button>
+                )
+            )}
+
+            <button
+                type="button"
+                onClick={() => onPageChange(currentPage + 1)}
+                disabled={currentPage === totalPages}
+                className="flex h-9 w-9 items-center justify-center rounded-lg border border-neutral-800 bg-neutral-900/60 text-neutral-300 transition-colors hover:border-amber-400/40 hover:text-amber-400 disabled:cursor-not-allowed disabled:opacity-30 disabled:hover:border-neutral-800 disabled:hover:text-neutral-300"
+                aria-label="Next page"
+            >
+                <ChevronRight size={16} />
+            </button>
+        </div>
+    );
+};
+
+/**
  * Shown when no products have been posted yet (empty DB or fetch failure).
  */
-
-
-
-
 const EmptyProductState = ({ message }) => (
     <div className="relative overflow-hidden rounded-3xl border border-neutral-800 bg-neutral-900/40 p-8 text-center backdrop-blur-md sm:p-12">
         {/* Glow effect in background */}
