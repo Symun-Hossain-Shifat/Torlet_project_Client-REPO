@@ -61,14 +61,14 @@ export default function Banner() {
 
                             <div className="mt-8 flex flex-wrap items-center gap-4">
                                 <Link
-                                    href="/shop"
+                                    href="/"
                                     className="inline-flex items-center gap-2 rounded-full bg-amber-400 px-6 py-3 text-sm font-semibold text-neutral-950 transition-colors hover:bg-amber-300"
                                 >
                                     {t("shopNow")}
                                     <ArrowRight size={16} />
                                 </Link>
                                 <Link
-                                    href="/categories"
+                                    href="/"
                                     className="inline-flex items-center gap-2 rounded-full border border-neutral-700 px-6 py-3 text-sm font-semibold text-neutral-200 transition-colors hover:border-amber-400 hover:text-amber-400"
                                 >
                                     {t("exploreCategories")}

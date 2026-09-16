@@ -186,7 +186,7 @@ export default function Navbar({
 
                             <input
                                 type="text"
-                                placeholder="Search products..."
+                                placeholder="Search"
 
                                 onChange={(e) => handleSearchChange(e.target.value)}
                                 className="w-full rounded-4xl border border-gray-700 bg-black py-3 pl-12 pr-5 text-white placeholder:text-gray-400 transition-all duration-200 focus:border-amber-400 focus:outline-none focus:ring-2 focus:ring-amber-400/30"
