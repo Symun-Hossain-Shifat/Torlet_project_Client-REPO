@@ -1,4 +1,7 @@
+import { authHeader } from "./GetToken";
+
 export default async function GetOrder(email) {
+    const headers = await authHeader()
     try {
         const url = email
             ? `${process.env.NEXT_PUBLIC_SERVER_URL}/api/Order?email=${email}`
@@ -6,6 +9,7 @@ export default async function GetOrder(email) {
 
         const res = await fetch(url, {
             method: 'GET',
+            headers: headers
         });
 
         if (!res.ok) {

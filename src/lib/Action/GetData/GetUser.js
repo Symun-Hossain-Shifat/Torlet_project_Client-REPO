@@ -1,5 +1,6 @@
 import { auth } from "@/lib/auth";
 import { headers } from "next/headers";
+import { authHeader } from "./GetToken";
 
 
 
@@ -13,7 +14,10 @@ export const GetUserInserver = async () => {
 
 
 export const GetAllUserInformation = async () => {
-    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/user`)
+    const headers = await authHeader();
+    const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/user`, {
+        headers: headers
+    })
     const data = await res.json()
     return data
 }

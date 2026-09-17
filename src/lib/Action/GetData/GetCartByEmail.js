@@ -1,8 +1,13 @@
+import { authHeader } from "./GetToken";
 
 
 export const GetCartByEmail = async (email) => {
+    const headers = await authHeader()
     try {
-        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/Cart?email=${email}`, { cache: "no-store" });
+        const res = await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/Cart?email=${email}`, {
+            cache: "no-store",
+            headers: headers
+        });
         if (!res.ok) return [];
         const data = await res.json();
         return Array.isArray(data) ? data : (data?.carts || []);

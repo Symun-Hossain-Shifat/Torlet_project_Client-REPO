@@ -24,8 +24,8 @@ export const authHeader = async () => {
 
     return token
         ? {
-            Authorization: `Bearer ${token}`,
-            User: userId,
+            authorization: `Bearer ${token}`,
+            user: userId,
         }
         : {};
 };
