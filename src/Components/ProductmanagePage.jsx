@@ -7,7 +7,7 @@ import { getTranslations } from "next-intl/server";
 export default async function ProductManagePage() {
     const t = await getTranslations("AdminProducts");
     const Products = await GetProduct();
-    console.log(Products);
+
     return (
         <div>
             {

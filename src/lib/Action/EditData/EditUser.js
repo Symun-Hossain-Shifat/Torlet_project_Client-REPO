@@ -1,9 +1,12 @@
+import { authHeader } from "../GetData/GetToken";
+
 export default async function UpdateUser(email, isBlocked) {
     const url = `${process.env.NEXT_PUBLIC_SERVER_URL}/api/user/${email}`
     const response = await fetch(url, {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
+            ...await authHeader()
         },
         body: JSON.stringify({ isBlocked: isBlocked }),
     })

@@ -9,7 +9,6 @@ export async function PostProduct(Data) {
         method: 'POST',
         headers: {
             'content-type': 'application/json',
-
             ...await authHeader()
 
 

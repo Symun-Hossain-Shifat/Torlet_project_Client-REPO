@@ -1,3 +1,4 @@
+import { authHeader } from "../GetData/GetToken";
 
 
 
@@ -9,6 +10,7 @@ export async function PostCart(Data) {
         headers: {
 
             'content-type': 'application/json',
+            ...await authHeader()
 
 
         },
