@@ -25,6 +25,10 @@ export default function ContactUsPage() {
             reason: formData.get("reason"),
             message: formData.get("message"),
         }
+        if (!user) {
+            toast.error(`You are not authorized to contact us ! Please Login Fast .`)
+            return
+        }
         if (user?.role === 'Admin') {
             toast.error(`You are not authorized to contact us`)
             return
@@ -139,6 +143,7 @@ export default function ContactUsPage() {
                                 id="name"
                                 name="name"
                                 type="text"
+                                defaultValue={user?.name || 'Enter your Name'}
                                 required
                             />
 
@@ -147,6 +152,7 @@ export default function ContactUsPage() {
                                 id="email"
                                 name="email"
                                 type="email"
+                                defaultValue={user?.email || 'Enter your Email'}
                                 required
                             />
                         </div>
@@ -262,7 +268,7 @@ export default function ContactUsPage() {
     )
 }
 
-function Field({ label, id, name, type, required }) {
+function Field({ label, id, name, type, required, defaultValue }) {
     return (
         <div>
             <label
@@ -276,6 +282,7 @@ function Field({ label, id, name, type, required }) {
                 id={id}
                 name={name}
                 type={type}
+                defaultValue={defaultValue}
                 required={required}
                 className="mt-2 w-full bg-transparent border-b border-[#0E4749]/20 py-2 text-[#1C2526] focus:outline-none focus:border-[#A9814A] transition-colors"
             />

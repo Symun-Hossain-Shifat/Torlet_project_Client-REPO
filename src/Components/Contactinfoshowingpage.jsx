@@ -68,8 +68,7 @@ export default function ContactInfoShowingPage({ complaint }) {
                         onClick={handleReply}
                         className="px-4 py-2 bg-black text-white text-sm font-medium rounded-lg hover:bg-gray-800 transition-colors"
                     >
-                        Reply via Gmail
-                    </button>
+                        Reply                     </button>
                 </div>
             </div>
         </div>
