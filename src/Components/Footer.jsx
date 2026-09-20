@@ -49,7 +49,7 @@ export default function Footer() {
         { label: t("links.news"), href: "/News" },
         { label: t("links.blog"), href: "/Blog" },
         { label: t("links.aboutUs"), href: "/AboutUs" },
-        { label: 'Testimonial', href: "/Testimonials" },
+        { label: t("links.testimonials"), href: "/Testimonials" },
     ];
 
     const SOCIAL_LINKS = [

@@ -1,41 +1,21 @@
+"use client";
+
+import { useTranslations } from "next-intl";
+
 export default function TestimonialsPage() {
-    const testimonials = [
-        {
-            quote: "Working with this team was seamless from start to finish. The attention to detail and the quality of communication made the whole process feel effortless.",
-            name: "Sarah Mitchell",
-            role: "Founder, Aurora Studio",
-        },
-        {
-            quote: "They delivered exactly what we needed, on time and beyond our expectations. It's rare to find a team this reliable and this thoughtful.",
-            name: "David Chen",
-            role: "Product Manager, Nova Labs",
-        },
-        {
-            quote: "The end result exceeded what we imagined. Every piece of feedback was handled with care, and the final product speaks for itself.",
-            name: "Amelia Rodriguez",
-            role: "Creative Director, Lumen & Co.",
-        },
-        {
-            quote: "Professional, responsive, and genuinely invested in getting things right. We'll absolutely be working together again.",
-            name: "James Okafor",
-            role: "CEO, Northbridge Ventures",
-        },
-        {
-            quote: "From the first conversation to the final handoff, everything felt intentional and well thought out. Highly recommended.",
-            name: "Priya Sharma",
-            role: "Marketing Lead, Elevate Co.",
-        },
-        {
-            quote: "A rare combination of great taste and great execution. They understood our vision better than we did at times.",
-            name: "Michael Turner",
-            role: "Co-Founder, Harbor & Stone",
-        },
-    ];
+    const t = useTranslations("Testimonials");
+
+    const testimonials = [1, 2, 3, 4, 5, 6].map((num) => ({
+        quote: t(`items.item${num}.quote`),
+        name: t(`items.item${num}.name`),
+        role: t(`items.item${num}.role`),
+    }));
 
     const initials = (name) =>
         name
             .split(" ")
             .map((part) => part[0])
+            .filter(Boolean)
             .join("")
             .slice(0, 2)
             .toUpperCase();
@@ -45,12 +25,12 @@ export default function TestimonialsPage() {
             <div className="container mx-auto px-4 py-24 max-w-5xl">
                 {/* Eyebrow */}
                 <p className="text-xs tracking-[0.3em] uppercase text-[#A9814A] mb-4">
-                    Testimonials
+                    {t("eyebrow")}
                 </p>
 
                 {/* Heading */}
                 <h1 className="font-serif italic text-4xl md:text-5xl font-semibold text-[#0E4749] leading-tight">
-                    What Our Clients Say
+                    {t("title")}
                 </h1>
 
                 {/* Signature "flow" divider */}
@@ -69,7 +49,7 @@ export default function TestimonialsPage() {
                 </svg>
 
                 <p className="mt-6 text-lg text-[#3F4A4A] max-w-2xl">
-                    Real stories from people we've had the pleasure of working with. Their trust and feedback are what drive us to keep raising the bar.
+                    {t("intro")}
                 </p>
 
                 {/* Testimonials grid */}
@@ -114,8 +94,9 @@ export default function TestimonialsPage() {
                 {/* Contact footer */}
                 <div className="mt-20 pt-8 border-t border-[#0E4749]/10 text-sm text-[#5B6666]">
                     <p>
-                        Have a story of your own to share?{" "}
-                        <span className="text-[#0E4749]">mozharislam0@gmail.com</span>
+                        {t.rich("contact", {
+                            email: (chunks) => <span className="text-[#0E4749]">mozharislam0@gmail.com</span>
+                        })}
                     </p>
                 </div>
             </div>

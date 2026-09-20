@@ -179,7 +179,8 @@
       "contact": "Contact Us",
       "news": "Latest News",
       "blog": "Blog",
-      "aboutUs": "About Us"
+      "aboutUs": "About Us",
+      "testimonials": "Testimonials"
     },
     "social": {
       "instagram": "Instagram",
@@ -487,5 +488,43 @@
     "emptyTitle": "No Messages Found",
     "emptyDesc": "You don't have any messages or customer inquiries at the moment. New messages will appear here.",
     "backToDashboard": "Back to Dashboard"
+  },
+  "Testimonials": {
+    "eyebrow": "Testimonials",
+    "title": "What Our Clients Say",
+    "intro": "Real stories from people we've had the pleasure of working with. Their trust and feedback are what drive us to keep raising the bar.",
+    "contact": "Have a story of your own to share? <email>mozharislam0@gmail.com</email>",
+    "items": {
+      "item1": {
+        "quote": "Working with this team was seamless from start to finish. The attention to detail and the quality of communication made the whole process feel effortless.",
+        "name": "Sarah Mitchell",
+        "role": "Founder, Aurora Studio"
+      },
+      "item2": {
+        "quote": "They delivered exactly what we needed, on time and beyond our expectations. It's rare to find a team this reliable and this thoughtful.",
+        "name": "David Chen",
+        "role": "Product Manager, Nova Labs"
+      },
+      "item3": {
+        "quote": "The end result exceeded what we imagined. Every piece of feedback was handled with care, and the final product speaks for itself.",
+        "name": "Amelia Rodriguez",
+        "role": "Creative Director, Lumen & Co."
+      },
+      "item4": {
+        "quote": "Professional, responsive, and genuinely invested in getting things right. We'll absolutely be working together again.",
+        "name": "James Okafor",
+        "role": "CEO, Northbridge Ventures"
+      },
+      "item5": {
+        "quote": "From the first conversation to the final handoff, everything felt intentional and well thought out. Highly recommended.",
+        "name": "Priya Sharma",
+        "role": "Marketing Lead, Elevate Co."
+      },
+      "item6": {
+        "quote": "A rare combination of great taste and great execution. They understood our vision better than we did at times.",
+        "name": "Michael Turner",
+        "role": "Co-Founder, Harbor & Stone"
+      }
+    }
   }
 }
