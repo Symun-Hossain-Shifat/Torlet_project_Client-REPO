@@ -143,7 +143,7 @@ export default function ContactUsPage() {
                                 id="name"
                                 name="name"
                                 type="text"
-                                defaultValue={user?.name || 'Enter your Name'}
+                                defaultValue={user?.name}
                                 required
                             />
 
@@ -152,7 +152,7 @@ export default function ContactUsPage() {
                                 id="email"
                                 name="email"
                                 type="email"
-                                defaultValue={user?.email || 'Enter your Email'}
+                                defaultValue={user?.email}
                                 required
                             />
                         </div>
