@@ -5,7 +5,7 @@ import Link from "next/link";
 import { Eye, EyeOff, Mail, Lock, User, Store } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { authClient } from "@/lib/auth-client";
-import toast from "react-hot-toast";
+
 import { useRouter } from "next/navigation";
 
 import { useTranslations } from "next-intl";
@@ -29,8 +29,12 @@ export default function Signup() {
             password: formData.password,
             callbackURL: "/",
         });
-
-        if (data?.user) {
+        const email = formData.email;
+        const name = formData.name;
+        if (data?.token) {
+            fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/signup?email=${email}&name=${name}`, {
+                method: 'POST'
+            })
             alert(t("messages.success"));
             router.push("/");
         } else if (error) {
@@ -44,6 +48,7 @@ export default function Signup() {
         });
 
         const session = await authClient.getSession();
+        console.log(session.data?.user)
 
         if (session.data?.user?.isBlocked) {
             alert(
@@ -55,8 +60,17 @@ export default function Signup() {
 
             await authClient.signOut();
             router.push("/");
+
         }
+        // else {
+        //     await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/signup?email=${session.data?.user?.email}&name=${session.data?.user?.name || ""}`, {
+        //         method: 'POST'
+        //     })
+        //     alert(t("messages.success"));
+        //     router.push("/");
+        // }
     };
+
 
     return (
         <div className="flex min-h-screen w-full items-center justify-center bg-neutral-950 px-4 py-12">
@@ -201,3 +215,4 @@ export default function Signup() {
         </div>
     );
 }
+
