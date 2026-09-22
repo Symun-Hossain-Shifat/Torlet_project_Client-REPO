@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Link from "next/link";
 import { Eye, EyeOff, Mail, Lock, Store } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
@@ -201,3 +201,6 @@ export default function Login() {
         </div>
     );
 }
+
+
+

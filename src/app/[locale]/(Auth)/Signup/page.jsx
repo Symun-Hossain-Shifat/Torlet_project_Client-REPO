@@ -29,12 +29,9 @@ export default function Signup() {
             password: formData.password,
             callbackURL: "/",
         });
-        const email = formData.email;
-        const name = formData.name;
+
         if (data?.token) {
-            fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/signup?email=${email}&name=${name}`, {
-                method: 'POST'
-            })
+
             alert(t("messages.success"));
             router.push("/");
         } else if (error) {

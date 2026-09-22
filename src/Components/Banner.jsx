@@ -3,9 +3,31 @@
 import Link from "next/link";
 import { ArrowRight, ShieldCheck, Truck, Tag, Sparkles, Search } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useEffect } from "react";
+import { authClient } from "@/lib/auth-client";
 
 export default function Banner() {
     const t = useTranslations("Banner");
+    useEffect(() => {
+        const handlesendWelcomeEmail = async () => {
+            const session = await authClient.getSession();
+
+            if (!session.data?.user) return;
+
+            const email = session.data.user.email;
+            const name = session.data.user.name;
+
+            try {
+                await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/signup?email=${email}&name=${name}`, {
+                    method: 'POST'
+                })
+            } catch (error) {
+                console.error("Welcome email error:", error);
+            }
+        };
+
+        handlesendWelcomeEmail();
+    }, []);
 
     const CATEGORIES = [
         t("categories.Electronics"),
