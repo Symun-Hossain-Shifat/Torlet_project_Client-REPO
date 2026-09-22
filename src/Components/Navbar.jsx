@@ -153,7 +153,7 @@ export default function Navbar({
                             type="button"
                             onClick={() => setIsCategoryDrawerOpen(true)}
                             aria-label="Open categories"
-                            className="hidden shrink-0 items-center justify-center rounded-full py-2 text-neutral-200 md:inline-flex"
+                            className="hidden shrink-0 items-center    md:inline-flex justify-center rounded-full p-2 text-neutral-200 hover:bg-neutral-800 hover:text-amber-400"
                         >
                             <Menu size={18} />
                         </button>

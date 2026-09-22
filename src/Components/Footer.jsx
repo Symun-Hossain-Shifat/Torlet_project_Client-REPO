@@ -163,17 +163,17 @@ export default function Footer() {
                         <h3 className="text-sm font-bold uppercase tracking-wide text-white">
                             {t("footerMenu")}
                         </h3>
-                        <ul className="mt-4 space-y-3 text-sm">
+                        <ul className="mt-4 space-y-3 text-sm ">
                             {SOCIAL_LINKS.map((social) => (
-                                <li key={social.label}>
+                                <li key={social.label} >
                                     <a
                                         href={social.href}
 
                                         target="blank"
                                         rel="noopener noreferrer"
-                                        className="inline-flex items-center gap-2 text-neutral-500 hover:text-amber-400"
+                                        className="inline-flex items-center  gap-2 text-neutral-500 hover:text-amber-400"
                                     >
-                                        <social.icon size={14} />
+                                        <social.icon size={20} />
                                         <span>{social.label}</span>
                                     </a>
                                 </li>
