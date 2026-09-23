@@ -9,6 +9,9 @@ import { authClient } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 
 import { useTranslations } from "next-intl";
+import toast from "react-hot-toast";
+import OtpPost from "@/lib/Action/PostData/OtpPost";
+import { GetOTpByEmail } from "@/lib/Action/GetData/GetOTP";
 
 export default function Signup() {
     const [showPassword, setShowPassword] = useState(false);
@@ -22,6 +25,24 @@ export default function Signup() {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
+        const name = formData.name
+        const email = formData.email
+
+        const Data = await OtpPost(email, name)
+
+        if (Data.insertedId) {
+            toast.success("OTP sent successfully");
+            const OTPdata = await GetOTpByEmail(email);
+            const OTP = OTPdata?.otp
+            console.log(OTP)
+            return
+
+        }
+        else {
+            toast.error("Failed to send OTP");
+            return
+        }
+
 
         const { data, error } = await authClient.signUp.email({
             name: formData.name,
@@ -59,13 +80,7 @@ export default function Signup() {
             router.push("/");
 
         }
-        // else {
-        //     await fetch(`${process.env.NEXT_PUBLIC_SERVER_URL}/api/auth/signup?email=${session.data?.user?.email}&name=${session.data?.user?.name || ""}`, {
-        //         method: 'POST'
-        //     })
-        //     alert(t("messages.success"));
-        //     router.push("/");
-        // }
+
     };
 
 
