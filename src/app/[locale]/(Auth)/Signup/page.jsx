@@ -12,6 +12,7 @@ import { useTranslations } from "next-intl";
 import toast from "react-hot-toast";
 import OtpPost from "@/lib/Action/PostData/OtpPost";
 import { GetOTpByEmail } from "@/lib/Action/GetData/GetOTP";
+import sendemailverifyotp from "@/lib/Action/PostData/SendOtpemail";
 
 export default function Signup() {
     const [showPassword, setShowPassword] = useState(false);
@@ -34,14 +35,16 @@ export default function Signup() {
             toast.success("OTP sent successfully");
             const OTPdata = await GetOTpByEmail(email);
             const OTP = OTPdata?.otp
-            console.log(OTP)
+            const EmailVerifyOTP = await sendemailverifyotp(email, OTP)
+            console.log(EmailVerifyOTP)
+
             return
 
+
+        } else {
+            return toast.error("Something went wrong")
         }
-        else {
-            toast.error("Failed to send OTP");
-            return
-        }
+
 
 
         const { data, error } = await authClient.signUp.email({
