@@ -35,15 +35,11 @@ export default function Signup() {
             toast.success("OTP sent successfully");
             const OTPdata = await GetOTpByEmail(email);
             const OTP = OTPdata?.otp
+            console.log(OTP)
             const EmailVerifyOTP = await sendemailverifyotp(email, OTP)
-            console.log(EmailVerifyOTP)
-
-            return
-
-
-        } else {
-            return toast.error("Something went wrong")
+            console.log(EmailVerifyOTP, 'Hello Cai')
         }
+
 
 
 
@@ -62,6 +58,10 @@ export default function Signup() {
             alert(t("messages.failed", { error: error.message }));
         }
     };
+
+
+
+
 
     const HandleGoogleSignin = async () => {
         await authClient.signIn.social({
