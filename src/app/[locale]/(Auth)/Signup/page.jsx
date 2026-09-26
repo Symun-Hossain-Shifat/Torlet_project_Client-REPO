@@ -36,27 +36,30 @@ export default function Signup() {
             const OTPdata = await GetOTpByEmail(email);
             const OTP = OTPdata?.otp
             console.log(OTP)
-            const EmailVerifyOTP = await sendemailverifyotp(email, OTP)
-            console.log(EmailVerifyOTP, 'Hello Cai')
+            const raw = await sendemailverifyotp(email, OTP)
+
+            if (raw.success === true) {
+                router.push('/OTP')
+            }
         }
 
 
 
 
-        const { data, error } = await authClient.signUp.email({
-            name: formData.name,
-            email: formData.email,
-            password: formData.password,
-            callbackURL: "/",
-        });
+        // const { data, error } = await authClient.signUp.email({
+        //     name: formData.name,
+        //     email: formData.email,
+        //     password: formData.password,
+        //     callbackURL: "/",
+        // });
 
-        if (data?.token) {
+        // if (data?.token) {
 
-            alert(t("messages.success"));
-            router.push("/");
-        } else if (error) {
-            alert(t("messages.failed", { error: error.message }));
-        }
+        //     alert(t("messages.success"));
+        //     router.push("/");
+        // } else if (error) {
+        //     alert(t("messages.failed", { error: error.message }));
+        // }
     };
 
 
