@@ -41,7 +41,7 @@ export default function Signup() {
 
             if (raw.success === true) {
                 sessionStorage.setItem("signupData",
-                    JSON.stringify({ name, email, password, otp: OTP, }));
+                    JSON.stringify({ name, email, password }));
                 router.push("/OTP");
             }
         }

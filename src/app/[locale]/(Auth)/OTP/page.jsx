@@ -7,6 +7,8 @@ import { authClient } from "@/lib/auth-client";
 import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
+import { UpdateEmailVerify } from '@/lib/Action/EditData/EditUser'
+import { GetOTpByEmail } from "@/lib/Action/GetData/GetOTP";
 
 export default function VerifyOtpPage() {
     const router = useRouter();
@@ -67,15 +69,21 @@ export default function VerifyOtpPage() {
 
         const data = sessionStorage.getItem("signupData");
         const signupData = JSON.parse(data);
-        const OTP = signupData.otp;
+        if (!signupData) {
+            alert('Something went wrong , Please try again')
+            router.push('/')
+            return;
+        }
         const name = signupData.name
         const email = signupData.email
         const password = signupData.password
-        console.log(OTP, name, email, password)
+        const OTPdata = await GetOTpByEmail(email);
+        const OTP = OTPdata?.otp
+
+
 
         const code = otp.join("");
-        console.log("OTP:", OTP, typeof OTP);
-        console.log("Code:", code, typeof code);
+
 
 
         if (Number(code) === OTP) {
@@ -88,7 +96,9 @@ export default function VerifyOtpPage() {
             });
 
             if (data?.token) {
-
+                const verifyResult = await UpdateEmailVerify(email, true);
+                console.log("Verify Result:", verifyResult);
+                sessionStorage.removeItem("signupData");
                 alert(t("messages.success"));
                 router.push("/");
             } else if (error) {
@@ -110,7 +120,7 @@ export default function VerifyOtpPage() {
                     <span className="font-medium text-white">your email</span>
                 </p>
 
-                <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
+                {/* <form className="mt-8 space-y-6" onSubmit={handleSubmit}>
                     <div className="flex justify-between gap-2">
                         {otp.map((digit, index) => (
                             <input
@@ -124,6 +134,31 @@ export default function VerifyOtpPage() {
                                 onKeyDown={(e) => handleKeyDown(index, e)}
                                 onPaste={handlePaste}
                                 className="h-14 w-12 rounded-lg border border-white/10 bg-zinc-900 text-center text-xl font-semibold text-white outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
+                            />
+                        ))}
+                    </div>
+
+                    <button
+                        type="submit"
+                        className="w-full rounded-lg bg-amber-500 py-3 font-medium text-black transition hover:bg-amber-400"
+                    >
+                        Verify Email
+                    </button>
+                </form> */}
+                <form className="mt-8 space-y-6 w-full max-w-md mx-auto px-4" onSubmit={handleSubmit}>
+                    <div className="flex justify-center gap-2 sm:gap-3">
+                        {otp.map((digit, index) => (
+                            <input
+                                key={index}
+                                ref={(el) => (inputRefs.current[index] = el)}
+                                type="text"
+                                inputMode="numeric"
+                                maxLength={1}
+                                value={digit}
+                                onChange={(e) => handleChange(index, e)}
+                                onKeyDown={(e) => handleKeyDown(index, e)}
+                                onPaste={handlePaste}
+                                className="aspect-square w-10 sm:w-12 md:w-14 flex-1 max-w-14 rounded-lg border border-white/10 bg-zinc-900 text-center text-lg sm:text-xl font-semibold text-white outline-none focus:border-amber-500 focus:ring-1 focus:ring-amber-500"
                             />
                         ))}
                     </div>
