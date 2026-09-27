@@ -3,11 +3,14 @@
 
 
 
+import { authClient } from "@/lib/auth-client";
+import { useTranslations } from "next-intl";
 import { useRouter } from "next/navigation";
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 export default function VerifyOtpPage() {
     const router = useRouter();
+    const t = useTranslations("Signup");
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
     const inputRefs = useRef([]);
 
@@ -53,14 +56,49 @@ export default function VerifyOtpPage() {
         const nextIndex = digits.length < 6 ? digits.length : 5;
         inputRefs.current[nextIndex]?.focus();
     };
-    const handleSubmit = (e) => {
+
+
+
+
+    // Handle Submit event
+    const handleSubmit = async (e) => {
         e.preventDefault();
 
+
+        const data = sessionStorage.getItem("signupData");
+        const signupData = JSON.parse(data);
+        const OTP = signupData.otp;
+        const name = signupData.name
+        const email = signupData.email
+        const password = signupData.password
+        console.log(OTP, name, email, password)
+
         const code = otp.join("");
+        console.log("OTP:", OTP, typeof OTP);
+        console.log("Code:", code, typeof code);
 
-        console.log("Entered OTP:", code);
 
-        window.location.reload();
+        if (Number(code) === OTP) {
+
+            const { data, error } = await authClient.signUp.email({
+                name: name,
+                email: email,
+                password: password,
+                callbackURL: "/",
+            });
+
+            if (data?.token) {
+
+                alert(t("messages.success"));
+                router.push("/");
+            } else if (error) {
+                alert(t("messages.failed", { error: error.message }));
+            }
+        } else if (Number(code) !== OTP) {
+            alert("Incorrect OTP");
+        }
+
+
     };
 
     return (

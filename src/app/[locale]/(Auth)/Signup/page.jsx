@@ -28,6 +28,7 @@ export default function Signup() {
         e.preventDefault();
         const name = formData.name
         const email = formData.email
+        const password = formData.password
 
         const Data = await OtpPost(email, name)
 
@@ -39,27 +40,15 @@ export default function Signup() {
             const raw = await sendemailverifyotp(email, OTP)
 
             if (raw.success === true) {
-                router.push('/OTP')
+                sessionStorage.setItem("signupData",
+                    JSON.stringify({ name, email, password, otp: OTP, }));
+                router.push("/OTP");
             }
         }
 
 
 
 
-        // const { data, error } = await authClient.signUp.email({
-        //     name: formData.name,
-        //     email: formData.email,
-        //     password: formData.password,
-        //     callbackURL: "/",
-        // });
-
-        // if (data?.token) {
-
-        //     alert(t("messages.success"));
-        //     router.push("/");
-        // } else if (error) {
-        //     alert(t("messages.failed", { error: error.message }));
-        // }
     };
 
 
