@@ -9,6 +9,7 @@ import { useRouter } from "next/navigation";
 import { useEffect, useRef, useState } from "react";
 import { UpdateEmailVerify } from '@/lib/Action/EditData/EditUser'
 import { GetOTpByEmail } from "@/lib/Action/GetData/GetOTP";
+import sendemailverifyotp from "@/lib/Action/PostData/SendOtpemail";
 
 export default function VerifyOtpPage() {
     const router = useRouter();
@@ -58,6 +59,35 @@ export default function VerifyOtpPage() {
         const nextIndex = digits.length < 6 ? digits.length : 5;
         inputRefs.current[nextIndex]?.focus();
     };
+
+
+    // Handle Resend OTp Email 
+    const handleresendotp = async (e) => {
+        e.preventDefault();
+
+        const Data = sessionStorage.getItem("signupData");
+        const signupData = JSON.parse(Data);
+        if (!signupData) {
+            alert('Something went wrong , Please try again')
+            router.push('/')
+            return;
+        }
+
+        const email = signupData.email
+
+        const OTPdata = await GetOTpByEmail(email);
+        const OTP = OTPdata?.otp
+        console.log(OTP)
+        const data = await sendemailverifyotp(email, OTP)
+        if (data.success === true) {
+            alert("OTP sent successfully");
+        }
+        else {
+            alert("Failed to send OTP");
+        }
+
+
+    }
 
 
 
@@ -175,6 +205,7 @@ export default function VerifyOtpPage() {
                     Didn't get the code?{" "}
                     <button
                         type="button"
+                        onClick={handleresendotp}
                         className="font-medium text-amber-400 hover:underline"
                     >
                         Resend code
