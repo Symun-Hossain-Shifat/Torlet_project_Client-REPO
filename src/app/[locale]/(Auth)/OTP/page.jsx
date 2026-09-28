@@ -10,12 +10,15 @@ import { useEffect, useRef, useState } from "react";
 import { UpdateEmailVerify } from '@/lib/Action/EditData/EditUser'
 import { GetOTpByEmail } from "@/lib/Action/GetData/GetOTP";
 import sendemailverifyotp from "@/lib/Action/PostData/SendOtpemail";
+import { Loader2 } from "lucide-react";
 
 export default function VerifyOtpPage() {
     const router = useRouter();
     const t = useTranslations("Signup");
     const [otp, setOtp] = useState(["", "", "", "", "", ""]);
     const inputRefs = useRef([]);
+    const [loading, setLoading] = useState(false);
+    const [resending, setResending] = useState(false);
 
     const handleChange = (index, e) => {
         const value = e.target.value;
@@ -64,81 +67,90 @@ export default function VerifyOtpPage() {
     // Handle Resend OTp Email 
     const handleresendotp = async (e) => {
         e.preventDefault();
+        if (resending || loading) return;
 
-        const Data = sessionStorage.getItem("signupData");
-        const signupData = JSON.parse(Data);
+        const raw = sessionStorage.getItem("signupData");
+        const signupData = raw ? JSON.parse(raw) : null;
         if (!signupData) {
-            alert('Something went wrong , Please try again')
-            router.push('/')
+            alert("Something went wrong, Please try again");
+            router.push("/");
             return;
         }
 
-        const email = signupData.email
+        setResending(true);
+        try {
+            const OTPdata = await GetOTpByEmail(signupData.email);
+            const data = await sendemailverifyotp(signupData.email, OTPdata?.otp);
 
-        const OTPdata = await GetOTpByEmail(email);
-        const OTP = OTPdata?.otp
-        console.log(OTP)
-        const data = await sendemailverifyotp(email, OTP)
-        if (data.success === true) {
-            alert("OTP sent successfully");
+            if (data?.success === true) {
+                alert("OTP sent successfully");
+            } else {
+                alert("Failed to send OTP");
+            }
+        } catch (error) {
+            console.error(error);
+            alert("Something went wrong. Please try again.");
+        } finally {
+            setResending(false);
         }
-        else {
-            alert("Failed to send OTP");
-        }
-
-
-    }
-
+    };
 
 
 
     // Handle Submit event
     const handleSubmit = async (e) => {
         e.preventDefault();
+        if (loading) return;
 
-
-        const data = sessionStorage.getItem("signupData");
-        const signupData = JSON.parse(data);
+        const raw = sessionStorage.getItem("signupData");
+        const signupData = raw ? JSON.parse(raw) : null;
         if (!signupData) {
-            alert('Something went wrong , Please try again')
-            router.push('/')
+            alert("Something went wrong, Please try again");
+            router.push("/");
             return;
         }
-        const name = signupData.name
-        const email = signupData.email
-        const password = signupData.password
-        const OTPdata = await GetOTpByEmail(email);
-        const OTP = OTPdata?.otp
-
-
 
         const code = otp.join("");
+        if (code.length !== 6) {
+            alert("Please enter the 6-digit code");
+            return;
+        }
 
+        const { name, email, password } = signupData;
+        setLoading(true);
 
+        try {
+            const OTPdata = await GetOTpByEmail(email);
+            const OTP = OTPdata?.otp;
 
-        if (Number(code) === OTP) {
+            if (Number(code) !== OTP) {
+                alert("Incorrect OTP");
+                setLoading(false);
+                return;
+            }
 
             const { data, error } = await authClient.signUp.email({
-                name: name,
-                email: email,
-                password: password,
+                name,
+                email,
+                password,
                 callbackURL: "/",
             });
 
             if (data?.token) {
-                const verifyResult = await UpdateEmailVerify(email, true);
-                console.log("Verify Result:", verifyResult);
+                await UpdateEmailVerify(email, true);
                 sessionStorage.removeItem("signupData");
                 alert(t("messages.success"));
                 router.push("/");
-            } else if (error) {
-                alert(t("messages.failed", { error: error.message }));
+                // loading true-i thakbe, redirect howa porjonto spinner cholbe
+            } else {
+                alert(t("messages.failed", { error: error?.message }));
+                setLoading(false);
             }
-        } else if (Number(code) !== OTP) {
-            alert("Incorrect OTP");
+        } catch (error) {
+            console.error(error);
+            alert("Something went wrong. Please try again.");
+            setLoading(false);
         }
-
-
     };
 
     return (
@@ -195,9 +207,17 @@ export default function VerifyOtpPage() {
 
                     <button
                         type="submit"
-                        className="w-full rounded-lg bg-amber-500 py-3 font-medium text-black transition hover:bg-amber-400"
+                        disabled={loading}
+                        className="flex w-full items-center justify-center gap-2 rounded-lg bg-amber-500 py-3 font-medium text-black transition hover:bg-amber-400 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:bg-amber-500"
                     >
-                        Verify Email
+                        {loading ? (
+                            <>
+                                <Loader2 size={18} className="animate-spin" />
+                                Verifying...
+                            </>
+                        ) : (
+                            "Verify Email"
+                        )}
                     </button>
                 </form>
 
@@ -206,9 +226,10 @@ export default function VerifyOtpPage() {
                     <button
                         type="button"
                         onClick={handleresendotp}
-                        className="font-medium text-amber-400 hover:underline"
+                        disabled={resending || loading}
+                        className="font-medium text-amber-400 hover:underline disabled:cursor-not-allowed disabled:opacity-60 disabled:no-underline"
                     >
-                        Resend code
+                        {resending ? "Sending..." : "Resend code"}
                     </button>
 
                     <p className="mt-2 text-xs text-zinc-500">

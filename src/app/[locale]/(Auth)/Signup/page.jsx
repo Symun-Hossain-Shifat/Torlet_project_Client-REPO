@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import Link from "next/link";
-import { Eye, EyeOff, Mail, Lock, User, Store } from "lucide-react";
+import { Eye, EyeOff, Mail, Lock, User, Store, Loader2 } from "lucide-react";
 import { FcGoogle } from "react-icons/fc";
 import { authClient } from "@/lib/auth-client";
 
@@ -16,6 +16,7 @@ import sendemailverifyotp from "@/lib/Action/PostData/SendOtpemail";
 
 export default function Signup() {
     const [showPassword, setShowPassword] = useState(false);
+    const [loading, setLoading] = useState(false);
     const [formData, setFormData] = useState({ name: "", email: "", password: "" });
     const router = useRouter();
     const t = useTranslations("Signup");
@@ -24,34 +25,46 @@ export default function Signup() {
         setFormData((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     };
 
+
+
     const handleSubmit = async (e) => {
         e.preventDefault();
-        const name = formData.name
-        const email = formData.email
-        const password = formData.password
+        if (loading) return;
 
-        const Data = await OtpPost(email, name)
+        const { name, email, password } = formData;
+        setLoading(true);
 
-        if (Data.insertedId) {
+        try {
+            const Data = await OtpPost(email, name);
+
+            if (!Data?.insertedId) {
+                toast.error("Failed to send OTP. Please try again.");
+                setLoading(false);
+                return;
+            }
+
             toast.success("OTP sent successfully");
             const OTPdata = await GetOTpByEmail(email);
-            const OTP = OTPdata?.otp
-            console.log(OTP)
-            const raw = await sendemailverifyotp(email, OTP)
+            const OTP = OTPdata?.otp;
+            const raw = await sendemailverifyotp(email, OTP);
 
-            if (raw.success === true) {
-                sessionStorage.setItem("signupData",
-                    JSON.stringify({ name, email, password }));
+            if (raw?.success === true) {
+                sessionStorage.setItem(
+                    "signupData",
+                    JSON.stringify({ name, email, password })
+                );
                 router.push("/OTP");
+                // loading true-i thakbe jate redirect howa porjonto spinner dekhay
+            } else {
+                toast.error("Failed to send verification email.");
+                setLoading(false);
             }
+        } catch (error) {
+            console.error(error);
+            toast.error("Something went wrong. Please try again.");
+            setLoading(false);
         }
-
-
-
-
     };
-
-
 
 
 
@@ -183,11 +196,25 @@ export default function Signup() {
                             </div>
                         </div>
 
-                        <button
+                        {/* <button
                             type="submit"
                             className="w-full rounded-lg bg-amber-400 py-2.5 text-sm font-semibold text-neutral-950 transition-colors hover:bg-amber-300 active:bg-amber-500"
                         >
                             {t("signupButton")}
+                        </button> */}
+                        <button
+                            type="submit"
+                            disabled={loading}
+                            className="flex w-full items-center justify-center gap-2 rounded-lg bg-amber-400 py-2.5 text-sm font-semibold text-neutral-950 transition-colors hover:bg-amber-300 active:bg-amber-500 disabled:cursor-not-allowed disabled:opacity-70 disabled:hover:bg-amber-400"
+                        >
+                            {loading ? (
+                                <>
+                                    <Loader2 size={17} className="animate-spin" />
+                                    Processing...
+                                </>
+                            ) : (
+                                t("signupButton")
+                            )}
                         </button>
                     </form>
 

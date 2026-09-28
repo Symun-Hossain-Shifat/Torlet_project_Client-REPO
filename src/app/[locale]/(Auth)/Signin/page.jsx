@@ -129,12 +129,12 @@ export default function Login() {
                                 >
                                     {t("passwordLabel")}
                                 </label>
-                                <Link
+                                {/* <Link
                                     href="/OTP"
                                     className="text-xs font-medium text-amber-400 hover:text-amber-300"
                                 >
                                     {t("forgotPassword")}
-                                </Link>
+                                </Link> */}
                             </div>
                             <div className="relative">
                                 <Lock
