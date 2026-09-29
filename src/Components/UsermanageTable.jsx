@@ -2,13 +2,15 @@
 
 import UpdateUser from "@/lib/Action/EditData/EditUser";
 import { useRouter } from "next/navigation";
-
-
 import toast from "react-hot-toast";
+import { useTranslations } from "next-intl";
 
 export default function UsermanageTable({ User }) {
     const users = Array.isArray(User) ? User : [];
-    const router = useRouter()
+    const router = useRouter();
+    const t = useTranslations("AdminTables");
+    const tProfile = useTranslations("Profile");
+
     function formatDate(value) {
         if (!value) return "N/A";
         return new Date(value).toLocaleDateString("en-US", {
@@ -26,11 +28,11 @@ export default function UsermanageTable({ User }) {
             const result = await UpdateUser(email, isBlocked)
 
             if (result.modifiedCount === 1) {
-                toast.success(`User ${isBlocked === true ? 'Blocked' : 'Unblocked'} Successfully`)
+                toast.success(isBlocked === true ? t("userBlockedSuccess") : t("userUnblockedSuccess"))
                 router.refresh()
             }
         } else {
-            toast.error('Admin Cannot Be Blocked')
+            toast.error(t("adminBlockError"))
         }
 
     }
@@ -39,13 +41,13 @@ export default function UsermanageTable({ User }) {
         <div className="w-full rounded-xl border border-white/10 bg-[#0A0A0A] text-zinc-100">
             {/* Header row — desktop / tablet only */}
             <div className="hidden text-left border-b border-white/10 bg-[#111114] px-5 py-3 text-xs font-medium uppercase tracking-wide text-zinc-500 sm:grid sm:grid-cols-[minmax(0,2fr)_minmax(0,2.4fr)_0.9fr_1.1fr_0.9fr_1fr_auto] sm:gap-4">
-                <span>Name</span>
-                <span>Email</span>
-                <span>Role</span>
-                <span>Verified</span>
-                <span>Status</span>
-                <span>Joined</span>
-                <span className="text-right">Action</span>
+                <span>{t("name")}</span>
+                <span>{t("email")}</span>
+                <span>{t("role")}</span>
+                <span>{t("verified")}</span>
+                <span>{t("status")}</span>
+                <span>{tProfile("joined")}</span>
+                <span className="text-right">{t("action")}</span>
             </div>
 
             {/* Rows */}
@@ -78,41 +80,41 @@ export default function UsermanageTable({ User }) {
 
                         {/* Role */}
                         <div className="text-sm text-zinc-300">
-                            <span className="text-zinc-500 sm:hidden">Role: </span>
+                            <span className="text-zinc-500 sm:hidden">{t("role")}: </span>
                             <span className="inline-flex items-center rounded-md border border-indigo-400/20 bg-indigo-500/10 px-2 py-0.5 text-xs font-medium text-indigo-300">
-                                {user.role}
+                                {user.role === 'Admin' ? tProfile("admin") : tProfile("user")}
                             </span>
                         </div>
 
                         {/* Email verified */}
                         <div className="text-sm text-zinc-300">
-                            <span className="text-zinc-500 sm:hidden">Verified: </span>
+                            <span className="text-zinc-500 sm:hidden">{t("verified")}: </span>
                             <span
                                 className={`inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium ${user.emailVerified
                                     ? "border-emerald-400/20 bg-emerald-500/10 text-emerald-300"
                                     : "border-amber-400/20 bg-amber-500/10 text-amber-300"
                                     }`}
                             >
-                                {user.emailVerified ? "Verified" : "Unverified"}
+                                {user.emailVerified ? tProfile("verified") : tProfile("unverified")}
                             </span>
                         </div>
 
                         {/* Status */}
                         <div className="text-sm text-zinc-300">
-                            <span className="text-zinc-500 sm:hidden">Status: </span>
+                            <span className="text-zinc-500 sm:hidden">{t("status")}: </span>
                             <span
                                 className={`inline-flex items-center rounded-md border px-2 py-0.5 text-xs font-medium ${user.isBlocked
                                     ? "border-rose-400/20 bg-rose-500/10 text-rose-400"
                                     : "border-emerald-400/20 bg-emerald-500/10 text-emerald-300"
                                     }`}
                             >
-                                {user.isBlocked ? "Blocked" : "Active"}
+                                {user.isBlocked ? tProfile("blocked") : tProfile("active")}
                             </span>
                         </div>
 
                         {/* Joined */}
                         <div className="text-sm text-zinc-400">
-                            <span className="text-zinc-500 sm:hidden">Joined: </span>
+                            <span className="text-zinc-500 sm:hidden">{tProfile("joined")}: </span>
                             {formatDate(user.createdAt)}
                         </div>
 
@@ -126,7 +128,7 @@ export default function UsermanageTable({ User }) {
                                     : "border-rose-400/20 bg-rose-500/10 text-rose-400 hover:border-rose-400/40 hover:bg-rose-500/20"
                                     }`}
                             >
-                                {user.isBlocked ? "Unblock" : "Block"}
+                                {user.isBlocked ? t("unblock") : t("block")}
                             </button>
                         </div>
                     </li>

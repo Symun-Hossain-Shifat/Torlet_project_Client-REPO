@@ -4,10 +4,7 @@ import Deleteproduct from "@/lib/Action/DeleteData/DeleteProduct";
 import { Icon } from "@iconify/react";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
-
-
-// Swap this for real data from your API/DB.
-
+import { useTranslations } from "next-intl";
 
 function formatPrice(value) {
     return new Intl.NumberFormat("en-US", {
@@ -25,15 +22,16 @@ function formatDate(value) {
 }
 
 export function ProductsTable({ products }) {
-
     const router = useRouter();
+    const t = useTranslations("AdminTables");
+
     const handleDelete = async (id) => {
         const result = await Deleteproduct(id)
         if (result.acknowledged === true) {
-            toast.success("Product deleted successfully");
+            toast.success(t("productDeleteSuccess"));
             router.refresh();
         } else {
-            toast.error("Product deleted failed");
+            toast.error(t("productDeleteFailed"));
         }
     }
 
@@ -42,11 +40,11 @@ export function ProductsTable({ products }) {
         <div className="w-full rounded-xl border border-white/10 bg-[#0A0A0A] text-zinc-100">
             {/* Header row — desktop / tablet only */}
             <div className="hidden text-left border-b border-white/10 bg-[#111114] px-5 py-3 text-xs font-medium uppercase tracking-wide text-zinc-500 sm:grid sm:grid-cols-[minmax(0,2.2fr)_1fr_1fr_1fr_auto] sm:gap-4">
-                <span>Product</span>
-                <span>Price</span>
-                <span>Category</span>
-                <span>Posted</span>
-                <span className="text-right">Actions</span>
+                <span>{t("product")}</span>
+                <span>{t("price")}</span>
+                <span>{t("category")}</span>
+                <span>{t("posted")}</span>
+                <span className="text-right">{t("actions")}</span>
             </div>
 
             {/* Rows */}
@@ -69,7 +67,7 @@ export function ProductsTable({ products }) {
 
                         {/* Price */}
                         <div className="text-sm text-zinc-300">
-                            <span className="text-zinc-500 sm:hidden">Price: </span>
+                            <span className="text-zinc-500 sm:hidden">{t("price")}: </span>
                             {formatPrice(product.price)}
                         </div>
 
@@ -93,7 +91,7 @@ export function ProductsTable({ products }) {
                                 className="inline-flex items-center gap-1.5 rounded-lg border border-white/10 bg-rose-500/10 px-3 py-1.5 text-xs font-medium text-rose-400 transition-colors hover:border-rose-400/40 hover:bg-rose-500/20"
                             >
                                 <Icon className="size-3.5" icon="gravity-ui:trash-bin" />
-                                Delete
+                                {t("delete")}
                             </button>
                         </div>
                     </li>
@@ -103,7 +101,7 @@ export function ProductsTable({ products }) {
             {/* Empty state */}
             {products.length === 0 && (
                 <div className="px-5 py-10 text-center text-sm text-zinc-500">
-                    No products yet. Add one to see it listed here.
+                    {t("noProductsYet")}
                 </div>
             )}
         </div>

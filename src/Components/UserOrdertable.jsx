@@ -1,27 +1,28 @@
+'use client';
+
 import Image from "next/image";
-
-
-
+import { useTranslations } from "next-intl";
 
 export default function UserOrderTable({ Data }) {
+    const t = useTranslations("AdminTables");
+
     return (
         <div className="w-full overflow-x-auto rounded-xl border border-gray-800 bg-black p-4">
             <h1 className="mb-4 text-xl font-semibold text-white">
-                User Order Table
+                {t("userOrderTitle")}
             </h1>
 
             <table className="w-full min-w-[900px] border-collapse text-left text-sm text-gray-300">
                 <thead>
                     <tr className="border-b border-gray-800 text-xs uppercase tracking-wide text-gray-400">
-                        <th className="px-4 py-3">Product</th>
-                        <th className="px-4 py-3">Customer</th>
-                        <th className="px-4 py-3">Contact</th>
-                        <th className="px-4 py-3">Address</th>
-                        <th className="px-4 py-3">Qty</th>
-                        <th className="px-4 py-3">Price</th>
-                        <th className="px-4 py-3">Status</th>
-                        <th className="px-4 py-3">Date</th>
-
+                        <th className="px-4 py-3">{t("product")}</th>
+                        <th className="px-4 py-3">{t("customer")}</th>
+                        <th className="px-4 py-3">{t("contact")}</th>
+                        <th className="px-4 py-3">{t("address")}</th>
+                        <th className="px-4 py-3">{t("qty")}</th>
+                        <th className="px-4 py-3">{t("price")}</th>
+                        <th className="px-4 py-3">{t("status")}</th>
+                        <th className="px-4 py-3">{t("date")}</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -60,10 +61,9 @@ export default function UserOrderTable({ Data }) {
 
                             <td className="px-4 py-3">${order.price}</td>
 
-
                             <td className="px-4 py-3">
                                 <span className={`${order.status === 'pending' ? 'bg-yellow-500/10 px-3 py-1 text-xs font-medium text-yellow-400' : order.status === 'Approved' ? 'bg-green-500/10 px-3 py-1 text-xs font-medium text-green-400' : 'bg-red-500/10 px-3 py-1 text-xs font-medium text-red-400'}`}>
-                                    {order.status}
+                                    {order.status === 'pending' ? t("pending") : order.status === 'Approved' ? t("approved") : order.status}
                                 </span>
                             </td>
                             <td className="px-4 py-3 text-gray-400">
@@ -71,8 +71,6 @@ export default function UserOrderTable({ Data }) {
                                     ? new Date(order.CreatedAt).toLocaleDateString("en-GB")
                                     : "N/A"}
                             </td>
-
-
                         </tr>
                     ))}
                 </tbody>

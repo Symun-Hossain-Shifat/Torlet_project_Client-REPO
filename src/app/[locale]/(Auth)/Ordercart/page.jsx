@@ -6,9 +6,11 @@ import { authClient } from "@/lib/auth-client";
 import { Mail, User, MapPin, Phone, CheckCircle2 } from "lucide-react";
 import { useRouter, useSearchParams } from "next/navigation";
 import toast from "react-hot-toast";
+import { useTranslations } from "next-intl";
 
 function OrderConfirmedModal({ redirectDelay = 4 }) {
     const router = useRouter();
+    const t = useTranslations("OrderForm");
     const [secondsLeft, setSecondsLeft] = useState(redirectDelay);
 
     useEffect(() => {
@@ -27,14 +29,13 @@ function OrderConfirmedModal({ redirectDelay = 4 }) {
                     <CheckCircle2 className="h-10 w-10 text-emerald-400" />
                 </div>
 
-                <h2 className="text-2xl font-semibold text-neutral-100">Order Confirmed!</h2>
+                <h2 className="text-2xl font-semibold text-neutral-100">{t("confirmedTitle")}</h2>
                 <p className="mt-2 text-sm text-neutral-400">
-                    🎉 Congratulations! Your order has been placed successfully.
+                    {t("confirmedMsg")}
                 </p>
 
                 <p className="mt-6 text-sm text-neutral-500">
-                    Redirecting to homepage in{" "}
-                    <span className="font-semibold text-neutral-200">{secondsLeft}</span>s
+                    {t("redirecting", { seconds: secondsLeft })}
                 </p>
 
                 <div className="mt-4 h-1 w-full overflow-hidden rounded-full bg-neutral-800">
@@ -48,7 +49,7 @@ function OrderConfirmedModal({ redirectDelay = 4 }) {
                     onClick={() => router.push("/")}
                     className="mt-6 w-full rounded-lg bg-amber-500 py-2.5 text-sm font-medium text-neutral-950 transition hover:bg-amber-400"
                 >
-                    Go to Homepage Now
+                    {t("goHomepage")}
                 </button>
             </div>
         </div>
@@ -64,6 +65,7 @@ export default function OrderForm() {
     const searchParams = useSearchParams();
     const [showConfirmation, setShowConfirmation] = useState(false);
     const [isSubmitting, setIsSubmitting] = useState(false);
+    const t = useTranslations("OrderForm");
 
     const rawData = searchParams.get("data");
     const Data = rawData ? JSON.parse(decodeURIComponent(rawData)) : {};
@@ -79,7 +81,7 @@ export default function OrderForm() {
         e.preventDefault();
 
         if (orderData.length === 0) {
-            toast.error("No items to order");
+            toast.error(t("noItems"));
             return;
         }
 
@@ -88,7 +90,7 @@ export default function OrderForm() {
         const mobile = form.mobile.value.trim();
 
         if (!address || !mobile) {
-            toast.error("Please fill in address and mobile number");
+            toast.error(t("fillRequired"));
             return;
         }
 
@@ -112,11 +114,11 @@ export default function OrderForm() {
             if (allSucceeded) {
                 setShowConfirmation(true); // shows the congrats modal; it handles the redirect itself
             } else {
-                toast.error("Some items failed to order. Please try again.");
+                toast.error(t("orderFailed"));
             }
         } catch (error) {
             console.error("Order submission error:", error);
-            toast.error("Failed to place order");
+            toast.error(t("orderFailed"));
         } finally {
             setIsSubmitting(false);
         }
@@ -126,15 +128,15 @@ export default function OrderForm() {
         <div className="min-h-screen bg-neutral-950 flex items-center justify-center p-6">
             <div className="w-full max-w-md">
                 <div className="mb-6">
-                    <h1 className="text-2xl font-semibold text-neutral-100">Place your order</h1>
-                    <p className="text-sm text-neutral-500 mt-1">Fill in your details and pick an item.</p>
+                    <h1 className="text-2xl font-semibold text-neutral-100">{t("title")}</h1>
+                    <p className="text-sm text-neutral-500 mt-1">{t("subtitle")}</p>
                 </div>
 
                 <form onSubmit={handleSubmit} className="space-y-5">
                     {/* Name */}
                     <div>
                         <label htmlFor="name" className="block text-sm font-medium text-neutral-300 mb-1.5">
-                            Full name
+                            {t("fullName")}
                         </label>
                         <div className="relative">
                             <User className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
@@ -152,7 +154,7 @@ export default function OrderForm() {
                     {/* Email */}
                     <div>
                         <label htmlFor="email" className="block text-sm font-medium text-neutral-300 mb-1.5">
-                            Email
+                            {t("email")}
                         </label>
                         <div className="relative">
                             <Mail className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
@@ -170,7 +172,7 @@ export default function OrderForm() {
                     {/* Address */}
                     <div>
                         <label htmlFor="address" className="block text-sm font-medium text-neutral-300 mb-1.5">
-                            Delivery address
+                            {t("deliveryAddress")}
                         </label>
                         <div className="relative">
                             <MapPin className="absolute left-3 top-3 w-4 h-4 text-neutral-500" />
@@ -178,7 +180,7 @@ export default function OrderForm() {
                                 id="address"
                                 name="address"
                                 rows={2}
-                                placeholder="House, road, area, city"
+                                placeholder={t("addressPlaceholder")}
                                 required
                                 className="w-full pl-10 pr-3 py-2.5 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-100 placeholder-neutral-600 text-sm resize-none focus:outline-none focus:ring-2 focus:ring-amber-500/40"
                             />
@@ -188,7 +190,7 @@ export default function OrderForm() {
                     {/* Mobile Number */}
                     <div>
                         <label htmlFor="mobile" className="block text-sm font-medium text-neutral-300 mb-1.5">
-                            Mobile Number
+                            {t("mobileNumber")}
                         </label>
                         <div className="relative">
                             <Phone className="absolute left-3 top-1/2 -translate-y-1/2 w-4 h-4 text-neutral-500" />
@@ -196,7 +198,7 @@ export default function OrderForm() {
                                 id="mobile"
                                 name="mobile"
                                 type="tel"
-                                placeholder="+8801XXXXXXXXX"
+                                placeholder={t("mobilePlaceholder")}
                                 required
                                 className="w-full pl-10 pr-3 py-2.5 rounded-lg bg-neutral-900 border border-neutral-800 text-neutral-100 placeholder-neutral-600 text-sm focus:outline-none focus:ring-2 focus:ring-amber-500/40"
                             />
@@ -205,7 +207,7 @@ export default function OrderForm() {
 
                     {/* Total */}
                     <div className="flex items-center justify-between rounded-lg bg-neutral-900 border border-neutral-800 px-4 py-3">
-                        <span className="text-sm text-neutral-400">Total</span>
+                        <span className="text-sm text-neutral-400">{t("total")}</span>
                         <span className="text-lg font-semibold text-amber-400">
                             ৳{totalPrice.toLocaleString()}
                         </span>
@@ -217,14 +219,14 @@ export default function OrderForm() {
                             disabled={isSubmitting}
                             className="flex-1 py-2.5 rounded-lg bg-amber-500 hover:bg-amber-400 text-neutral-950 text-sm font-medium transition-colors disabled:cursor-not-allowed disabled:opacity-60"
                         >
-                            {isSubmitting ? "Placing order..." : "Confirm order"}
+                            {isSubmitting ? t("confirmOrder") : t("confirmOrder")}
                         </button>
                         <button
                             type="button"
                             onClick={() => window.location.reload()}
                             className="px-4 py-2.5 rounded-lg border border-neutral-800 text-neutral-400 hover:text-neutral-200 hover:border-neutral-700 text-sm transition-colors"
                         >
-                            Reset
+                            {t("reset")}
                         </button>
                     </div>
                 </form>

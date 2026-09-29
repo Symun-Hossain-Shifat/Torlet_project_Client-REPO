@@ -18,6 +18,7 @@ import { PostCart } from "@/lib/Action/PostData/PostCart";
 import toast from "react-hot-toast";
 import PostWishlist from "@/lib/Action/PostData/PostWishlist";
 import { useRouter } from "next/navigation";
+import { useTranslations } from "next-intl";
 
 // ---------- Helpers ----------
 function toDriveEmbedUrl(url) {
@@ -62,6 +63,7 @@ function ProductImage({ src, alt }) {
 }
 
 export default function ProductDetailsPage({ Product }) {
+    const t = useTranslations("ProductDetails");
 
     const [activeMedia, setActiveMedia] = useState("image");
     const [quantity, setQuantity] = useState(1);
@@ -76,7 +78,7 @@ export default function ProductDetailsPage({ Product }) {
         return (
             <div className="flex min-h-[60vh] flex-col items-center justify-center gap-3 bg-black text-neutral-400">
                 <PackageX className="h-10 w-10 text-neutral-600" />
-                <p className="text-sm">This product could not be found.</p>
+                <p className="text-sm">{t("notFound")}</p>
             </div>
         );
     }
@@ -86,12 +88,12 @@ export default function ProductDetailsPage({ Product }) {
     const embedVideoUrl = toDriveEmbedUrl(Product.video);
     const handleAddToCart = async (product) => {
         if (!user) {
-            toast.error("Please login first");
+            toast.error(t("loginFirst"));
             return;
         }
 
         if (user.role === "Admin") {
-            toast.error("Admin Can not add to cart");
+            toast.error(t("adminCartError"));
             return;
         }
         const Data = {
@@ -102,7 +104,7 @@ export default function ProductDetailsPage({ Product }) {
 
         if (result) {
 
-            toast.success(`Product Added In Cart Successfully`);
+            toast.success(t("addedSuccess"));
             setTimeout(() => { }, 2000);
         } else {
             toast.error(result.message);
@@ -111,13 +113,13 @@ export default function ProductDetailsPage({ Product }) {
 
     const handleClick = () => {
         if (!user) {
-            toast.error("Please login first");
+            toast.error(t("loginFirst"));
             router.push("/Signin");
             return;
         }
 
         if (user?.role === "Admin") {
-            toast.error("Admin Can not Order");
+            toast.error(t("adminOrderError"));
             return;
         }
 
@@ -135,12 +137,12 @@ export default function ProductDetailsPage({ Product }) {
 
     const handleToggleWishlist = async (product) => {
         if (!user) {
-            toast.error("Please login first");
+            toast.error(t("loginFirst"));
             return;
         }
 
         if (user.role === "Admin") {
-            toast.error("Admin Can not add to WishList");
+            toast.error(t("adminWishlistError"));
             return;
         }
         const Data = {
@@ -150,7 +152,7 @@ export default function ProductDetailsPage({ Product }) {
         const result = await PostWishlist(Data)
         if (result) {
 
-            toast.success(`${Product.title} Wishlisted`);
+            toast.success(t("wishlistedSuccess", { title: Product.title }));
 
         } else {
             toast.error(result.message);
@@ -164,7 +166,7 @@ export default function ProductDetailsPage({ Product }) {
             <div className="mx-auto max-w-6xl px-4 py-8 sm:px-6 sm:py-12 lg:px-8">
                 {/* Breadcrumb */}
                 <nav className="mb-6 text-sm text-neutral-500">
-                    <span>Shop</span>
+                    <span>{t("shop")}</span>
                     <span className="mx-2">/</span>
                     <span className="text-[#D4AF37]">{Product.category}</span>
                 </nav>
@@ -226,7 +228,7 @@ export default function ProductDetailsPage({ Product }) {
                         </h1>
 
                         <p className="mt-2 text-xs text-neutral-500">
-                            Listed on {formatDate(Product.createdAt)}
+                            {t("listedOn", { date: formatDate(Product.createdAt) })}
                         </p>
 
                         <p className="mt-4 text-3xl font-bold text-[#D4AF37]">
@@ -241,7 +243,7 @@ export default function ProductDetailsPage({ Product }) {
                         {Product.features?.length > 0 && (
                             <div className="mt-6">
                                 <h2 className="mb-3 text-sm font-semibold uppercase tracking-wide text-neutral-300">
-                                    Features
+                                    {t("features")}
                                 </h2>
                                 <ul className="space-y-2">
                                     {Product.features.map((feature, i) => (
@@ -260,7 +262,7 @@ export default function ProductDetailsPage({ Product }) {
                         {/* Quantity */}
                         <div className="mt-8">
                             <h2 className="mb-2 text-sm font-semibold uppercase tracking-wide text-neutral-300">
-                                Quantity
+                                {t("quantity")}
                             </h2>
                             <div className="flex w-fit items-center rounded-lg border border-neutral-800">
                                 <button
@@ -289,14 +291,14 @@ export default function ProductDetailsPage({ Product }) {
                                 className="flex flex-1 items-center justify-center gap-2 rounded-xl bg-[#D4AF37] px-6 py-3.5 text-sm font-semibold text-black transition hover:bg-[#c4a030] active:scale-[0.98]"
                             >
                                 <Zap className="h-4 w-4" />
-                                Order Now
+                                {t("orderNow")}
                             </button>
                             <button
                                 onClick={() => handleAddToCart(Product)}
                                 className="flex flex-1 items-center justify-center gap-2 rounded-xl border border-[#D4AF37] px-6 py-3.5 text-sm font-semibold text-[#D4AF37] transition hover:bg-[#D4AF37]/10 active:scale-[0.98]"
                             >
                                 <ShoppingCart className="h-4 w-4" />
-                                Add to Cart
+                                {t("addToCart")}
                             </button>
                             <button
                                 onClick={() => handleToggleWishlist(Product)}
@@ -311,7 +313,7 @@ export default function ProductDetailsPage({ Product }) {
                                     fill={wishlisted ? "currentColor" : "none"}
                                 />
                                 <span className="sm:hidden">
-                                    {wishlisted ? "Wishlisted" : "Wishlist"}
+                                    {wishlisted ? t("wishlisted") : t("wishlist")}
                                 </span>
                             </button>
                         </div>
