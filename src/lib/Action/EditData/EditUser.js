@@ -21,6 +21,7 @@ export async function UpdateEmailVerify(email, emailVerified) {
         method: 'PATCH',
         headers: {
             'Content-Type': 'application/json',
+            ...await authHeader()
 
         },
         body: JSON.stringify({ emailVerified: emailVerified }),
