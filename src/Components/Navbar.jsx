@@ -307,7 +307,7 @@ export default function Navbar({
             {/* ---------- Mobile bottom tab bar ---------- */}
             <nav className="fixed bottom-0 left-0 right-0 z-50 flex items-center justify-around border-t border-neutral-800 bg-neutral-950 py-2 md:hidden">
                 <BottomTabButton
-                    label="Categories"
+                    label={t("categories")}
                     onClick={() => setIsCategoryDrawerOpen(true)}
                 >
                     <Menu size={22} />

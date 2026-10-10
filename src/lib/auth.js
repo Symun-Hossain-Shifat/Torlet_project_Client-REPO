@@ -33,7 +33,9 @@ export const auth = betterAuth({
     },
 
     trustedOrigins: [
-        process.env.BETTER_AUTH_URL,
+        "https://www.torlet.com",
+        "https://torlet.com",
+        "https://torlet-project-client-side.vercel.app",
     ],
     user: {
         additionalFields: {
